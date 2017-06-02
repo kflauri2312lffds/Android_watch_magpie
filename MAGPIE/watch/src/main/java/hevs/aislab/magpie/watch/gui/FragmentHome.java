@@ -13,6 +13,7 @@ import hevs.aislab.magpie.watch.R;
  * This will be the gf
  */
 
+//initial fragment that display user states
 public class FragmentHome extends Fragment {
 
 
