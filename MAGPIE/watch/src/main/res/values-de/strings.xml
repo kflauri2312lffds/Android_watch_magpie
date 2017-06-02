@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="greetings">Allo</string>
+    <string name="pulse">Pulsieren</string>
+    <string name="start">go</string>
+    <string name="voice">Stimme</string>
+    <string name="voice_not_found">Befehl nicht gefunden</string>
+</resources>

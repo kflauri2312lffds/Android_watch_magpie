@@ -1,0 +1,49 @@
+apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion '25.0.0'
+    //Android 6.0 release has removed support for the Apache HTTP client.
+    //Use HttpURLConnection class instead.
+    //To continue using the Apache HTTP APIs we have to include the compile-time dependency
+    useLibrary 'org.apache.http.legacy'
+
+    defaultConfig {
+        applicationId "ch.hevs.aislab.magpie.debs"
+        minSdkVersion 18
+        targetSdkVersion 25
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    packagingOptions {
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+    }
+
+    lintOptions {
+        lintOptions {
+            abortOnError false
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.android.support:appcompat-v7:25.1.1'
+    compile 'com.android.support:design:25.1.1'
+    compile 'com.google.android.gms:play-services-gcm:7.5.0'
+    compile 'com.google.guava:guava:18.0'
+    compile 'commons-io:commons-io:2.4'
+    compile 'org.apache.httpcomponents:httpclient-android:4.3.5.1'
+    compile 'com.squareup.retrofit:retrofit:1.9.0'
+    compile 'com.code-troopers.betterpickers:library:2.0.0'
+    compile 'joda-time:joda-time:2.1'
+    compile project (':library')
+}

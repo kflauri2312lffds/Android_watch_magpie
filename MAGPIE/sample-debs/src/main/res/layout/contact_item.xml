@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/view_margin"
+    android:paddingRight="@dimen/view_margin"
+    android:paddingTop="@dimen/view_margin"
+    android:paddingBottom="@dimen/view_margin">
+
+    <TextView
+        android:id="@+id/usernameLabelTxtView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="8dp"
+        android:layout_marginEnd="8dp"
+        style="@style/LabelFont"
+        android:text="username:"/>
+
+    <TextView
+        android:id="@+id/fullNameLabelTxtView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/usernameLabelTxtView"
+        style="@style/LabelFont"
+        android:text="@string/name"/>
+
+    <TextView
+        android:id="@+id/statusLabelTxtView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/fullNameLabelTxtView"
+        style="@style/LabelFont"
+        android:text="Status:"/>
+
+    <TextView
+        android:id="@+id/contactUsernameTxtView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/usernameLabelTxtView"
+        android:layout_toEndOf="@id/usernameLabelTxtView"
+        style="@style/ValueFont" />
+
+    <TextView
+        android:id="@+id/fullNameTxtView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/contactUsernameTxtView"
+        android:layout_toRightOf="@id/usernameLabelTxtView"
+        android:layout_toEndOf="@id/usernameLabelTxtView"
+        style="@style/ValueFont" />
+
+    <TextView
+        android:id="@+id/statusTxtView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/fullNameTxtView"
+        android:layout_toRightOf="@id/usernameLabelTxtView"
+        android:layout_toEndOf="@id/usernameLabelTxtView"
+        style="@style/ValueFont" />
+
+</RelativeLayout>

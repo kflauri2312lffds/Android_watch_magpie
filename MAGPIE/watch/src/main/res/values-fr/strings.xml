@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="greetings">bonjour</string>
+    <string name="pulse">Pulsation</string>
+    <string name="start">démarrer</string>
+    <string name="voice">Voix</string>
+    <string name="voice_not_found">Commande introuvable</string>
+</resources>

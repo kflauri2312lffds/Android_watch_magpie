@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+
+
+
+
+<resources>
+
+    <style name="button_main_menu">
+        <item name="android:textSize">24sp</item>
+    </style>
+
+    <!-- MAIN LAYOUT !-->
+    <style name="mainLayout">
+        <item name="android:background">#C7E0FC</item>
+    </style>
+
+
+    <style name="button_larg">
+    <item name="android:textSize">18sp</item>
+</style>
+
+    <!-- TEXT VIEW  !-->
+    <style name="txtView">
+
+    </style>
+    <style name="txtView_title" parent="txtView">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+
+
+</resources>
