@@ -20,7 +20,7 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
-        android:onClick="voiceRecognition"
+        android:onClick="click_voiceRecongnition"
         android:text="@string/voice"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.503"
@@ -31,21 +31,21 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp" />
 
-    <fragment
-        android:id="@+id/fragment"
-        android:name="hevs.aislab.magpie.watch.gui.FragmentHome"
-        android:layout_width="204dp"
-        android:layout_height="183dp"
+    <FrameLayout
+        android:id="@+id/main_container"
+        android:layout_width="207dp"
+        android:layout_height="163dp"
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:layout="@layout/fragment_home"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.868">
+
+    </FrameLayout>
+
 </android.support.constraint.ConstraintLayout>

@@ -31,5 +31,10 @@
     </style>
 
 
+<!-- EDIT TEXT STYLE !-->
+    <style name="edittxt" parent="txtView">
+        <item name="android:textStyle"></item>
+        <item name="android:textSize">18sp</item>
+    </style>
 
 </resources>

@@ -34,4 +34,5 @@ dependencies {
     compile 'org.greenrobot:greendao:3.2.2' // add library
     compile project(path: ':library')
     compile project(path: ':library')
+    compile 'com.android.support:design:25.3.1'
 }

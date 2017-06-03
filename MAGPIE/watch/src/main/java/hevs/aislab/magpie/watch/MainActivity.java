@@ -106,6 +106,7 @@ public class MainActivity extends Activity {
         if (this.hasUserPermission())
         {
             Intent intent=new Intent(this,HomeActivity.class);
+
             startActivity(intent);
         }
         else
