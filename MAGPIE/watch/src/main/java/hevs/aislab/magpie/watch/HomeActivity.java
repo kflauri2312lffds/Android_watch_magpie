@@ -18,6 +18,7 @@ import ch.hevs.aislab.magpie.android.MagpieActivityWatch;
 import ch.hevs.aislab.magpie.event.LogicTupleEvent;
 import hevs.aislab.magpie.watch.gui.FragmentAddGlucose;
 import hevs.aislab.magpie.watch.gui.FragmentHome;
+import hevs.aislab.magpie.watch.gui.FragmentSettings;
 import hevs.aislab.magpie.watch.libs.Lib;
 
 /**
@@ -37,6 +38,7 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
     //fragment
     private FragmentHome fragmentHome;
     private FragmentAddGlucose fragmentAddGlucose;
+    private FragmentSettings fragmentSettings;
 
     //sensors
     private SensorManager sensorManager;
@@ -50,16 +52,37 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
         setContentView(R.layout.activity_home);
 
         //display the fragment home witout any value
-        displayFragment_home("");
+        displayFragmentHome("");
 
         //init the sensors
         this.sensorManager=(SensorManager) getSystemService(SENSOR_SERVICE);
         sensor_pulse=sensorManager.getDefaultSensor(Sensor.TYPE_HEART_RATE);
 
         registerSensors();
+    }
 
+
+  //    BUTTON MENU EVENT
+    public void click_voiceRecongnition(View view)
+    {
+        displaySpeechRecognizer();
 
     }
+
+    public void click_home(View view )
+    {
+
+        displayFragmentHome("");
+
+    }
+    public void click_settings(View view )
+    {
+        displayFragmentSettings();
+    }
+
+
+
+
 
     //UPDATE VIEW IN FRAGMENT
     private void updatePulseDisplay(String value)
@@ -81,16 +104,12 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
         EditText editText=(EditText) findViewById(R.id.edit_text_add_glucose);
         String value=editText.getText().toString();
         //change the current fragment
-        displayFragment_home(value);
+        displayFragmentHome(value);
         //process event by magpie
         processPulseEvent(value);
     }
 
-    //event for the button voice
-    public void click_voiceRecongnition(View view)
-    {
-        displaySpeechRecognizer();
-    }
+
 
     //------------VOICE RECOGNITION HANDLER------------------
 
@@ -110,13 +129,32 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
                     RecognizerIntent.EXTRA_RESULTS);
             String spokenText = results.get(0).toLowerCase();
 
+            //replace eventual comma by "."
+           spokenText= spokenText.replace(",",".");
+
+
             //create the possiblity and handle multi language
             String glucose=getString(R.string.voice_glucose);
+            //split the texte spoken into an array
+            String []arraySpocken=spokenText.split(" ");
 
-            if (spokenText.equals(glucose))
+            //ad the glucose by voice
+            if (arraySpocken[0].toLowerCase().equals(glucose))
             {
-                displayFragment_addGlucose();
+                //we set the value of the glucose
+                try
+                {
+                    //get the number. handle eventual null value or not number value, or the fact that the framgent is not fully charged
+                    double value=Double.parseDouble(arraySpocken[1]);
+                    fragmentHome.setGlucoseValue(value+"");
+
+                }
+                catch (Exception ex)
+                {
+                    Toast.makeText(this, getString(R.string.voice_incorrect), Toast.LENGTH_SHORT).show();
+                }
             }
+
 
             else
             {
@@ -138,10 +176,10 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
         transaction.commitAllowingStateLoss();
     }
 
-    private void displayFragment_home(String value)
+    private void displayFragmentHome(String value)
     {
         fragmentHome=new  FragmentHome();
-    Bundle bundle=new Bundle();
+        Bundle bundle=new Bundle();
         bundle.putString("glucoseValue",value);
         fragmentHome.setArguments(bundle);
 
@@ -149,6 +187,11 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
 
         Log.d("stateofMessage","display fragment");
        // fragmentHome.setGlucoseValue(value);
+    }
+    private void displayFragmentSettings()
+    {
+        fragmentSettings=new FragmentSettings();
+        getSupportFragmentManager().beginTransaction().replace(R.id.main_container, fragmentSettings,"settingsTag").addToBackStack(null).commit(); // newInstance() is a static factory method.
     }
 
 

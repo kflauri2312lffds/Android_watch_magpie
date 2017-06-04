@@ -45,6 +45,11 @@ public class FragmentHome extends Fragment {
             txtViewPulse.setText(value);
     }
 
+    public void setGlucoseValue(String value)throws Exception
+    {
+        txtViewGlucose.setText(value);
+    }
+
 
 
 }

@@ -24,7 +24,8 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.868"
         android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp">
+        android:layout_marginEnd="8dp"
+        app:layout_constraintHorizontal_bias="0.5">
 
     </FrameLayout>
 
@@ -40,9 +41,42 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        tools:layout_editor_absoluteY="15dp"
+        app:layout_constraintVertical_bias="0.060000002"
         android:layout_height="30dp"
-        android:layout_width="28dp" />
+        android:layout_width="28dp"
+        app:layout_constraintHorizontal_bias="0.789" />
+
+    <ImageButton
+        android:id="@+id/imageButton3"
+        style="@style/img_button_voice"
+        android:layout_width="28dp"
+        android:layout_height="30dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@null"
+        android:onClick="click_settings"
+        android:src="@drawable/settings"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.060000002" />
+
+    <ImageButton
+        android:id="@+id/imageButton5"
+        style="@style/img_button_voice"
+        android:layout_width="28dp"
+        android:layout_height="30dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@null"
+        android:src="@drawable/home"
+        android:onClick="click_home"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.242"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.060000002" />
 
 </android.support.constraint.ConstraintLayout>
