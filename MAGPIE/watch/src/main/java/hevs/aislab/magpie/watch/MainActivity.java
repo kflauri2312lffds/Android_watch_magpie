@@ -18,27 +18,16 @@ import hevs.aislab.magpie.watch.models.DaoMaster;
  */
 public class MainActivity extends Activity {
 
-
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         //initialize the data base
         initDB();
 
-        //ask for all the permission
-       ActivityCompat.requestPermissions(this,
-                new String[]{Manifest.permission.BODY_SENSORS},
-                3);
 
-
-
-
+    askAllPermission();
 
     }
 
@@ -46,9 +35,20 @@ public class MainActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-
-
     }
+
+    private void askAllPermission()
+    {
+        //ask for all the permission
+        ActivityCompat.requestPermissions(this,
+                new String[]{Manifest.permission.BODY_SENSORS},
+                3);
+
+        ActivityCompat.requestPermissions(this,
+                new String[]{Manifest.permission.BATTERY_STATS},
+                2);
+    }
+
     private boolean hasUserPermission()
     {
         //get the result of permission
@@ -71,55 +71,22 @@ public class MainActivity extends Activity {
 
 
 
-//    @Override
-//    public void onEnterAmbient(Bundle ambientDetails) {
-//        super.onEnterAmbient(ambientDetails);
-//        updateDisplay();
-//    }
-//
-//    @Override
-//    public void onUpdateAmbient() {
-//        super.onUpdateAmbient();
-//        updateDisplay();
-//    }
-//
-//    @Override
-//    public void onExitAmbient() {
-//        updateDisplay();
-//        super.onExitAmbient();
-//    }
-//
-//    private void updateDisplay() {
-//        if (isAmbient()) {
-//
-//
-//            return;
-//        }
-
     public void startHomeActivity(View view)
     {
         //disallow the access if the user has not given the autorisation
-
-
         //ask for all the permission
 
         if (this.hasUserPermission())
         {
             Intent intent=new Intent(this,HomeActivity.class);
-
             startActivity(intent);
         }
         else
         {
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.BODY_SENSORS},
-                    3);
+            askAllPermission();
         }
 
 
     }
-
-
-
 
 }

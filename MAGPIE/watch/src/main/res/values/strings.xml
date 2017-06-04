@@ -15,5 +15,5 @@
     <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
     <string name="add_glucose" translatable="false">Add glucose</string>
     <string name="submit" translatable="false">Submit</string>
-    <string name="hint_addglucose">add your glucose level here</string>
+    <string name="hint_addglucose" translatable="false">Enter glucose</string>
 </resources>

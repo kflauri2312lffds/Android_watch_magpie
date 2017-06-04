@@ -5,5 +5,4 @@
     <string name="start">go</string>
     <string name="voice">Stimme</string>
     <string name="voice_not_found">Befehl nicht gefunden</string>
-    <string name="hint_addglucose">add your glucose level here</string>
 </resources>

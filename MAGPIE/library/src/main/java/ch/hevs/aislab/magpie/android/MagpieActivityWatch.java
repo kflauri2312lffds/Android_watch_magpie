@@ -12,6 +12,7 @@ import android.os.IBinder;
 import android.os.Message;
 import android.os.Messenger;
 import android.os.RemoteException;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
@@ -25,7 +26,7 @@ import ch.hevs.aislab.magpie.environment.Environment;
 import ch.hevs.aislab.magpie.event.LogicTupleEvent;
 import ch.hevs.aislab.magpie.event.MagpieEvent;
 
-public abstract class MagpieActivityWatch extends Activity implements MagpieConnection {
+public abstract class MagpieActivityWatch extends FragmentActivity implements MagpieConnection {
 
 
 	public final String ACTIVITY_NAME = getClass().getName();

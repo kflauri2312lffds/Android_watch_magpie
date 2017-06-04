@@ -9,18 +9,16 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
-
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import java.util.List;
-
 import ch.hevs.aislab.magpie.android.MagpieActivityWatch;
 import ch.hevs.aislab.magpie.event.LogicTupleEvent;
 import hevs.aislab.magpie.watch.gui.FragmentAddGlucose;
 import hevs.aislab.magpie.watch.gui.FragmentHome;
+import hevs.aislab.magpie.watch.libs.Lib;
 
 /**
  * Created by teuft on 31.05.2017.
@@ -30,18 +28,19 @@ import hevs.aislab.magpie.watch.gui.FragmentHome;
 //implement the listener for the sensors
 public class HomeActivity extends MagpieActivityWatch implements SensorEventListener {
 
+
+
     //handle the voice variable
     private static final int SPEECH_REQUEST_CODE = 0;
     FragmentManager manager;
 
     //fragment
-    FragmentHome fragmentHome;
-    FragmentAddGlucose fragmentAddGlucose;
+    private FragmentHome fragmentHome;
+    private FragmentAddGlucose fragmentAddGlucose;
 
     //sensors
-    SensorManager sensorManager;
-    Sensor sensor_pulse;
-
+    private SensorManager sensorManager;
+    private Sensor sensor_pulse;
 
 
 
@@ -91,15 +90,9 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
     public void click_voiceRecongnition(View view)
     {
         displaySpeechRecognizer();
-
     }
 
-
-
-
     //------------VOICE RECOGNITION HANDLER------------------
-
-
 
     private void displaySpeechRecognizer() {
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
@@ -117,10 +110,6 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
                     RecognizerIntent.EXTRA_RESULTS);
             String spokenText = results.get(0).toLowerCase();
 
-            //action based on the r
-
-            //get the texte
-
             //create the possiblity and handle multi language
             String glucose=getString(R.string.voice_glucose);
 
@@ -128,7 +117,6 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
             {
                 displayFragment_addGlucose();
             }
-
 
             else
             {
@@ -184,7 +172,6 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
     {
 
     }
-
     //------------SENSORS METHODE--------------
 
     private void registerSensors()
@@ -202,17 +189,34 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
         switch (sensorEvent.sensor.getType())
         {   //handle heart event
             case Sensor.TYPE_HEART_RATE :
+                //return if the watch is charging ==bad balue
+                if (Lib.isPhonePluggedIn(this))
+                    return;
+
                 String value=sensorEvent.values[0]+"";
                 updatePulseDisplay(value);
                 processPulseEvent(value);
+
                 break;
         }
-
-
     }
-
     @Override
     public void onAccuracyChanged(Sensor sensor, int i) {
+        Toast.makeText(this, i+"", Toast.LENGTH_SHORT).show();
+
+        if (sensor.getType()==Sensor.TYPE_HEART_RATE)
+        {
+           if (i== SensorManager.SENSOR_STATUS_NO_CONTACT)
+           {
+//               Toast.makeText(this, "No contact with wath", Toast.LENGTH_SHORT).show();
+               return;
+           }
+            if (i== SensorManager.SENSOR_STATUS_ACCURACY_HIGH)
+            {
+//                Toast.makeText(this, "good contact with watch", Toast.LENGTH_SHORT).show();
+                return;
+            }
+        }
 
     }
 //    @Override

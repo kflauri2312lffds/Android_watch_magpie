@@ -27,7 +27,8 @@
     </style>
     <style name="txtView_title" parent="txtView">
         <item name="android:textStyle">bold</item>
-        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">#000</item>
+        <item name="android:textSize">20sp</item>
     </style>
 
 
@@ -36,5 +37,18 @@
         <item name="android:textStyle"></item>
         <item name="android:textSize">18sp</item>
     </style>
+
+    <!-- IMG STYLE !-->
+    <style name="img_status">
+        <item name="android:layout_width">55dp</item>
+        <item name="android:layout_height">65dp</item>
+    </style>
+
+    <!-- IMG_button_voice !-->
+    <style name="img_button_voice">
+        <item name="android:layout_width">65dp</item>
+        <item name="android:layout_height">75dp</item>
+    </style>
+
 
 </resources>

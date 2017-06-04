@@ -5,5 +5,4 @@
     <string name="start">démarrer</string>
     <string name="voice">Voix</string>
     <string name="voice_not_found">Commande introuvable</string>
-    <string name="hint_addglucose">add your glucose level here</string>
 </resources>

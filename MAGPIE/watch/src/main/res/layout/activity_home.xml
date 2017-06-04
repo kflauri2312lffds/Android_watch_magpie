@@ -10,27 +10,6 @@
     tools:deviceIds="wear">
 
 
-
-
-    <Button
-        android:id="@+id/button_voice"
-        android:layout_width="88dp"
-        android:layout_height="48dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="8dp"
-        android:onClick="click_voiceRecongnition"
-        android:text="@string/voice"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.503"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp" />
-
     <FrameLayout
         android:id="@+id/main_container"
         android:layout_width="207dp"
@@ -40,12 +19,30 @@
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.868">
+        app:layout_constraintVertical_bias="0.868"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp">
 
     </FrameLayout>
+
+    <ImageButton
+        android:id="@+id/imageButton"
+        style="@style/img_button_voice"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@null"
+        android:onClick="click_voiceRecongnition"
+        android:src="@drawable/voice"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        tools:layout_editor_absoluteY="15dp"
+        android:layout_height="30dp"
+        android:layout_width="28dp" />
 
 </android.support.constraint.ConstraintLayout>
