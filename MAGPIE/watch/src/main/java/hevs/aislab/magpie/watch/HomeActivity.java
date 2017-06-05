@@ -1,6 +1,7 @@
 package hevs.aislab.magpie.watch;
 
 import android.hardware.SensorManager;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.content.Intent;
@@ -12,14 +13,28 @@ import android.speech.RecognizerIntent;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
 import java.util.List;
+
+import ch.hevs.aislab.magpie.agent.MagpieAgent;
 import ch.hevs.aislab.magpie.android.MagpieActivityWatch;
+import ch.hevs.aislab.magpie.behavior.PriorityBehaviorAgentMind;
+import ch.hevs.aislab.magpie.environment.Services;
 import ch.hevs.aislab.magpie.event.LogicTupleEvent;
+import ch.hevs.aislab.magpie.support.Rule;
+import hevs.aislab.magpie.watch.agents.PulseBehaviour;
+import hevs.aislab.magpie.watch.db.Core;
 import hevs.aislab.magpie.watch.gui.FragmentAddGlucose;
 import hevs.aislab.magpie.watch.gui.FragmentHome;
 import hevs.aislab.magpie.watch.gui.FragmentSettings;
 import hevs.aislab.magpie.watch.libs.Lib;
+import hevs.aislab.magpie.watch.models.DaoSession;
+import hevs.aislab.magpie.watch.models.Rules;
+import hevs.aislab.magpie.watch.models.RulesDao;
+import hevs.aislab.magpie.watch.repository.RulesRepository;
 
 /**
  * Created by teuft on 31.05.2017.
@@ -44,6 +59,9 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
     private SensorManager sensorManager;
     private Sensor sensor_pulse;
 
+    //store the current values
+
+    //set the current rules, we will search in the db
 
 
     @Override
@@ -57,14 +75,24 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
         //init the sensors
         this.sensorManager=(SensorManager) getSystemService(SENSOR_SERVICE);
         sensor_pulse=sensorManager.getDefaultSensor(Sensor.TYPE_HEART_RATE);
-
         registerSensors();
+
+        //Db
+      //  Core.getInstance().setDaoSession((Core.getInstance().getDaoMaster().newSession()));
+
+
+
+
+
     }
 
 
   //    BUTTON MENU EVENT
     public void click_voiceRecongnition(View view)
     {
+
+        //fragmentHome.setSeverity("sever",3);
+
         displaySpeechRecognizer();
 
     }
@@ -79,10 +107,6 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
     {
         displayFragmentSettings();
     }
-
-
-
-
 
     //UPDATE VIEW IN FRAGMENT
     private void updatePulseDisplay(String value)
@@ -106,7 +130,9 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
         //change the current fragment
         displayFragmentHome(value);
         //process event by magpie
-        processPulseEvent(value);
+        //get the timestamp
+        long timestamp=System.currentTimeMillis();
+        processEvent(value,"glucose",timestamp);
     }
 
 
@@ -164,6 +190,7 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
         super.onActivityResult(requestCode, resultCode, data);
     }
 
+
     //display the different fragment
 
     private void displayFragment_addGlucose()
@@ -199,6 +226,14 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
     @Override
     public void onEnvironmentConnected() {
 
+        //Java rules
+        MagpieAgent behaviorAgent = new MagpieAgent("priority_agent", Services.LOGIC_TUPLE);
+        PriorityBehaviorAgentMind behaviorMind = new PriorityBehaviorAgentMind();
+        behaviorMind.addBehavior(new PulseBehaviour(this, behaviorAgent, 1));
+
+        behaviorAgent.setMind(behaviorMind);
+        registerAgent(behaviorAgent);
+
     }
 
     @Override
@@ -207,13 +242,12 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
     }
 
     //PROCESS EVENT WITH MAGPIE
-    public void processGlucose(String value)
-    {
 
-    }
-    public void processPulseEvent(String value)
+    public void processEvent(String value, String type, long timeStamp)
     {
-
+        LogicTupleEvent lte = new LogicTupleEvent(type, value);
+        lte.setTimestamp(timeStamp);
+        sendEvent(lte);
     }
     //------------SENSORS METHODE--------------
 
@@ -233,19 +267,25 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
         {   //handle heart event
             case Sensor.TYPE_HEART_RATE :
                 //return if the watch is charging ==bad balue
-                if (Lib.isPhonePluggedIn(this))
-                    return;
+//                if (Lib.isPhonePluggedIn(this))
+//                    return;
 
-                String value=sensorEvent.values[0]+"";
+                String value=((int)sensorEvent.values[0])+"";
                 updatePulseDisplay(value);
-                processPulseEvent(value);
+                long timeStamp=System.currentTimeMillis();
+                processEvent(value,"pulse",timeStamp);
 
                 break;
         }
     }
+
+    public FragmentHome getFragmentHome()
+    {
+        return this.fragmentHome;
+    }
     @Override
     public void onAccuracyChanged(Sensor sensor, int i) {
-        Toast.makeText(this, i+"", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, i+"", Toast.LENGTH_SHORT).show();
 
         if (sensor.getType()==Sensor.TYPE_HEART_RATE)
         {
@@ -260,10 +300,12 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
                 return;
             }
         }
-
     }
-//    @Override
+
+    //    @Override
 //    protected void onSaveInstanceState(Bundle outState) {
 //        //No call for super(). Bug on API Level > 11.
 //    }
+
+
 }

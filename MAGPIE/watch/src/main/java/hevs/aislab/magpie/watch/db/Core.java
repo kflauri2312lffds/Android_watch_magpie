@@ -20,6 +20,15 @@ public class Core {
     private DaoMaster daoMaster;
     private DaoSession daoSession;
 
+    public static void setInstance(Core instance) {
+        Core.instance = instance;
+    }
+
+
+
+
+
+
 
     private Core() {}
 
@@ -62,4 +71,5 @@ public class Core {
     public void setDaoSession(DaoSession daoSession) {
         this.daoSession = daoSession;
     }
+
 }
