@@ -1,5 +1,6 @@
 package hevs.aislab.magpie.watch;
 
+import android.app.DialogFragment;
 import android.hardware.SensorManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -28,6 +29,7 @@ import ch.hevs.aislab.magpie.event.LogicTupleEvent;
 import ch.hevs.aislab.magpie.support.Rule;
 import hevs.aislab.magpie.watch.agents.PulseBehaviour;
 import hevs.aislab.magpie.watch.db.Core;
+import hevs.aislab.magpie.watch.gui.DialogFragmentSetGlucose;
 import hevs.aislab.magpie.watch.gui.FragmentAddGlucose;
 import hevs.aislab.magpie.watch.gui.FragmentHome;
 import hevs.aislab.magpie.watch.gui.FragmentSettings;
@@ -133,6 +135,23 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
         //get the timestamp
         long timestamp=System.currentTimeMillis();
         processEvent(value,"glucose",timestamp);
+    }
+
+    //BUTTON to set value manually
+    public void click_setGlucose(View view)
+    {
+        FragmentManager fm = getSupportFragmentManager();
+        DialogFragmentSetGlucose myDialogFragment = new DialogFragmentSetGlucose();
+        myDialogFragment.show(fm,"tag");
+
+    }
+    public void click_setWeight(View view)
+    {
+
+    }
+    public void click_setPressure(View view)
+    {
+
     }
 
 

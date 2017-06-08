@@ -7,8 +7,10 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/img_severity_glucose"
+    <ImageButton
+        android:background="@null"
+        android:scaleType="fitXY"
+        android:id="@+id/img_severity_step"
         style="@style/img_status"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
@@ -18,14 +20,16 @@
         android:layout_weight="1"
         android:src="@drawable/step_lv0"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.959"
+        app:layout_constraintHorizontal_bias="0.86"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.75" />
+        app:layout_constraintVertical_bias="0.73" />
 
-    <ImageView
-        android:id="@+id/imageView5"
+    <ImageButton
+        android:background="@null"
+        android:scaleType="fitXY"
+        android:id="@+id/img_severity_pressure"
         style="@style/img_status"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
@@ -41,41 +45,42 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.72" />
 
-    <ImageView
-        android:id="@+id/imageView4"
+    <ImageButton
+        android:id="@+id/img_severity_glucose"
         style="@style/img_status"
-        android:layout_width="64dp"
-        android:layout_height="73dp"
+        android:layout_marginBottom="0dp"
         android:layout_marginEnd="8dp"
-        android:layout_weight="1"
-        android:src="@drawable/glucose_lv0"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="8dp"
         android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_weight="1"
+        android:background="@null"
+        android:onClick="click_setGlucose"
+        android:scaleType="fitXY"
+        android:src="@drawable/glucose_lv0"
+        app:layout_constraintBottom_toBottomOf="@+id/img_severity_weight"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        app:layout_constraintHorizontal_bias="0.57" />
+        app:layout_constraintTop_toTopOf="@+id/img_severity_weight"
+        app:layout_constraintVertical_bias="1.0" />
 
-    <ImageView
+    <ImageButton
+        android:background="@null"
+        android:scaleType="fitXY"
         android:id="@+id/img_severity_pulse"
         style="@style/img_status"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="0dp"
         android:layout_marginRight="9dp"
         android:layout_marginTop="8dp"
         android:layout_weight="1"
         android:src="@drawable/pulse_lv0"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.12"
+        app:layout_constraintBottom_toBottomOf="@+id/img_severity_glucose"
+        app:layout_constraintHorizontal_bias="0.163"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toTopOf="@+id/img_severity_glucose" />
 
     <TextView
         android:id="@+id/txtView_pulseValue"
@@ -91,8 +96,7 @@
         app:layout_constraintLeft_toLeftOf="@+id/img_severity_pulse"
         app:layout_constraintRight_toRightOf="@+id/img_severity_pulse"
         app:layout_constraintTop_toTopOf="@+id/img_severity_pulse"
-        app:layout_constraintHorizontal_bias="0.48"
-        app:layout_constraintVertical_bias="0.52" />
+        app:layout_constraintHorizontal_bias="0.47" />
 
     <TextView
         android:id="@+id/txtView_GlucoseValue"
@@ -101,16 +105,17 @@
         android:layout_height="wrap_content"
         android:text="/"
         android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="@+id/imageView4"
+        app:layout_constraintLeft_toLeftOf="@+id/img_severity_glucose"
         android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="@+id/imageView4"
-        app:layout_constraintTop_toTopOf="@+id/imageView4"
+        app:layout_constraintRight_toRightOf="@+id/img_severity_glucose"
+        app:layout_constraintTop_toTopOf="@+id/img_severity_glucose"
         android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView4"
+        app:layout_constraintBottom_toBottomOf="@+id/img_severity_glucose"
         android:layout_marginBottom="8dp" />
 
-    <ImageView
-        android:id="@+id/imageView3"
+    <ImageButton
+        android:scaleType="fitXY"
+        android:id="@+id/img_severity_weight"
         style="@style/img_status"
         android:layout_marginBottom="16dp"
         android:layout_marginEnd="8dp"
@@ -118,15 +123,14 @@
         android:layout_marginRight="0dp"
         android:layout_marginTop="8dp"
         android:layout_weight="1"
+        android:background="@null"
         android:src="@drawable/weight_lv0"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.98"
+        app:layout_constraintHorizontal_bias="0.843"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        android:layout_height="57dp"
-        android:layout_width="49dp" />
+        app:layout_constraintVertical_bias="0.07999998" />
 
     <TextView
         android:id="@+id/textView5"
@@ -153,11 +157,11 @@
         android:layout_marginTop="8dp"
         android:text="99"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.88"
+        app:layout_constraintHorizontal_bias="0.78"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.13" />
+        app:layout_constraintVertical_bias="0.17000002" />
 
     <TextView
         android:id="@+id/textView11"
@@ -170,11 +174,11 @@
         android:layout_marginTop="8dp"
         android:text="120"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.821"
+        app:layout_constraintHorizontal_bias="0.76"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.98" />
+        app:layout_constraintVertical_bias="0.96" />
 
     <TextView
         android:id="@+id/textView9"

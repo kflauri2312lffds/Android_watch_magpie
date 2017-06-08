@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -26,7 +27,7 @@ public class FragmentHome extends Fragment {
     private TextView txtViewPulse;
     private TextView txtViewGlucose;
     private ImageView imgSeverity_glucose;
-    private ImageView imgSeverity_pulse;
+    private ImageButton imgSeverity_pulse;
     View view;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -39,7 +40,9 @@ public class FragmentHome extends Fragment {
         txtViewGlucose=(TextView)view.findViewById(R.id.txtView_GlucoseValue);
         txtViewPulse=(TextView)view.findViewById(R.id.txtView_pulseValue);
         imgSeverity_glucose=(ImageView)view.findViewById(R.id.img_severity_glucose);
-        imgSeverity_pulse=(ImageView)view.findViewById(R.id.img_severity_pulse);
+        imgSeverity_pulse=(ImageButton) view.findViewById(R.id.img_severity_pulse);
+
+
 
         //retrive data from the bundle and set it to texte view
         Bundle bundle=this.getArguments();
