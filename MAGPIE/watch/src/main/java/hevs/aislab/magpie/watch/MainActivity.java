@@ -44,12 +44,12 @@ public class MainActivity extends Activity {
        {
             createFirstRules();
             PrefAccessor.getInstance().save(this,"first",true);
+
         }
 
 
 
     }
-
     // if user has set the permission, we change the activity
     @Override
     protected void onResume() {

@@ -6,7 +6,13 @@ import hevs.aislab.magpie.watch.models.DaoMaster;
 import hevs.aislab.magpie.watch.models.DaoSession;
 
 /**
- * Created by teuft on 31.05.2017.
+ * This class is used to initiliaze the the DB & the ORM GreenDAO. Initialize it directly in the your first activity.
+ * To initi the database in an activity, do the following method:
+ *
+ *           Core.getInstance().setHelper(new DaoMaster.DevOpenHelper(this,"{nameOfYourDB}",null));
+ *           Core.getInstance().setDb(Core.getInstance().getHelper().getWritableDatabase());
+ *           Core.getInstance().setDaoMaster(new DaoMaster(Core.getInstance().getDb()));
+ *           Core.getInstance().setDaoSession( (Core.getInstance().getDaoMaster().newSession()));
  */
 
 
@@ -23,11 +29,6 @@ public class Core {
     public static void setInstance(Core instance) {
         Core.instance = instance;
     }
-
-
-
-
-
 
 
     private Core() {}

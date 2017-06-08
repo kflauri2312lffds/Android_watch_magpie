@@ -7,7 +7,7 @@ package hevs.aislab.magpie.watch.repository;
 public class MeasuresRepository {
 
     public static MeasuresRepository INSTANCE;
-    
+
     private MeasuresRepository ()
     {
 

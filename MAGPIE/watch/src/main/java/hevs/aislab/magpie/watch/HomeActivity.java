@@ -10,6 +10,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
+import android.support.wearable.view.BoxInsetLayout;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -79,11 +80,6 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
 
         //Db
       //  Core.getInstance().setDaoSession((Core.getInstance().getDaoMaster().newSession()));
-
-
-
-
-
     }
 
 
@@ -116,6 +112,10 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    public void click_alert(View view)
+    {
+        //TODO : DISPLAY THE ALERT FRAGMENT
     }
 
     //-------------------ON CLICK HANDLER--------------------

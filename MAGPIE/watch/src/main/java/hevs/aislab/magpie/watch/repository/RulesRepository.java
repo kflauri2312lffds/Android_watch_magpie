@@ -62,6 +62,7 @@ public class RulesRepository {
     }
 
 
+
     public void insert(Rules rule)
     {
         rulesDao.insert(rule);

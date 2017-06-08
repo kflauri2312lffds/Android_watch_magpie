@@ -9,9 +9,9 @@ import org.greenrobot.greendao.annotation.Generated;
  * Created by teuft on 31.05.2017.
  */
 
-/*
+/**
 *
-* Represent a measure that has been taken, like the pulse, glucose level.
+* Entity that represent a measure that has been taken, like the pulse, glucose level.
 * */
 @Entity(
         nameInDb = "Measures"

@@ -10,12 +10,17 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
+
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@android:style/Theme.DeviceDefault"
         tools:replace="android:theme">
+        <!-- SET THE STANDALONE VALUES TO TRUE !-->
+        <meta-data
+            android:name="com.google.android.wearable.standalone"
+            android:value="true" />
         <uses-library
             android:name="com.google.android.wearable"
             android:required="false" />

@@ -35,7 +35,6 @@ public class PulseBehaviour extends Behavior {
 
         List<Rules>pulseRules= RulesRepository.getInstance().getByCategory("pulse");
 
-
         for (final Rules aRules : pulseRules)
         {
             Log.d("foreachTestValue:",value+"");
