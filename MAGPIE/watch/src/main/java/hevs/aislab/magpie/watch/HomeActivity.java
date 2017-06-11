@@ -1,24 +1,17 @@
 package hevs.aislab.magpie.watch;
 
-import android.app.DialogFragment;
 import android.hardware.SensorManager;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
-import android.support.wearable.view.BoxInsetLayout;
 import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import ch.hevs.aislab.magpie.agent.MagpieAgent;
@@ -26,18 +19,12 @@ import ch.hevs.aislab.magpie.android.MagpieActivityWatch;
 import ch.hevs.aislab.magpie.behavior.PriorityBehaviorAgentMind;
 import ch.hevs.aislab.magpie.environment.Services;
 import ch.hevs.aislab.magpie.event.LogicTupleEvent;
-import ch.hevs.aislab.magpie.support.Rule;
 import hevs.aislab.magpie.watch.agents.PulseBehaviour;
-import hevs.aislab.magpie.watch.db.Core;
-import hevs.aislab.magpie.watch.gui.DialogFragmentSetGlucose;
-import hevs.aislab.magpie.watch.gui.FragmentAddGlucose;
+import hevs.aislab.magpie.watch.gui.dialogfragment.DialogFragmentSetValue;
+import hevs.aislab.magpie.watch.gui.dialogfragment.DialogFragmentSetGlucose;
 import hevs.aislab.magpie.watch.gui.FragmentHome;
 import hevs.aislab.magpie.watch.gui.FragmentSettings;
 import hevs.aislab.magpie.watch.libs.Lib;
-import hevs.aislab.magpie.watch.models.DaoSession;
-import hevs.aislab.magpie.watch.models.Rules;
-import hevs.aislab.magpie.watch.models.RulesDao;
-import hevs.aislab.magpie.watch.repository.RulesRepository;
 
 /**
  * Created by teuft on 31.05.2017.
@@ -45,7 +32,7 @@ import hevs.aislab.magpie.watch.repository.RulesRepository;
  */
 
 //implement the listener for the sensors
-public class HomeActivity extends MagpieActivityWatch implements SensorEventListener {
+public class HomeActivity extends MagpieActivityWatch implements SensorEventListener,DialogFragmentSetValue.IdialogToActivity {
 
 
 
@@ -55,7 +42,6 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
 
     //fragment
     private FragmentHome fragmentHome;
-    private FragmentAddGlucose fragmentAddGlucose;
     private FragmentSettings fragmentSettings;
 
     //sensors
@@ -90,8 +76,7 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
     {
 
         //fragmentHome.setSeverity("sever",3);
-
-        displaySpeechRecognizer();
+         displaySpeechRecognizer();
 
     }
 
@@ -105,39 +90,29 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
     {
         displayFragmentSettings();
     }
-
     //UPDATE VIEW IN FRAGMENT
-    private void updatePulseDisplay(String value)
-    {
-        try {
-            fragmentHome.setPulseValue(value);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+
     public void click_alert(View view)
     {
         //TODO : DISPLAY THE ALERT FRAGMENT
     }
 
-    //-------------------ON CLICK HANDLER--------------------
-    /* theses methodes will handle the activity and fragment on click*/
+    //------------------METHODE TO PROCESS VALUE FROM THE DIALOG FRAGMENT---------------------
 
-    //get back the value of the glucose directly in home view
-    public void click_sendGlucoseLevel(View view )
-    {
-        //get the value from the editText
-        EditText editText=(EditText) findViewById(R.id.edit_text_add_glucose);
-        String value=editText.getText().toString();
-        //change the current fragment
-        displayFragmentHome(value);
-        //process event by magpie
-        //get the timestamp
-        long timestamp=System.currentTimeMillis();
-        processEvent(value,"glucose",timestamp);
+    @Override
+    public void sendValue(String category, String value) {
+        switch (category)
+        {
+            case Lib.CATEGORY_GLUCOSE:
+                //TODO SEND THE EVENT TO MAGPIE, NOT CHANGE THE VALUE HERE!
+                fragmentHome.setGlucoseValue(value);
+                break;
+        }
     }
 
-    //BUTTON to set value manually
+
+    //-------------------DIALOG FRAGMENT --------------------
+
     public void click_setGlucose(View view)
     {
         FragmentManager fm = getSupportFragmentManager();
@@ -153,8 +128,6 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
     {
 
     }
-
-
 
     //------------VOICE RECOGNITION HANDLER------------------
 
@@ -200,26 +173,12 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
                 }
             }
 
-
             else
             {
                 Toast.makeText(this, getString(R.string.voice_not_found), Toast.LENGTH_SHORT).show();
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
-    }
-
-
-    //display the different fragment
-
-    private void displayFragment_addGlucose()
-    {
-        this.manager= getSupportFragmentManager();
-        FragmentTransaction transaction = manager.beginTransaction();
-
-            fragmentAddGlucose=new FragmentAddGlucose();
-        transaction.replace(R.id.main_container, fragmentAddGlucose); // newInstance() is a static factory method.
-        transaction.commitAllowingStateLoss();
     }
 
     private void displayFragmentHome(String value)
@@ -289,8 +248,8 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
 //                if (Lib.isPhonePluggedIn(this))
 //                    return;
 
+                //Get the value and send it to magpie
                 String value=((int)sensorEvent.values[0])+"";
-                updatePulseDisplay(value);
                 long timeStamp=System.currentTimeMillis();
                 processEvent(value,"pulse",timeStamp);
 
@@ -320,6 +279,8 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
             }
         }
     }
+
+
 
     //    @Override
 //    protected void onSaveInstanceState(Bundle outState) {

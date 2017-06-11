@@ -37,35 +37,18 @@ public class PulseBehaviour extends Behavior {
 
         for (final Rules aRules : pulseRules)
         {
-            Log.d("foreachTestValue:",value+"");
-            Log.d("foreachTestMin:",aRules.getMinValue()+"");
-            Log.d("foreachTestMax:",aRules.getMaxValue()+"");
-
             if (value>=aRules.getMinValue() && value<aRules.getMaxValue())
             {
-
                 ((HomeActivity) getContext()).runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                       ((HomeActivity) getContext()).getFragmentHome().setSeverity(aRules.getCategory(),aRules.getSeverity());
+                        //set the value and the severity
+                        ((HomeActivity) getContext()).getFragmentHome().setSeverity(aRules.getCategory(),aRules.getSeverity());
+                        ((HomeActivity) getContext()).getFragmentHome().setPulseValue(((int)value)+"");
                     }
                 });
             }
         }
-
-
-//        if (value > 90) {
-//            ((MainActivity) getContext()).runOnUiThread(new Runnable() {
-//                @Override
-//                public void run() {
-//                    String name = getAgent().getName();
-//                    Toast.makeText(
-//                            getContext(),
-//                            "Agent '" + name + "' detected a high weight",
-//                            Toast.LENGTH_LONG).show();
-//                }
-//            });
-//        }
     }
 
     @Override

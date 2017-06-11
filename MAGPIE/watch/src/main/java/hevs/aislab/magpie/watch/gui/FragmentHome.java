@@ -52,15 +52,18 @@ public class FragmentHome extends Fragment {
         return view;
     }
 
-    public void setPulseValue(String value) throws Exception
+    public void setPulseValue(String value)
     {
+        if (txtViewPulse!=null)
         txtViewPulse.setText(value);
     }
 
-    public void setGlucoseValue(String value)throws Exception
+    public void setGlucoseValue(String value)
     {
+        if (txtViewGlucose!=null)
         txtViewGlucose.setText(value);
     }
+
     public void setSeverity(String category, int severity)
     {
         //TODO IF ELSE FOR THE SEVERITY
@@ -68,6 +71,8 @@ public class FragmentHome extends Fragment {
         img = getDrawable(category,severity);
         if (category.equals("pulse"))
         {
+            if (imgSeverity_pulse==null)
+                return;
             imgSeverity_pulse.setImageDrawable(img);
             return ;
         }
@@ -76,20 +81,9 @@ public class FragmentHome extends Fragment {
         {
 
         }
-
-        //event type : pulse, glucose
-
-
-
-
-
-
-
-
     }
 
     private Drawable getDrawable(String category,int severity) {
-
         //pulse_lv3
         Log.d("RessourceName",category+"_lv"+severity);
         Context context = view.getContext();
@@ -97,9 +91,5 @@ public class FragmentHome extends Fragment {
         int id = context.getResources().getIdentifier(category+"_lv"+severity, "drawable", context.getPackageName());
         Drawable img=ContextCompat.getDrawable(getContext(), id);
         return img;
-
-
     }
-
-
 }

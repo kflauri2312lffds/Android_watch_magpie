@@ -18,4 +18,5 @@
     <string name="hint_addglucose" translatable="false">Enter glucose</string>
     <string name="voice_incorrect" translatable="false">Value inserted is not correct. expected a number</string>
     <string name="glucose_level" translatable="false">enter glucose measure</string>
+    <string name="incorrect_value" translatable="false">incorrect value</string>
 </resources>

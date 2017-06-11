@@ -36,6 +36,7 @@
     <style name="edittxt" parent="txtView">
         <item name="android:textStyle"></item>
         <item name="android:textSize">18sp</item>
+        <item name="android:textColor">#000</item>
     </style>
 
     <!-- IMG STYLE !-->
@@ -50,7 +51,9 @@
         <item name="android:layout_height">55dp</item>
     </style>
 
-    <!-- image settings !-->
+
+
+
 
 
 
