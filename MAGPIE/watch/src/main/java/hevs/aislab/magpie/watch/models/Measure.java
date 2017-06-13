@@ -16,7 +16,8 @@ import org.greenrobot.greendao.annotation.Generated;
 @Entity(
         nameInDb = "Measures"
 )
-public class Measures {
+public class Measure {
+
     @Id(autoincrement = true)
     private Long id;
     @NotNull
@@ -24,24 +25,29 @@ public class Measures {
     @NotNull
     private double value;
     @NotNull
-    private int severity;
-    @NotNull
     private long timeStamp;
 
 
-    @Generated(hash = 697260422)
-    public Measures(Long id, @NotNull String category, double value, int severity,
-            long timeStamp) {
+
+
+
+
+    @Generated(hash = 1406889111)
+    public Measure(Long id, @NotNull String category, double value, long timeStamp) {
         this.id = id;
         this.category = category;
         this.value = value;
-        this.severity = severity;
         this.timeStamp = timeStamp;
     }
 
-    @Generated(hash = 1445040170)
-    public Measures() {
+    @Generated(hash = 1840334633)
+    public Measure() {
     }
+
+
+
+
+
 
     public Long getId() {
         return id;
@@ -75,11 +81,5 @@ public class Measures {
         this.timeStamp = timeStamp;
     }
 
-    public int getSeverity() {
-        return severity;
-    }
 
-    public void setSeverity(int severity) {
-        this.severity = severity;
-    }
 }

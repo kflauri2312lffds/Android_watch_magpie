@@ -126,11 +126,11 @@
         android:background="@null"
         android:src="@drawable/weight_lv0"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.843"
+        app:layout_constraintHorizontal_bias="0.81"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.07999998" />
+        app:layout_constraintVertical_bias="0.24000001" />
 
     <TextView
         android:id="@+id/textView5"
@@ -156,12 +156,12 @@
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
         android:text="99"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.78"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.17000002" />
+        app:layout_constraintBottom_toBottomOf="@+id/img_severity_weight"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintLeft_toLeftOf="@+id/img_severity_weight"
+        app:layout_constraintRight_toRightOf="@+id/img_severity_weight"
+        app:layout_constraintTop_toTopOf="@+id/img_severity_weight"
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:id="@+id/textView11"

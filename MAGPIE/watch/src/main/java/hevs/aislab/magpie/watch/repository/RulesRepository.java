@@ -1,11 +1,12 @@
 package hevs.aislab.magpie.watch.repository;
 
+import android.database.sqlite.SQLiteConstraintException;
+
 import java.util.List;
 
-import ch.hevs.aislab.magpie.support.Rule;
 import hevs.aislab.magpie.watch.db.Core;
-import hevs.aislab.magpie.watch.models.Rules;
-import hevs.aislab.magpie.watch.models.RulesDao;
+import hevs.aislab.magpie.watch.models.CustomRules;
+import hevs.aislab.magpie.watch.models.CustomRulesDao;
 
 /**
  * Created by teuft on 05.06.2017.
@@ -15,26 +16,26 @@ public class RulesRepository {
 
     public static RulesRepository INSTANCE;
 
-    RulesDao rulesDao;
+    CustomRulesDao rulesDao;
 
-    private RulesRepository(RulesDao rulesDao) {
+    private RulesRepository(CustomRulesDao rulesDao) {
         this.rulesDao = rulesDao;
     }
 
-    ;
+
 
 
     public static RulesRepository getInstance() {
         if (INSTANCE == null) {
-            INSTANCE = new RulesRepository(Core.getInstance().getDaoSession().getRulesDao());
+            INSTANCE = new RulesRepository(Core.getInstance().getDaoSession().getCustomRulesDao());
         }
         return INSTANCE;
     }
 
-    public Rules getById(long id) {
-        List<Rules> rules = rulesDao.queryBuilder()
-                .where(RulesDao.Properties.Id.eq(id))
-                .orderAsc(RulesDao.Properties.Id)
+    public CustomRules getById(long id) {
+        List<CustomRules> rules = rulesDao.queryBuilder()
+                .where(CustomRulesDao.Properties.Id.eq(id))
+                .orderAsc(CustomRulesDao.Properties.Id)
                 .list();
 
         if (rules.size() == 0)
@@ -42,19 +43,20 @@ public class RulesRepository {
         return rules.get(0);
     }
 
-    public List<Rules>getAllRules()
+    public List<CustomRules>getAllRules()
     {
-        List<Rules> rules = rulesDao.queryBuilder()
+        List<CustomRules> rules = rulesDao.queryBuilder()
                 .list();
         if (rules.size()==0)
             return null;
         return rules;
     }
 
-    public List<Rules>getByCategory(String category)
+    public List<CustomRules>getByCategory(String category)
     {
-        List<Rules> rules = rulesDao.queryBuilder()
-                .where(RulesDao.Properties.Category.eq(category))
+
+        List<CustomRules> rules = rulesDao.queryBuilder()
+                .where(CustomRulesDao.Properties.Category.eq(category))
                 .list();
         if (rules.size()==0)
             return null;
@@ -63,24 +65,31 @@ public class RulesRepository {
 
 
 
-    public void insert(Rules rule)
+    public void insert(CustomRules rule)
     {
-        rulesDao.insert(rule);
+        try
+        {
+            rulesDao.insert(rule);
+        }
+        catch (SQLiteConstraintException ex)
+        {
+            ex.printStackTrace();
+        }
     }
 
-    public void delete(Rules rules)
+    public void delete(CustomRules rule)
     {
-        rulesDao.delete(rules);
+        rulesDao.delete(rule);
     }
 
     public void delete(long id)
     {
         rulesDao.deleteByKey(id);
     }
-    public void updateOrCreate(Rules rule)
+    public void updateOrCreate(CustomRules rule)
     {
         rulesDao.save(rule);
-
     }
+
 
 }

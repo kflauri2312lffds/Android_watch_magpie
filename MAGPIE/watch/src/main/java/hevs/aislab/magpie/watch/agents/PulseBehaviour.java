@@ -1,8 +1,6 @@
 package hevs.aislab.magpie.watch.agents;
 
 import android.content.Context;
-import android.util.Log;
-import android.widget.Toast;
 
 import java.util.List;
 
@@ -11,8 +9,7 @@ import ch.hevs.aislab.magpie.behavior.Behavior;
 import ch.hevs.aislab.magpie.event.LogicTupleEvent;
 import ch.hevs.aislab.magpie.event.MagpieEvent;
 import hevs.aislab.magpie.watch.HomeActivity;
-import hevs.aislab.magpie.watch.MainActivity;
-import hevs.aislab.magpie.watch.models.Rules;
+import hevs.aislab.magpie.watch.models.CustomRules;
 import hevs.aislab.magpie.watch.repository.RulesRepository;
 
 /**
@@ -33,22 +30,22 @@ public class PulseBehaviour extends Behavior {
         final double value = Long.parseLong(lte.getArguments().get(0));
 
 
-        List<Rules>pulseRules= RulesRepository.getInstance().getByCategory("pulse");
-
-        for (final Rules aRules : pulseRules)
-        {
-            if (value>=aRules.getMinValue() && value<aRules.getMaxValue())
-            {
-                ((HomeActivity) getContext()).runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        //set the value and the severity
-                        ((HomeActivity) getContext()).getFragmentHome().setSeverity(aRules.getCategory(),aRules.getSeverity());
-                        ((HomeActivity) getContext()).getFragmentHome().setPulseValue(((int)value)+"");
-                    }
-                });
-            }
-        }
+//        List<CustomRules>pulseRules= RulesRepository.getInstance().getByCategory("pulse");
+//
+//        for (final CustomRules aRule : pulseRules)
+//        {
+//            if (value>= aRule.getMinValue() && value< aRule.getMaxValue())
+//            {
+//                ((HomeActivity) getContext()).runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        //set the value and the severity
+//                        ((HomeActivity) getContext()).getFragmentHome().setSeverity(aRule.getCategory(), aRule.getSeverity());
+//                        ((HomeActivity) getContext()).getFragmentHome().setPulseValue(((int)value)+"");
+//                    }
+//                });
+//            }
+//        }
     }
 
     @Override
