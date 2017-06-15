@@ -29,13 +29,15 @@ public class MeasuresRepository {
         return INSTANCE;
     }
 
-    public void getByCategoryWhereTimeStampBetween(String category, long startTimeStamp, long endTimeStamp)
+    public List<Measure> getByCategoryWhereTimeStampBetween(String category, long startTimeStamp, long endTimeStamp)
     {
-        List<Measure>measures=measuresDao.queryBuilder()
+       return measuresDao.queryBuilder()
                 .where(MeasureDao.Properties.Category.eq(category))
                 .where(MeasureDao.Properties.TimeStamp.between(startTimeStamp,endTimeStamp))
+               .orderDesc(MeasureDao.Properties.TimeStamp)
                 .list();
     }
+
     public void insert(Measure measure)
     {
         measuresDao.insert(measure);
@@ -46,6 +48,21 @@ public class MeasuresRepository {
                 .where(MeasureDao.Properties.Id.eq(id))
                 .orderAsc(MeasureDao.Properties.Id)
                 .unique();
+    }
 
+    /**
+     * Get all measure in the database
+     * @return List<Measure>
+     */
+    public List<Measure>getAll()
+    {
+        return measuresDao.queryBuilder()
+                .list();
+    }
+    public List<Measure>getByCategory(String category)
+    {
+        return measuresDao.queryBuilder()
+                .where(MeasureDao.Properties.Category.eq(category))
+                .list();
     }
 }

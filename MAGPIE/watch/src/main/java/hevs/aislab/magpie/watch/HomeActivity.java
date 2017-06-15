@@ -19,12 +19,15 @@ import ch.hevs.aislab.magpie.android.MagpieActivityWatch;
 import ch.hevs.aislab.magpie.behavior.PriorityBehaviorAgentMind;
 import ch.hevs.aislab.magpie.environment.Services;
 import ch.hevs.aislab.magpie.event.LogicTupleEvent;
+import hevs.aislab.magpie.watch.agents.GlucoseBehaviour;
 import hevs.aislab.magpie.watch.agents.PulseBehaviour;
 import hevs.aislab.magpie.watch.gui.dialogfragment.DialogFragmentSetValue;
 import hevs.aislab.magpie.watch.gui.dialogfragment.DialogFragmentSetGlucose;
 import hevs.aislab.magpie.watch.gui.FragmentHome;
 import hevs.aislab.magpie.watch.gui.FragmentSettings;
 import hevs.aislab.magpie.watch.libs.Lib;
+import hevs.aislab.magpie.watch.models.Measure;
+import hevs.aislab.magpie.watch.repository.MeasuresRepository;
 
 /**
  * Created by teuft on 31.05.2017.
@@ -99,20 +102,30 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
 
     //------------------METHODE TO PROCESS VALUE FROM THE DIALOG FRAGMENT---------------------
 
+
+    /**
+     *
+     * Used by the dialog fragment to communicate with the activity.
+     * @param category
+     * @param value
+     */
     @Override
-    public void sendValue(String category, String value) {
-        switch (category)
-        {
-            case Lib.CATEGORY_GLUCOSE:
-                //TODO SEND THE EVENT TO MAGPIE, NOT CHANGE THE VALUE HERE!
-                fragmentHome.setGlucoseValue(value);
-                break;
-        }
+    public void sendValue(String category, String ... value) {
+
+
+                processEvent(System.currentTimeMillis(),category,value);
+
+
     }
 
 
     //-------------------DIALOG FRAGMENT --------------------
 
+    /**
+     *
+     * Open the dialog fragment glucose. Then, user will be able to add new glucose value.
+     * @param view
+     */
     public void click_setGlucose(View view)
     {
         FragmentManager fm = getSupportFragmentManager();
@@ -208,6 +221,7 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
         MagpieAgent behaviorAgent = new MagpieAgent("priority_agent", Services.LOGIC_TUPLE);
         PriorityBehaviorAgentMind behaviorMind = new PriorityBehaviorAgentMind();
         behaviorMind.addBehavior(new PulseBehaviour(this, behaviorAgent, 1));
+        behaviorMind.addBehavior(new GlucoseBehaviour(this,behaviorAgent,1));
 
         behaviorAgent.setMind(behaviorMind);
         registerAgent(behaviorAgent);
@@ -221,11 +235,17 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
 
     //PROCESS EVENT WITH MAGPIE
 
-    public void processEvent(String value, String type, long timeStamp)
+    public void processEvent(long timeStamp, String type, String ... value )
     {
         LogicTupleEvent lte = new LogicTupleEvent(type, value);
+
         lte.setTimestamp(timeStamp);
         sendEvent(lte);
+    }
+
+    public void fuck(Object ... myint)
+    {
+
     }
     //------------SENSORS METHODE--------------
 
@@ -251,7 +271,15 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
                 //Get the value and send it to magpie
                 String value=((int)sensorEvent.values[0])+"";
                 long timeStamp=System.currentTimeMillis();
-                processEvent(value,"pulse",timeStamp);
+                try
+                {
+                    processEvent(timeStamp,"pulse",value);
+                }
+                catch (Exception ex)
+                {
+                    ex.printStackTrace();
+                }
+
 
                 break;
         }
@@ -287,5 +315,13 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
 //        //No call for super(). Bug on API Level > 11.
 //    }
 
+
+
+
+    //***************************************TESTE METHODE***************************
+    public void testShowAllMeasures()
+    {
+        Log.d("CallIN ","Activity");
+    }
 
 }

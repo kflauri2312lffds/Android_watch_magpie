@@ -1,10 +1,16 @@
 package hevs.aislab.magpie.watch.repository;
 
+import org.greenrobot.greendao.query.QueryBuilder;
+
 import java.util.List;
 
 import hevs.aislab.magpie.watch.db.Core;
+import hevs.aislab.magpie.watch.libs.Const;
 import hevs.aislab.magpie.watch.models.Alertes;
 import hevs.aislab.magpie.watch.models.AlertesDao;
+import hevs.aislab.magpie.watch.models.CustomRules;
+import hevs.aislab.magpie.watch.models.Measure;
+import hevs.aislab.magpie.watch.models.MeasureDao;
 
 /**
  * Created by teuft on 13.06.2017.
@@ -43,6 +49,24 @@ public class AlertRepository {
     {
         return  alertesDao.queryBuilder()
                 .list();
+    }
+
+    public List<Alertes>getAllByCategory(String category)
+    {
+        QueryBuilder<Alertes> queryBuilder = alertesDao.queryBuilder();
+        queryBuilder.join(AlertesDao.Properties.Measure_id,Measure.class)
+                .where(MeasureDao.Properties.Category.eq(category));
+        return queryBuilder.list();
+    }
+
+    public List<Alertes>getAllByCategoryBetweenTimeStamp(String category, long startTimeStamp, long endTimeStamp )
+    {
+        QueryBuilder<Alertes> queryBuilder = alertesDao.queryBuilder();
+        queryBuilder.join(AlertesDao.Properties.Measure_id,Measure.class)
+                .where(MeasureDao.Properties.Category.eq(category))
+                .where(MeasureDao.Properties.TimeStamp.between(startTimeStamp,endTimeStamp));
+        return queryBuilder.list();
+
     }
 
 

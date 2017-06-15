@@ -40,6 +40,8 @@ public class CustomRules {
 
     private String constraint_3;
 
+    private Long timeWindow;
+
     //RELATIONSHIP
     @ToMany(referencedJoinProperty = "rule_id")
     private List<Alertes> alertes;
@@ -51,10 +53,11 @@ public class CustomRules {
     private transient CustomRulesDao myDao;
 
 
-    @Generated(hash = 1128112798)
+    @Generated(hash = 1519990713)
     public CustomRules(Long id, @NotNull String category, Double val_1_min,
             Double val_1_max, Double val__2_min, Double val_2_max,
-            String constraint_1, String constraint_2, String constraint_3) {
+            String constraint_1, String constraint_2, String constraint_3,
+            Long timeWindow) {
         this.id = id;
         this.category = category;
         this.val_1_min = val_1_min;
@@ -64,6 +67,7 @@ public class CustomRules {
         this.constraint_1 = constraint_1;
         this.constraint_2 = constraint_2;
         this.constraint_3 = constraint_3;
+        this.timeWindow = timeWindow;
     }
 
     @Generated(hash = 922913921)
@@ -143,12 +147,13 @@ public class CustomRules {
         this.constraint_3 = constraint_3;
     }
 
-    public List<Alertes> getCustomRulesList() {
-        return alertes;
+
+    public Long getTimeWindow() {
+        return timeWindow;
     }
 
-    public void setCustomRulesList(List<Alertes> alertes) {
-        this.alertes = alertes;
+    public void setTimeWindow(Long timeWindow) {
+        this.timeWindow = timeWindow;
     }
 
     /**

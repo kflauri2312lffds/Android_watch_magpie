@@ -14,12 +14,12 @@ import android.widget.ImageButton;
 
 public abstract class DialogFragmentSetValue extends DialogFragment {
     /**
-     * This interface is designed to handle the commincation between the fragment and the activity.
+     * This interface is designed to handle the communication between the fragment and the activity.
      * Each dialog Fragment can now call methode from activity  described in the Inteface
      */
     public interface IdialogToActivity
     {
-        public void sendValue(String category, String value);
+         void sendValue(String category, String ... value);
     }
     protected View view;
     /**

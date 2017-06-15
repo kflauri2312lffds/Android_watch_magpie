@@ -52,16 +52,14 @@ public class RulesRepository {
         return rules;
     }
 
-    public List<CustomRules>getByCategory(String category)
+    public CustomRules getByCategory(String category)
     {
 
-        List<CustomRules> rules = rulesDao.queryBuilder()
+        return rulesDao.queryBuilder()
                 .where(CustomRulesDao.Properties.Category.eq(category))
-                .list();
-        if (rules.size()==0)
-            return null;
-        return rules;
+                .unique();
     }
+
 
 
 

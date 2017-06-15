@@ -10,11 +10,13 @@ import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 
-import java.util.ArrayList;
+import org.greenrobot.greendao.query.QueryBuilder;
+
 import java.util.List;
 
 import ch.hevs.aislab.magpie.support.Rule;
 import hevs.aislab.magpie.watch.db.Core;
+import hevs.aislab.magpie.watch.libs.Const;
 import hevs.aislab.magpie.watch.models.Alertes;
 import hevs.aislab.magpie.watch.models.CustomRules;
 import hevs.aislab.magpie.watch.models.DaoMaster;
@@ -35,6 +37,9 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        QueryBuilder.LOG_SQL = true;
+        QueryBuilder.LOG_VALUES = true;
+
         //initialize the data base
         initDB();
         askAllPermission();
@@ -42,15 +47,14 @@ public class MainActivity extends Activity {
         //test if it's the first time we open the apps
         boolean hasBeenInit=PrefAccessor.getInstance().getBoolean(this,"first");
 
+
        if (!hasBeenInit)
        {
-            createFirstRules();
-           // createFirstRules();
-            PrefAccessor.getInstance().save(this,"first",true);
-
+           PrefAccessor.getInstance().save(this,"first",true);
+           insertFirstRules();
        }
 
-        displayFirstData();
+
 
 
     }
@@ -107,25 +111,42 @@ public class MainActivity extends Activity {
             askAllPermission();
         }
     }
+    private void insertFirstRules()
+    {
+        //GLUCOSE RULES
+        CustomRules glucoseRules=new CustomRules();
+        glucoseRules.setCategory(Const.CATEGORY_GLUCOSE);
+
+        long timewindows= 1000*60*60*6;
+        glucoseRules.setTimeWindow(timewindows);
+        glucoseRules.setConstraint_1("Val1<=Val1Min");
+        glucoseRules.setConstraint_2("Val2>=Val2Max");
+        glucoseRules.setConstraint_3("Tev2>Tev1");
+        //SET THE VALUES
+        glucoseRules.setVal_1_min(3.8);
+        glucoseRules.setVal_2_max(8.0);
+
+        RulesRepository.getInstance().insert(glucoseRules);
+
+
+    }
     //methode used to create the first rules in our DB
-    public void createFirstRules()
+    public void testInsertDB()
     {
         CustomRules rule =new CustomRules();
         rule.setCategory("cat1");
         rule.setVal_1_max((double)2);
 
 
-            RulesRepository.getInstance().insert(rule);
-
-
+        RulesRepository.getInstance().insert(rule);
 
         CustomRules myRules=RulesRepository.getInstance().getById(1);
         Log.d("Affichage_BD rules",myRules.getCategory());
 
         Measure measure=new Measure();
-        measure.setCategory("cateMeasure");
+        measure.setCategory(Const.CATEGORY_GLUCOSE);
         measure.setTimeStamp(System.currentTimeMillis());
-        measure.setValue((double)33);
+        measure.setValue1((double)33);
 
         MeasuresRepository.getInstance().insert(measure);
 
@@ -145,13 +166,113 @@ public class MainActivity extends Activity {
     }
     private void displayFirstData()
     {
-        CustomRules myRules=RulesRepository.getInstance().getById(1);
-        Log.d("Affichage_BD rules",myRules.getCategory());
 
-        Measure myMeasure=MeasuresRepository.getInstance().getById(1);
-        Log.d("Affichage_BD measure",myMeasure.getCategory());
+    }
+    private void testBetween()
+    {
+        //create 2 values
+        Measure measure=new Measure();
+        measure.setTimeStamp(10);
+        measure.setCategory("cate");
+        measure.setValue1(1.0);
 
-        Alertes myAlert=AlertRepository.getINSTANCE().getByIdWithRelations(1);
-        Log.d("Affichage_BD alert",myAlert.getMeasure().getValue()+"");
+
+        Measure measure2=new Measure();
+        measure2.setTimeStamp(20);
+        measure2.setCategory("cate");
+        measure2.setValue1(1.0);
+
+
+        Measure measure3=new Measure();
+        measure3.setTimeStamp(30);
+        measure3.setCategory("cate");
+        measure3.setValue1(1.0);
+
+
+        Measure measure4=new Measure();
+        measure4.setTimeStamp(40);
+        measure4.setCategory("cate");
+        measure4.setValue1(1.0);
+
+        Measure measure5=new Measure();
+        measure5.setTimeStamp(50);
+        measure5.setCategory("cate");
+        measure5.setValue1(1.0);
+
+        Log.d("PassageDansMethode,","passageDansMethode");
+        MeasuresRepository.getInstance().insert(measure);
+        MeasuresRepository.getInstance().insert(measure2);
+        MeasuresRepository.getInstance().insert(measure3);
+        MeasuresRepository.getInstance().insert(measure4);
+        MeasuresRepository.getInstance().insert(measure5);
+
+        //affichage des resultats
+
+        List<Measure>list= MeasuresRepository.getInstance().getByCategoryWhereTimeStampBetween("cate",1,31);
+        Log.d("AffichageResult",list.size()+"");
+    }
+
+    public void testShowRelationRules()
+    {
+        CustomRules custRules=RulesRepository.getInstance().getByCategory(Const.CATEGORY_GLUCOSE);
+        Log.d("AffInMAINE",custRules.getCategory());
+    }
+    public void testAlertes()
+    {
+
+        List<Alertes>alertesList=AlertRepository.getINSTANCE().getAllByCategory(Const.CATEGORY_GLUCOSE);
+        Log.d("affichageAlertSize",alertesList.size()+"");
+
+
+    }
+    public void testBetweenALert()
+    {
+        //create 2 values
+        Measure measure=new Measure();
+        measure.setTimeStamp(10);
+        measure.setCategory(Const.CATEGORY_GLUCOSE);
+        measure.setValue1(1.0);
+
+
+        Measure measure2=new Measure();
+        measure2.setTimeStamp(20);
+        measure2.setCategory(Const.CATEGORY_GLUCOSE);
+        measure2.setValue1(1.0);
+
+
+        Measure measure3=new Measure();
+        measure3.setTimeStamp(30);
+        measure3.setCategory(Const.CATEGORY_GLUCOSE);
+        measure3.setValue1(1.0);
+
+
+        Measure measure4=new Measure();
+        measure4.setTimeStamp(40);
+        measure4.setCategory(Const.CATEGORY_GLUCOSE);
+        measure4.setValue1(1.0);
+
+
+        MeasuresRepository.getInstance().insert(measure);
+        MeasuresRepository.getInstance().insert(measure2);
+        MeasuresRepository.getInstance().insert(measure3);
+        MeasuresRepository.getInstance().insert(measure4);
+
+        //create the rules
+        CustomRules rule= RulesRepository.getInstance().getByCategory(Const.CATEGORY_GLUCOSE);
+
+        Alertes alertes=new Alertes();
+        alertes.setMeasure(measure);
+        AlertRepository.getINSTANCE().insert(alertes);
+
+
+        //now we teste the repository
+
+        //First one
+      List<Alertes> alertGood=  AlertRepository.getINSTANCE().getAllByCategoryBetweenTimeStamp(Const.CATEGORY_GLUCOSE,0,30);
+        List<Alertes>alertBGad=AlertRepository.getINSTANCE().getAllByCategoryBetweenTimeStamp(Const.CATEGORY_GLUCOSE,100,430);
+
+        Log.d("SHOWSITEOF_Correct",alertGood.size()+"");
+        Log.d("SHOWSITEOF_notCorrect",alertBGad.size()+"");
+
     }
 }
