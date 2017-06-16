@@ -7,9 +7,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import hevs.aislab.magpie.watch.R;
+import hevs.aislab.magpie.watch.libs.Const;
 
 /**
  * Created by teuft on 08.06.2017.
@@ -22,7 +24,7 @@ public class DialogFragmentSetGlucose extends DialogFragmentSetValue {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.dialogfragment_setglucose, //nomn du layout frag dialogue
+        View view = inflater.inflate(R.layout.dialogfragment_set1value, //Fragment that take only one value
                 container, false);
         this.view=view;
 
@@ -38,6 +40,10 @@ public class DialogFragmentSetGlucose extends DialogFragmentSetValue {
         createListenerCancelButton(cancel);
         createListenerSubmitButton(submit);
 
+        //set the value of the textView
+        TextView title=(TextView)view.findViewById(R.id.title_setvalue);
+        title.setText(getString(R.string.glucose_level));
+
         return view;
     }
 
@@ -52,7 +58,7 @@ public class DialogFragmentSetGlucose extends DialogFragmentSetValue {
                 try
                 {
                     double value=Double.parseDouble(txtValue.getText().toString());
-                    homeActivity.sendValue("glucose",value+"");
+                    homeActivity.sendValue(Const.CATEGORY_GLUCOSE,value+"");
                     dismiss();
                 }
                 catch (Exception ex)

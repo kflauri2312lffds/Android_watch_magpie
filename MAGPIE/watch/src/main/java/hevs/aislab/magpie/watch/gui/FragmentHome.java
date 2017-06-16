@@ -14,6 +14,8 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 import hevs.aislab.magpie.watch.R;
 
 /**
@@ -26,6 +28,9 @@ public class FragmentHome extends Fragment {
 
     private TextView txtViewPulse;
     private TextView txtViewGlucose;
+    private TextView txtViewSystol;
+    private TextView txtViewDiastol;
+
     private ImageView imgSeverity_glucose;
     private ImageButton imgSeverity_pulse;
     View view;
@@ -39,10 +44,13 @@ public class FragmentHome extends Fragment {
         //init graphical element
         txtViewGlucose=(TextView)view.findViewById(R.id.txtView_GlucoseValue);
         txtViewPulse=(TextView)view.findViewById(R.id.txtView_pulseValue);
+
+        txtViewSystol=(TextView)view.findViewById(R.id.txtView_systolValue);
+        txtViewDiastol=(TextView)view.findViewById(R.id.txtView_DiastolValue);
+
+
         imgSeverity_glucose=(ImageView)view.findViewById(R.id.img_severity_glucose);
         imgSeverity_pulse=(ImageButton) view.findViewById(R.id.img_severity_pulse);
-
-
 
         //retrive data from the bundle and set it to texte view
         Bundle bundle=this.getArguments();
@@ -52,17 +60,33 @@ public class FragmentHome extends Fragment {
         return view;
     }
 
+    public void setGlucoseValue(String value)
+    {
+        if (txtViewGlucose!=null)
+            txtViewGlucose.setText(value);
+    }
+
+    public void setSystolValue(String value)
+    {
+        if (txtViewDiastol!=null)
+            txtViewSystol.setText(value);
+    }
+
+    public void setDiastolValue(String value)
+    {
+        if (txtViewDiastol!=null)
+            txtViewDiastol.setText(value);
+    }
+
+
+
     public void setPulseValue(String value)
     {
         if (txtViewPulse!=null)
         txtViewPulse.setText(value);
     }
 
-    public void setGlucoseValue(String value)
-    {
-        if (txtViewGlucose!=null)
-        txtViewGlucose.setText(value);
-    }
+
 
     public void setSeverity(String category, int severity)
     {

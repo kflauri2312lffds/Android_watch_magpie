@@ -47,7 +47,7 @@
             app:layout_constraintVertical_bias="0.84" />
 
         <TextView
-            android:id="@+id/textView6"
+            android:id="@+id/title_setvalue"
             style="@style/txtView_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -55,13 +55,13 @@
             android:layout_marginLeft="5dp"
             android:layout_marginRight="8dp"
             android:layout_marginTop="4dp"
-            android:text="@string/glucose_level"
+            android:text="set value"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.318" />
+            app:layout_constraintVertical_bias="0.313" />
 
         <EditText
             android:id="@+id/edit_txt_value"

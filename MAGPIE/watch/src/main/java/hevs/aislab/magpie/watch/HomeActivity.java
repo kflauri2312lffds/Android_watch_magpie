@@ -20,11 +20,14 @@ import ch.hevs.aislab.magpie.behavior.PriorityBehaviorAgentMind;
 import ch.hevs.aislab.magpie.environment.Services;
 import ch.hevs.aislab.magpie.event.LogicTupleEvent;
 import hevs.aislab.magpie.watch.agents.GlucoseBehaviour;
+import hevs.aislab.magpie.watch.agents.PressureBehaviour;
 import hevs.aislab.magpie.watch.agents.PulseBehaviour;
+import hevs.aislab.magpie.watch.gui.dialogfragment.DialogFragmentSetPressure;
 import hevs.aislab.magpie.watch.gui.dialogfragment.DialogFragmentSetValue;
 import hevs.aislab.magpie.watch.gui.dialogfragment.DialogFragmentSetGlucose;
 import hevs.aislab.magpie.watch.gui.FragmentHome;
 import hevs.aislab.magpie.watch.gui.FragmentSettings;
+import hevs.aislab.magpie.watch.libs.Const;
 import hevs.aislab.magpie.watch.libs.Lib;
 import hevs.aislab.magpie.watch.models.Measure;
 import hevs.aislab.magpie.watch.repository.MeasuresRepository;
@@ -110,12 +113,10 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
      * @param value
      */
     @Override
-    public void sendValue(String category, String ... value) {
-
-
+    public void sendValue(String category, String ... value)
+    {
+                //we send the values directly to magpie methode
                 processEvent(System.currentTimeMillis(),category,value);
-
-
     }
 
 
@@ -139,6 +140,9 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
     }
     public void click_setPressure(View view)
     {
+        FragmentManager fm = getSupportFragmentManager();
+        DialogFragmentSetPressure myDialogFragment = new DialogFragmentSetPressure();
+        myDialogFragment.show(fm,"tag");
 
     }
 
@@ -156,43 +160,76 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
     protected void onActivityResult(int requestCode, int resultCode,
                                     Intent data) {
         if (requestCode == SPEECH_REQUEST_CODE && resultCode == RESULT_OK) {
-            List<String> results = data.getStringArrayListExtra(
-                    RecognizerIntent.EXTRA_RESULTS);
-            String spokenText = results.get(0).toLowerCase();
-
-            //replace eventual comma by "."
-           spokenText= spokenText.replace(",",".");
-
-
-            //create the possiblity and handle multi language
-            String glucose=getString(R.string.voice_glucose);
-            //split the texte spoken into an array
-            String []arraySpocken=spokenText.split(" ");
-
-            //ad the glucose by voice
-            if (arraySpocken[0].toLowerCase().equals(glucose))
-            {
-                //we set the value of the glucose
-                try
-                {
-                    //get the number. handle eventual null value or not number value, or the fact that the framgent is not fully charged
-                    double value=Double.parseDouble(arraySpocken[1]);
-                    fragmentHome.setGlucoseValue(value+"");
-
-                }
-                catch (Exception ex)
-                {
-                    Toast.makeText(this, getString(R.string.voice_incorrect), Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            else
-            {
-                Toast.makeText(this, getString(R.string.voice_not_found), Toast.LENGTH_SHORT).show();
-            }
+            handleVoiceEvent(data);
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
+    //DEFINE THE ACTION IN RESPONSE OF VOICE EVENT
+
+    private void handleVoiceEvent(Intent data) {
+        List<String> results = data.getStringArrayListExtra(
+                RecognizerIntent.EXTRA_RESULTS);
+        String spokenText = results.get(0).toLowerCase();
+        //replace eventual comma by "."
+        spokenText = spokenText.replace(",", ".");
+        String glucose = getString(R.string.voice_glucose);
+        //split the texte spoken into an array. The first value will be category, the second the value
+        String[] arraySpocken = spokenText.split(" ");
+
+        //ad the glucose by voice
+        if (arraySpocken[0].toLowerCase().equals(glucose))
+        {
+            if (arraySpocken.length >= 1)
+            {
+                voiceAction_addValue(Const.CATEGORY_GLUCOSE, arraySpocken[1]);
+                return;
+            }
+            // no number has been specified, so command is not complet
+            Toast.makeText(this, getString(R.string.voice_incomplet_number), Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        String pressure=getString(R.string.voice_pressure);
+        if (arraySpocken[0].toLowerCase().equals(pressure))
+        {
+            if (arraySpocken.length >= 3)
+            {
+                voiceAction_addValue( Const.CATEGORY_PRESSURE, arraySpocken[1],arraySpocken[3]);
+                return;
+            }
+            // no number has been specified, so command is not complet
+            Toast.makeText(this, getString(R.string.voice_incomplet_number), Toast.LENGTH_SHORT).show();
+            return;
+        }
+            Toast.makeText(this, getString(R.string.voice_not_found), Toast.LENGTH_SHORT).show();
+    }
+
+    private void voiceAction_addValue( String category, String ... rawvalue) {
+        //we set the value of the glucose
+        try
+        {
+            //get the number. handle eventual null value or not number value, or the fact that the framgent is not fully charged
+            double value[]=new double[rawvalue.length];
+            //try to cast all value into double. if it fails, we return passe in the exception
+            for (int k=0;k<value.length;k++)
+            {
+                value[k]=Double.parseDouble(rawvalue[k]);
+            }
+            processEvent(System.currentTimeMillis(), category,rawvalue);
+        }
+        catch (NumberFormatException ex)
+        {
+            ex.printStackTrace();
+            Toast.makeText(this, getString(R.string.voice_incorrect), Toast.LENGTH_SHORT).show();
+        }
+        catch (NullPointerException ex)
+        {
+            ex.printStackTrace();
+            Toast.makeText(this, "Error with the value inserted", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
 
     private void displayFragmentHome(String value)
     {
@@ -222,6 +259,8 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
         PriorityBehaviorAgentMind behaviorMind = new PriorityBehaviorAgentMind();
         behaviorMind.addBehavior(new PulseBehaviour(this, behaviorAgent, 1));
         behaviorMind.addBehavior(new GlucoseBehaviour(this,behaviorAgent,1));
+        behaviorMind.addBehavior(new PressureBehaviour(this,behaviorAgent,1));
+
 
         behaviorAgent.setMind(behaviorMind);
         registerAgent(behaviorAgent);
@@ -243,10 +282,7 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
         sendEvent(lte);
     }
 
-    public void fuck(Object ... myint)
-    {
 
-    }
     //------------SENSORS METHODE--------------
 
     private void registerSensors()
@@ -308,14 +344,10 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
         }
     }
 
-
-
     //    @Override
 //    protected void onSaveInstanceState(Bundle outState) {
 //        //No call for super(). Bug on API Level > 11.
 //    }
-
-
 
 
     //***************************************TESTE METHODE***************************

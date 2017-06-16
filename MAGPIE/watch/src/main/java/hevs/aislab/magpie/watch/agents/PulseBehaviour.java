@@ -2,15 +2,13 @@ package hevs.aislab.magpie.watch.agents;
 
 import android.content.Context;
 
-import java.util.List;
-
 import ch.hevs.aislab.magpie.agent.MagpieAgent;
 import ch.hevs.aislab.magpie.behavior.Behavior;
 import ch.hevs.aislab.magpie.event.LogicTupleEvent;
 import ch.hevs.aislab.magpie.event.MagpieEvent;
 import hevs.aislab.magpie.watch.HomeActivity;
-import hevs.aislab.magpie.watch.models.CustomRules;
-import hevs.aislab.magpie.watch.repository.RulesRepository;
+import hevs.aislab.magpie.watch.libs.Const;
+import hevs.aislab.magpie.watch.threads.DisplayGUI;
 
 /**
  * Created by teuft on 05.06.2017.
@@ -46,11 +44,14 @@ public class PulseBehaviour extends Behavior {
 //                });
 //            }
 //        }
+
+
+
     }
 
     @Override
     public boolean isTriggered(MagpieEvent event) {
         LogicTupleEvent condition = (LogicTupleEvent) event;
-        return condition.getName().equals("pulse");
+        return condition.getName().equals(Const.CATEGORY_PULSE);
     }
 }

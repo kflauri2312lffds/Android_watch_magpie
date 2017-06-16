@@ -19,4 +19,9 @@
     <string name="voice_incorrect" translatable="false">Value inserted is not correct. expected a number</string>
     <string name="glucose_level" translatable="false">enter glucose measure</string>
     <string name="incorrect_value" translatable="false">incorrect value</string>
+    <string name="voice_incomplet_number" translatable="false">Incomplet command, expected a number</string>
+    <string name="systol" translatable="false">systol</string>
+    <string name="diastol" translatable="false">diastol</string>
+    <string name="pressure_level" translatable="false">enter pressure leve</string>
+    <string name="voice_pressure" translatable="false">pression</string>
 </resources>

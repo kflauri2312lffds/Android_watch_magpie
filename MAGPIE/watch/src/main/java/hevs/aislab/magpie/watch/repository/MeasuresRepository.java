@@ -31,10 +31,11 @@ public class MeasuresRepository {
 
     public List<Measure> getByCategoryWhereTimeStampBetween(String category, long startTimeStamp, long endTimeStamp)
     {
+        //we ORDER BY ASC. THEN, WE WON'T NEED TO ORDER IT IN THE ALGORITHME FOR THE GLUCOSE. USEFULLL FOR RULES LIKE TEV2>TEV1
        return measuresDao.queryBuilder()
                 .where(MeasureDao.Properties.Category.eq(category))
                 .where(MeasureDao.Properties.TimeStamp.between(startTimeStamp,endTimeStamp))
-               .orderDesc(MeasureDao.Properties.TimeStamp)
+               .orderAsc(MeasureDao.Properties.TimeStamp)
                 .list();
     }
 

@@ -9,9 +9,8 @@ import ch.hevs.aislab.magpie.agent.MagpieAgent;
 import ch.hevs.aislab.magpie.behavior.Behavior;
 import ch.hevs.aislab.magpie.event.LogicTupleEvent;
 import ch.hevs.aislab.magpie.event.MagpieEvent;
-import ch.hevs.aislab.magpie.support.Rule;
-import hevs.aislab.magpie.watch.HomeActivity;
 
+import hevs.aislab.magpie.watch.HomeActivity;
 import hevs.aislab.magpie.watch.libs.Const;
 import hevs.aislab.magpie.watch.models.Alertes;
 import hevs.aislab.magpie.watch.models.CustomRules;
@@ -19,6 +18,7 @@ import hevs.aislab.magpie.watch.models.Measure;
 import hevs.aislab.magpie.watch.repository.AlertRepository;
 import hevs.aislab.magpie.watch.repository.MeasuresRepository;
 import hevs.aislab.magpie.watch.repository.RulesRepository;
+import hevs.aislab.magpie.watch.threads.DisplayGUI;
 
 /**
  * Created by teuft on 12.06.2017.
@@ -35,12 +35,18 @@ public class GlucoseBehaviour extends Behavior {
     @Override
     public void action(MagpieEvent event) {
         LogicTupleEvent lte = (LogicTupleEvent) event;
+        Log.d("MessageVocal",lte.getArguments().get(0));
         final double value = Double.parseDouble(lte.getArguments().get(0));
 
         //ENTER THE GLUCOSE INTO THE DB
         Measure measure=new Measure();
         insertInDB(lte, value, measure);
+        //TODO CHANGE THE CURRENT VALUES SHOW IN THE HOME ACTIVITY
 
+        //add the values in the GUI
+        HomeActivity context=(HomeActivity)getContext();
+        Runnable threadGui= new DisplayGUI(context,Const.CATEGORY_GLUCOSE,value);
+        context.runOnUiThread(threadGui);
 
         //GET THE RULES
         CustomRules rules =RulesRepository.getInstance().getByCategory(Const.CATEGORY_GLUCOSE);
@@ -66,9 +72,11 @@ public class GlucoseBehaviour extends Behavior {
                 break;
             }
         }
+
        //if null: no measure below 3.8 so we don't check further
         if (firstMeasure==null)
             return;
+        Log.d("InfoRulesAgent","First loop");
         Measure secondeMeasure=null;
         //now we will compare measure that comme later in the time stamp is higher than the max
         for (int k=counter;k<measureList.size();k++)
@@ -95,8 +103,16 @@ public class GlucoseBehaviour extends Behavior {
         alertes.setRule(rules);
         AlertRepository.getINSTANCE().insert(alertes);
 
-        Log.d("InfoRulesAgent","RulesHasBennCreated");
-        //TODO IMPLEMENT THE RULES ENGINE
+        Log.d("InfoRulesAgent","Alert has been trigered");
+        //TODO DISPLAY THE ALERT OF RULES
+    }
+
+
+
+    @Override
+    public boolean isTriggered(MagpieEvent event) {
+        LogicTupleEvent condition = (LogicTupleEvent) event;
+        return condition.getName().equals(Const.CATEGORY_GLUCOSE);
     }
 
     /**
@@ -107,14 +123,9 @@ public class GlucoseBehaviour extends Behavior {
      */
     private void insertInDB(LogicTupleEvent lte, double value, Measure measure) {
         measure.setValue1(value);
-        measure.setCategory("glucose");
+        measure.setCategory(Const.CATEGORY_GLUCOSE);
         measure.setTimeStamp(lte.getTimestamp());
         MeasuresRepository.getInstance().insert(measure);
     }
 
-    @Override
-    public boolean isTriggered(MagpieEvent event) {
-        LogicTupleEvent condition = (LogicTupleEvent) event;
-        return condition.getName().equals("glucose");
-    }
 }
