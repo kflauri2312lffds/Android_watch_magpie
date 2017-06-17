@@ -30,12 +30,13 @@ public class StepBehaviour extends Behavior {
         final double steps = Double.parseDouble(lte.getArguments().get(0));
 
         //write the measure in the database
-        Measure measure=new Measure();
-        measure.setValue1(steps);
-        measure.setCategory(Const.CATEGORY_STEP);
-        measure.setTimeStamp(event.getTimestamp());
 
-        MeasuresRepository.getInstance().insert(measure);
+
+//        Measure measure=new Measure();
+//        measure.setValue1(steps);
+//        measure.setCategory(Const.CATEGORY_STEP);
+//        measure.setTimeStamp(event.getTimestamp());
+//        MeasuresRepository.getInstance().insert(measure);
 
         //SET THE VALUE ON THE GUI
         HomeActivity context=((HomeActivity)getContext());
@@ -43,6 +44,7 @@ public class StepBehaviour extends Behavior {
         context.runOnUiThread(threadGUI);
 
         //TODO: DEFINE THE RULES FOR THE STEPS
+
 
     }
 

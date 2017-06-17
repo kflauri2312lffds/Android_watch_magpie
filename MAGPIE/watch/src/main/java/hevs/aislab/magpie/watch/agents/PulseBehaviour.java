@@ -25,7 +25,16 @@ public class PulseBehaviour extends Behavior {
     @Override
     public void action(MagpieEvent event) {
         LogicTupleEvent lte = (LogicTupleEvent) event;
-        final double value = Long.parseLong(lte.getArguments().get(0));
+        final double value = Double.parseDouble(lte.getArguments().get(0));
+
+
+
+        HomeActivity context=(HomeActivity)getContext();
+        Thread threadGUI=new Thread(new DisplayGUI(context,Const.CATEGORY_PULSE,value));
+        context.runOnUiThread(threadGUI);
+
+
+
 
 
 //        List<CustomRules>pulseRules= RulesRepository.getInstance().getByCategory("pulse");
@@ -43,9 +52,7 @@ public class PulseBehaviour extends Behavior {
 //                    }
 //                });
 //            }
-//        }
-
-
+//
 
     }
 

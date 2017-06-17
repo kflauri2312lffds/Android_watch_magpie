@@ -175,7 +175,8 @@ public abstract class MagpieActivityWatch extends FragmentActivity implements Ma
 
         request.setData(bundle);
 
-        try {
+        try { //ADD CHRISTOPHE
+            if (requestMessenger!=null)
             requestMessenger.send(request);
         } catch (RemoteException ex) {
             ex.printStackTrace();

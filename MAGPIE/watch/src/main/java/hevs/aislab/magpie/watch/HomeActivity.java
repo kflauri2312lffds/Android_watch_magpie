@@ -1,11 +1,6 @@
 package hevs.aislab.magpie.watch;
 
-import android.content.Context;
-import android.content.pm.PackageManager;
 import android.hardware.SensorManager;
-import android.media.AudioDeviceInfo;
-import android.media.AudioManager;
-import android.os.Build;
 import android.support.v4.app.FragmentManager;
 import android.content.Intent;
 import android.hardware.Sensor;
@@ -15,8 +10,10 @@ import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewAnimationUtils;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ch.hevs.aislab.magpie.agent.MagpieAgent;
@@ -27,15 +24,16 @@ import ch.hevs.aislab.magpie.event.LogicTupleEvent;
 import hevs.aislab.magpie.watch.agents.GlucoseBehaviour;
 import hevs.aislab.magpie.watch.agents.PressureBehaviour;
 import hevs.aislab.magpie.watch.agents.PulseBehaviour;
+import hevs.aislab.magpie.watch.agents.StepBehaviour;
 import hevs.aislab.magpie.watch.gui.dialogfragment.DialogFragmentSetPressure;
 import hevs.aislab.magpie.watch.gui.dialogfragment.DialogFragmentSetValue;
 import hevs.aislab.magpie.watch.gui.dialogfragment.DialogFragmentSetGlucose;
 import hevs.aislab.magpie.watch.gui.FragmentHome;
 import hevs.aislab.magpie.watch.gui.FragmentSettings;
+import hevs.aislab.magpie.watch.gui.dialogfragment.DialogFragmentSetWeight;
 import hevs.aislab.magpie.watch.libs.Const;
-import hevs.aislab.magpie.watch.libs.Lib;
-import hevs.aislab.magpie.watch.models.Measure;
-import hevs.aislab.magpie.watch.repository.MeasuresRepository;
+import hevs.aislab.magpie.watch.threads.IhomeActivity;
+import hevs.aislab.magpie.watch.threads.SensorsThreadLifecircle;
 
 /**
  * Created by teuft on 31.05.2017.
@@ -43,7 +41,7 @@ import hevs.aislab.magpie.watch.repository.MeasuresRepository;
  */
 
 //implement the listener for the sensors
-public class HomeActivity extends MagpieActivityWatch implements SensorEventListener,DialogFragmentSetValue.IdialogToActivity {
+public class HomeActivity extends MagpieActivityWatch implements SensorEventListener,DialogFragmentSetValue.IdialogToActivity, IhomeActivity {
 
 
 
@@ -69,6 +67,8 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
     private String currentValue_diastol;
     private String currentValue_weight;
 
+    //List where we will store value in the pulse to make the average
+    private ArrayList<Double>listPulse=new ArrayList<Double>();
 
 
 
@@ -84,8 +84,13 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
         this.sensorManager=(SensorManager) getSystemService(SENSOR_SERVICE);
         sensor_pulse=sensorManager.getDefaultSensor(Sensor.TYPE_HEART_RATE);
         sensor_step=sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
+        //register the sensors
+        sensorManager.registerListener(this,sensor_step,SensorManager.SENSOR_DELAY_NORMAL);
+        //activate a thread for the pulse sensors
+        Thread threadSensorsPulse=new Thread(new SensorsThreadLifecircle(this,sensor_pulse,30000,30000));
+        threadSensorsPulse.start();
 
-        registerSensors();
+
 
         //Db
       //  Core.getInstance().setDaoSession((Core.getInstance().getDaoMaster().newSession()));
@@ -98,7 +103,6 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
 
         //fragmentHome.setSeverity("sever",3);
          displaySpeechRecognizer();
-
     }
 
     public void click_home(View view )
@@ -151,7 +155,9 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
     }
     public void click_setWeight(View view)
     {
-
+        FragmentManager fm = getSupportFragmentManager();
+        DialogFragmentSetWeight myDialogFragment = new DialogFragmentSetWeight();
+        myDialogFragment.show(fm,"tag");
     }
     public void click_setPressure(View view)
     {
@@ -159,6 +165,16 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
         DialogFragmentSetPressure myDialogFragment = new DialogFragmentSetPressure();
         myDialogFragment.show(fm,"tag");
 
+    }
+    //only inform the user that the measure are taken automaticaly
+    public void click_setPulse(View view)
+    {
+        Toast.makeText(this, getString(R.string.information_pulse_device), Toast.LENGTH_SHORT).show();
+    }
+
+    public void click_setSteps(View view)
+    {
+        Toast.makeText(this, getString(R.string.information_step_device), Toast.LENGTH_SHORT).show();
     }
 
     //------------VOICE RECOGNITION HANDLER------------------
@@ -179,11 +195,13 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
-    //DEFINE THE ACTION IN RESPONSE OF VOICE EVENT
 
+
+    //DEFINE THE ACTION IN RESPONSE OF VOICE EVENT
     private void handleVoiceEvent(Intent data) {
         List<String> results = data.getStringArrayListExtra(
                 RecognizerIntent.EXTRA_RESULTS);
+        //get the spocken language in a string
         String spokenText = results.get(0).toLowerCase();
         //replace eventual comma by "."
         spokenText = spokenText.replace(",", ".");
@@ -275,6 +293,10 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
         behaviorMind.addBehavior(new PulseBehaviour(this, behaviorAgent, 1));
         behaviorMind.addBehavior(new GlucoseBehaviour(this,behaviorAgent,1));
         behaviorMind.addBehavior(new PressureBehaviour(this,behaviorAgent,1));
+        behaviorMind.addBehavior(new StepBehaviour(this,behaviorAgent,1));
+
+        //TODO ADD THE WEIGHT
+
 
 
         behaviorAgent.setMind(behaviorMind);
@@ -297,43 +319,52 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
         sendEvent(lte);
     }
 
-
-    //------------SENSORS METHODE--------------
-
-    private void registerSensors()
+    //this methode will be called by the thread. we will send the pulse to magpie
+    @Override
+    public void processPulse()
     {
-        sensorManager.registerListener(this,sensor_pulse,SensorManager.SENSOR_DELAY_NORMAL);
-        sensorManager.registerListener(this,sensor_step,SensorManager.SENSOR_DELAY_NORMAL);
+        if (listPulse.size()==0)
+            return;
 
-    }
-    private void unregisterSensors()
-    {
-        sensorManager.unregisterListener(this,sensor_pulse);
+        double average=0;
+        //make the average of the list
+        for(Double aPulse : listPulse)
+        {
+            average+=aPulse;
+        }
+        average/=listPulse.size();
+        Log.d("averageOfPulse:",average+"");
+        processEvent(System.currentTimeMillis(),Const.CATEGORY_PULSE,average+"");
+        listPulse.clear();
     }
 
+    //-------------SENSORS METHODE---------------------------
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
 
         switch (sensorEvent.sensor.getType())
         {   //handle heart event
             case Sensor.TYPE_HEART_RATE :
-                //return if the watch is charging ==bad balue
-//                if (Lib.isPhonePluggedIn(this))
-//                    return;
-
-                //Get the value and send it to magpie
-                String value=((int)sensorEvent.values[0])+"";
-                long timeStamp=System.currentTimeMillis();
-                try
-                {
-                    processEvent(timeStamp,"pulse",value);
-                }
-                catch (Exception ex)
-                {
-                    ex.printStackTrace();
-                }
+                double value=sensorEvent.values[0];
+                listPulse.add(value);
                 break;
+            case Sensor.TYPE_STEP_COUNTER :
+                processEvent(System.currentTimeMillis(),Const.CATEGORY_STEP,sensorEvent.values[0]+"");
+                break;
+
         }
+    }
+
+    //***************************************HANDLE THE LIFE CIRCLE OF SENSORS***************************
+    @Override
+    public void registerSensor(Sensor sensor, int sensorsType) {
+        sensorManager.registerListener(this,sensor,sensorsType);
+    }
+
+    @Override
+    public void unregisterSensors(Sensor sensor) {
+        sensorManager.unregisterListener(this,sensor);
+
     }
 
     public FragmentHome getFragmentHome()
@@ -365,10 +396,5 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
 //    }
 
 
-    //***************************************TESTE METHODE***************************
-    public void testShowAllMeasures()
-    {
-        Log.d("CallIN ","Activity");
-    }
 
 }
