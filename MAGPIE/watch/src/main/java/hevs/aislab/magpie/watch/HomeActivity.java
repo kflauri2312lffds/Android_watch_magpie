@@ -1,6 +1,11 @@
 package hevs.aislab.magpie.watch;
 
+import android.content.Context;
+import android.content.pm.PackageManager;
 import android.hardware.SensorManager;
+import android.media.AudioDeviceInfo;
+import android.media.AudioManager;
+import android.os.Build;
 import android.support.v4.app.FragmentManager;
 import android.content.Intent;
 import android.hardware.Sensor;
@@ -53,10 +58,18 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
     //sensors
     private SensorManager sensorManager;
     private Sensor sensor_pulse;
+    private Sensor sensor_step;
 
-    //store the current values
 
-    //set the current rules, we will search in the db
+    //CURRENT VALUES (USED TO POPULATE THE DISPLAY when we change fragment)
+    private String currentValue_pulse;
+    private String currentValue_step;
+    private String currentValue_glucose;
+    private String currentValue_systol;
+    private String currentValue_diastol;
+    private String currentValue_weight;
+
+
 
 
     @Override
@@ -70,6 +83,8 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
         //init the sensors
         this.sensorManager=(SensorManager) getSystemService(SENSOR_SERVICE);
         sensor_pulse=sensorManager.getDefaultSensor(Sensor.TYPE_HEART_RATE);
+        sensor_step=sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
+
         registerSensors();
 
         //Db
@@ -288,6 +303,8 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
     private void registerSensors()
     {
         sensorManager.registerListener(this,sensor_pulse,SensorManager.SENSOR_DELAY_NORMAL);
+        sensorManager.registerListener(this,sensor_step,SensorManager.SENSOR_DELAY_NORMAL);
+
     }
     private void unregisterSensors()
     {
@@ -315,8 +332,6 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
                 {
                     ex.printStackTrace();
                 }
-
-
                 break;
         }
     }

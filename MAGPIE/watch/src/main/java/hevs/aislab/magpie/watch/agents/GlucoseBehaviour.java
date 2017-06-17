@@ -41,14 +41,13 @@ public class GlucoseBehaviour extends Behavior {
         //ENTER THE GLUCOSE INTO THE DB
         Measure measure=new Measure();
         insertInDB(lte, value, measure);
-        //TODO CHANGE THE CURRENT VALUES SHOW IN THE HOME ACTIVITY
 
         //add the values in the GUI
         HomeActivity context=(HomeActivity)getContext();
         Runnable threadGui= new DisplayGUI(context,Const.CATEGORY_GLUCOSE,value);
         context.runOnUiThread(threadGui);
 
-        //GET THE RULES
+        //GET THE RULE RELATED TO THE GLUCOSE
         CustomRules rules =RulesRepository.getInstance().getByCategory(Const.CATEGORY_GLUCOSE);
 
         //GET THE BEGIN TIME STAMP AND THE END TIME STAMP
@@ -78,7 +77,7 @@ public class GlucoseBehaviour extends Behavior {
             return;
         Log.d("InfoRulesAgent","First loop");
         Measure secondeMeasure=null;
-        //now we will compare measure that comme later in the time stamp is higher than the max
+        //now we will compare measure that comme later in the time stamp is higher than the max (in our case, it's 8.0
         for (int k=counter;k<measureList.size();k++)
         {
             if (measureList.get(k).getValue1()>=rules.getVal_2_max())
@@ -88,7 +87,7 @@ public class GlucoseBehaviour extends Behavior {
             }
         }
 
-        //if no value >=8 come after the value <=3.8, we don't write the alert
+        //if no value >=8 come after the value <=3.8, there is no alert so we don't write it in the db.
         if (secondeMeasure==null)
             return;
 
@@ -97,7 +96,7 @@ public class GlucoseBehaviour extends Behavior {
        List<Alertes>alertesList=AlertRepository.getINSTANCE().getAllByCategoryBetweenTimeStamp(Const.CATEGORY_GLUCOSE,startTimeStamp,endTimeSTamp);
         if (alertesList.size()!=0)
             return;
-        //otherwise, we will create the alert and link it with our value
+        //there is no alert existing, so we create one and we link it with the measure
         Alertes alertes=new Alertes();
         alertes.setMeasure(measure);
         alertes.setRule(rules);

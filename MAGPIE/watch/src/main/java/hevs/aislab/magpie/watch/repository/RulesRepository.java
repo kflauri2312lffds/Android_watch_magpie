@@ -14,9 +14,9 @@ import hevs.aislab.magpie.watch.models.CustomRulesDao;
 
 public class RulesRepository {
 
-    public static RulesRepository INSTANCE;
+    private static RulesRepository INSTANCE;
 
-    CustomRulesDao rulesDao;
+    private CustomRulesDao rulesDao;
 
     private RulesRepository(CustomRulesDao rulesDao) {
         this.rulesDao = rulesDao;

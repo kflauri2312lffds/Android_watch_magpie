@@ -15,8 +15,8 @@ import hevs.aislab.magpie.watch.models.MeasureDao;
 
 public class MeasuresRepository {
 
-    public static MeasuresRepository INSTANCE;
-    MeasureDao measuresDao;
+    private static MeasuresRepository INSTANCE;
+    private MeasureDao measuresDao;
 
     private MeasuresRepository(MeasureDao measuresDao) {
         this.measuresDao = measuresDao;

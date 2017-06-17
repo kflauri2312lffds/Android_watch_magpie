@@ -13,12 +13,12 @@ import hevs.aislab.magpie.watch.repository.MeasuresRepository;
 import hevs.aislab.magpie.watch.threads.DisplayGUI;
 
 /**
- * Created by teuft on 16.06.2017.
+ * Created by teuft on 17.06.2017.
  */
 
-public class PressureBehaviour extends Behavior {
+public class StepBehaviour extends Behavior {
 
-    public PressureBehaviour(Context context, MagpieAgent agent, int priority) {
+    public StepBehaviour(Context context, MagpieAgent agent, int priority) {
         setContext(context);
         setAgent(agent);
         setPriority(priority);
@@ -27,29 +27,28 @@ public class PressureBehaviour extends Behavior {
     @Override
     public void action(MagpieEvent event) {
         LogicTupleEvent lte = (LogicTupleEvent) event;
-        final double valueSystol = Double.parseDouble(lte.getArguments().get(0));
-        final double valueDiastol = Double.parseDouble(lte.getArguments().get(1));
+        final double steps = Double.parseDouble(lte.getArguments().get(0));
 
-        //write the new measure in the database
+        //write the measure in the database
         Measure measure=new Measure();
-        measure.setValue1(valueSystol);
-        measure.setValue2(valueDiastol);
+        measure.setValue1(steps);
         measure.setCategory(Const.CATEGORY_STEP);
         measure.setTimeStamp(event.getTimestamp());
+
         MeasuresRepository.getInstance().insert(measure);
 
-
-        //set the value on the gui
+        //SET THE VALUE ON THE GUI
         HomeActivity context=((HomeActivity)getContext());
-        Runnable threadGUI=new Thread(new DisplayGUI(context, Const.CATEGORY_PRESSURE,valueSystol,valueDiastol));
+        Runnable threadGUI=new Thread(new DisplayGUI(context, Const.CATEGORY_STEP,steps));
         context.runOnUiThread(threadGUI);
 
-        //TODO: DEFINE THE RULES FOR THE PRESSURE
+        //TODO: DEFINE THE RULES FOR THE STEPS
+
     }
 
     @Override
     public boolean isTriggered(MagpieEvent event) {
         LogicTupleEvent condition = (LogicTupleEvent) event;
-        return condition.getName().equals(Const.CATEGORY_PRESSURE);
+        return condition.getName().equals(Const.CATEGORY_STEP);
     }
 }

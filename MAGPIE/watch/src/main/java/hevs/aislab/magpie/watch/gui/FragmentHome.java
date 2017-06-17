@@ -30,6 +30,7 @@ public class FragmentHome extends Fragment {
     private TextView txtViewGlucose;
     private TextView txtViewSystol;
     private TextView txtViewDiastol;
+    private TextView txtViewSteps;
 
     private ImageView imgSeverity_glucose;
     private ImageButton imgSeverity_pulse;
@@ -44,9 +45,10 @@ public class FragmentHome extends Fragment {
         //init graphical element
         txtViewGlucose=(TextView)view.findViewById(R.id.txtView_GlucoseValue);
         txtViewPulse=(TextView)view.findViewById(R.id.txtView_pulseValue);
-
         txtViewSystol=(TextView)view.findViewById(R.id.txtView_systolValue);
         txtViewDiastol=(TextView)view.findViewById(R.id.txtView_DiastolValue);
+        txtViewSteps=(TextView)view.findViewById(R.id.txtView_stepValue);
+
 
 
         imgSeverity_glucose=(ImageView)view.findViewById(R.id.img_severity_glucose);
@@ -78,15 +80,17 @@ public class FragmentHome extends Fragment {
             txtViewDiastol.setText(value);
     }
 
-
+    public void setStepValue(String value)
+    {
+        if (txtViewSteps!=null)
+            txtViewSteps.setText(value);
+    }
 
     public void setPulseValue(String value)
     {
         if (txtViewPulse!=null)
         txtViewPulse.setText(value);
     }
-
-
 
     public void setSeverity(String category, int severity)
     {
@@ -108,7 +112,7 @@ public class FragmentHome extends Fragment {
     }
 
     private Drawable getDrawable(String category,int severity) {
-        //pulse_lv3
+
         Log.d("RessourceName",category+"_lv"+severity);
         Context context = view.getContext();
         //Get the image with the named based on category and based on name of the category

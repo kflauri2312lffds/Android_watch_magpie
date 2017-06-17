@@ -165,7 +165,7 @@
         app:layout_constraintVertical_bias="1.0" />
 
     <TextView
-        android:id="@+id/textView11"
+        android:id="@+id/txtView_stepValue"
         style="@style/txtView_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

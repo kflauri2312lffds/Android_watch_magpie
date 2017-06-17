@@ -2,8 +2,12 @@ package hevs.aislab.magpie.watch;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.media.AudioDeviceInfo;
+import android.media.AudioManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -54,7 +58,7 @@ public class MainActivity extends Activity {
            insertFirstRules();
        }
 
-
+        Log.d("speackerInformation",this.hasSpeacker()+"");
 
 
     }
@@ -273,6 +277,27 @@ public class MainActivity extends Activity {
 
         Log.d("SHOWSITEOF_Correct",alertGood.size()+"");
         Log.d("SHOWSITEOF_notCorrect",alertBGad.size()+"");
+    }
 
+    public boolean hasSpeacker()
+    {
+        PackageManager packageManager = this.getPackageManager();
+        AudioManager audioManager = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
+
+// Check whether the device has a speaker.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            // Check FEATURE_AUDIO_OUTPUT to guard against false positives.
+            if (!packageManager.hasSystemFeature(PackageManager.FEATURE_AUDIO_OUTPUT)) {
+                return false;
+            }
+
+            AudioDeviceInfo[] devices = audioManager.getDevices(AudioManager.GET_DEVICES_OUTPUTS);
+            for (AudioDeviceInfo device : devices) {
+                if (device.getType() == AudioDeviceInfo.TYPE_BUILTIN_SPEAKER) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }
