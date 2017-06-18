@@ -60,6 +60,8 @@ public class MainActivity extends Activity {
 
         Log.d("speackerInformation",this.hasSpeacker()+"");
 
+        testDisplayAllMeasure();
+
 
     }
     // if user has set the permission, we change the activity
@@ -120,7 +122,7 @@ public class MainActivity extends Activity {
         //GLUCOSE RULES
         CustomRules glucoseRules=new CustomRules();
         glucoseRules.setCategory(Const.CATEGORY_GLUCOSE);
-
+        //6 HOURS
         long timewindows= 1000*60*60*6;
         glucoseRules.setTimeWindow(timewindows);
         glucoseRules.setConstraint_1("Val1<=Val1Min");
@@ -131,6 +133,24 @@ public class MainActivity extends Activity {
         glucoseRules.setVal_2_max(8.0);
 
         RulesRepository.getInstance().insert(glucoseRules);
+
+        //PRESSEURE RULES
+        CustomRules pressureRules=new CustomRules();
+        pressureRules.setCategory(Const.CATEGORY_PRESSURE);
+
+        //1 WEEK
+        long timewindow2=1000*60*60*24*7;
+
+        pressureRules.setTimeWindow(timewindow2);
+        pressureRules.setVal_1_max(130.0);
+        pressureRules.setVal_2_max(80.0);
+        pressureRules.setConstraint_1("Sys>=130");
+        pressureRules.setConstraint_2("Dias>=80");
+        RulesRepository.getInstance().insert(pressureRules);
+
+
+      //  Rule
+
 
 
     }
@@ -299,5 +319,20 @@ public class MainActivity extends Activity {
             }
         }
         return false;
+    }
+
+    private void testDisplayAllMeasure()
+    {
+        List<Measure>measureList=MeasuresRepository.getInstance().getAll();
+
+        for (Measure aMeasure : measureList)
+        {
+            Log.d("ShowingMeasure_BEGIN","*********************************************");
+            Log.d("ShowingMeasure_TIME",aMeasure.getTimeStamp()+"");
+            Log.d("ShowingMeasure_VALUE",aMeasure.getValue1()+"");
+            Log.d("ShowingMeasure_CATEGORY",aMeasure.getCategory()+"");
+            Log.d("ShowingMeasure_END","*********************************************");
+        }
+
     }
 }

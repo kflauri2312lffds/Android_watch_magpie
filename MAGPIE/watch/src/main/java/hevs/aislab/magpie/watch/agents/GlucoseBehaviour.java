@@ -38,14 +38,16 @@ public class GlucoseBehaviour extends Behavior {
         Log.d("MessageVocal",lte.getArguments().get(0));
         final double value = Double.parseDouble(lte.getArguments().get(0));
 
-        //ENTER THE GLUCOSE INTO THE DB
-        Measure measure=new Measure();
-        insertInDB(lte, value, measure);
-
         //add the values in the GUI
         HomeActivity context=(HomeActivity)getContext();
         Runnable threadGui= new DisplayGUI(context,Const.CATEGORY_GLUCOSE,value);
         context.runOnUiThread(threadGui);
+
+        //ENTER THE GLUCOSE INTO THE DB
+        Measure measure=new Measure();
+        insertInDB(lte, value, measure);
+
+
 
         //GET THE RULE RELATED TO THE GLUCOSE
         CustomRules rules =RulesRepository.getInstance().getByCategory(Const.CATEGORY_GLUCOSE);

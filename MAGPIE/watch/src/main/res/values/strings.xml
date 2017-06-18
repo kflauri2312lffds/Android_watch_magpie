@@ -28,4 +28,5 @@
     <string name="information_step_device" translatable="false">Step are taken automaticaly by the device</string>
     <string name="weight_level">Enter your current weight</string>
     <string name="weight">weight in kg</string>
+    <string name="voice_weight">poids</string>
 </resources>

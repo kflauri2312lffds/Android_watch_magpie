@@ -25,6 +25,7 @@ import hevs.aislab.magpie.watch.agents.GlucoseBehaviour;
 import hevs.aislab.magpie.watch.agents.PressureBehaviour;
 import hevs.aislab.magpie.watch.agents.PulseBehaviour;
 import hevs.aislab.magpie.watch.agents.StepBehaviour;
+import hevs.aislab.magpie.watch.agents.WeightBehaviour;
 import hevs.aislab.magpie.watch.gui.dialogfragment.DialogFragmentSetPressure;
 import hevs.aislab.magpie.watch.gui.dialogfragment.DialogFragmentSetValue;
 import hevs.aislab.magpie.watch.gui.dialogfragment.DialogFragmentSetGlucose;
@@ -234,6 +235,19 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
             Toast.makeText(this, getString(R.string.voice_incomplet_number), Toast.LENGTH_SHORT).show();
             return;
         }
+        String weight=getString(R.string.voice_weight);
+
+        if (arraySpocken[0].toLowerCase().equals(weight))
+        {
+            if (arraySpocken.length>=2)
+            {
+                voiceAction_addValue(Const.CATEGORY_WEIGHT,arraySpocken[1]);
+                return;
+            }
+            Toast.makeText(this, getString(R.string.voice_incorrect), Toast.LENGTH_SHORT).show();
+        }
+
+
             Toast.makeText(this, getString(R.string.voice_not_found), Toast.LENGTH_SHORT).show();
     }
 
@@ -294,6 +308,7 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
         behaviorMind.addBehavior(new GlucoseBehaviour(this,behaviorAgent,1));
         behaviorMind.addBehavior(new PressureBehaviour(this,behaviorAgent,1));
         behaviorMind.addBehavior(new StepBehaviour(this,behaviorAgent,1));
+        behaviorMind.addBehavior(new WeightBehaviour(this,behaviorAgent,1));
 
         //TODO ADD THE WEIGHT
 

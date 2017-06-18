@@ -31,6 +31,7 @@ public class FragmentHome extends Fragment {
     private TextView txtViewSystol;
     private TextView txtViewDiastol;
     private TextView txtViewSteps;
+    private TextView txtViewWeight;
 
     private ImageView imgSeverity_glucose;
     private ImageButton imgSeverity_pulse;
@@ -48,6 +49,7 @@ public class FragmentHome extends Fragment {
         txtViewSystol=(TextView)view.findViewById(R.id.txtView_systolValue);
         txtViewDiastol=(TextView)view.findViewById(R.id.txtView_DiastolValue);
         txtViewSteps=(TextView)view.findViewById(R.id.txtView_stepValue);
+        txtViewWeight=(TextView)view.findViewById(R.id.txtView_weightValue);
 
 
 
@@ -90,6 +92,11 @@ public class FragmentHome extends Fragment {
     {
         if (txtViewPulse!=null)
         txtViewPulse.setText(value);
+    }
+    public void setWeightValue(String value)
+    {
+        if (txtViewWeight!=null)
+            txtViewWeight.setText(value);
     }
 
     public void setSeverity(String category, int severity)

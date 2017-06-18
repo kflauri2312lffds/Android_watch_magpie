@@ -52,6 +52,7 @@ public class DisplayGUI implements Runnable {
             context.getFragmentHome().setGlucoseValue(value[0]+"");
             return;
         }
+
         if (category.equals(Const.CATEGORY_PRESSURE))
         {
                                                         //we cast in it to remove the comma.
@@ -59,32 +60,23 @@ public class DisplayGUI implements Runnable {
             context.getFragmentHome().setDiastolValue((int)value[1]+"");
             return;
         }
+
         if (category.equals(Const.CATEGORY_STEP))
         {
             context.getFragmentHome().setStepValue((int)value[0]+"");
             return;
         }
+
         if (category.equals(Const.CATEGORY_PULSE))
         {
             context.getFragmentHome().setPulseValue((int)value[0]+"");
         }
 
-    }
-    private void updateStep()
-    {
-
-    }
-    private void updateWeight()
-    {
+        if (category.equals(Const.CATEGORY_WEIGHT))
+        {
+            context.getFragmentHome().setWeightValue(value[0]+"");
+        }
 
     }
 
-    private void updateGlucose()
-    {
-
-    }
-    private void updatePulse()
-    {
-
-    }
 }

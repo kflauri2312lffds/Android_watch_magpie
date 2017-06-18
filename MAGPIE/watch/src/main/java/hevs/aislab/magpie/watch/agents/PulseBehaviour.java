@@ -8,6 +8,8 @@ import ch.hevs.aislab.magpie.event.LogicTupleEvent;
 import ch.hevs.aislab.magpie.event.MagpieEvent;
 import hevs.aislab.magpie.watch.HomeActivity;
 import hevs.aislab.magpie.watch.libs.Const;
+import hevs.aislab.magpie.watch.models.Measure;
+import hevs.aislab.magpie.watch.repository.MeasuresRepository;
 import hevs.aislab.magpie.watch.threads.DisplayGUI;
 
 /**
@@ -33,7 +35,12 @@ public class PulseBehaviour extends Behavior {
         Thread threadGUI=new Thread(new DisplayGUI(context,Const.CATEGORY_PULSE,value));
         context.runOnUiThread(threadGUI);
 
-
+        //INSERT THE VALUES IN THE DB
+        Measure measure=new Measure();
+        measure.setTimeStamp(event.getTimestamp());
+        measure.setCategory(Const.CATEGORY_PULSE);
+        measure.setValue1(value);
+        MeasuresRepository.getInstance().insert(measure);
 
 
 
