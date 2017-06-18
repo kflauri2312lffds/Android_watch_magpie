@@ -2,6 +2,7 @@ package hevs.aislab.magpie.watch;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -30,8 +31,18 @@ import hevs.aislab.magpie.watch.repository.MeasuresRepository;
 import hevs.aislab.magpie.watch.repository.RulesRepository;
 import hevs.aislab.magpie.watch.shared_pref.PrefAccessor;
 
+
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
+import android.support.v4.app.NotificationCompat.WearableExtender;
+
+
 /**
- * This class will be used mainly to init the db and ask for the permission
+ * This class will essentially be used to init the different component of our application.
+ * it include: init the database
+ * ask permission, and if the user don't allow, he won't be able to continue
+ * insert the first rules in the databse, if it's the first time the user launch app
+ * detect if the device has can create song (for notification)
  */
 public class MainActivity extends Activity {
 
@@ -55,6 +66,7 @@ public class MainActivity extends Activity {
        if (!hasBeenInit)
        {
            PrefAccessor.getInstance().save(this,"first",true);
+           PrefAccessor.getInstance().save(this,"hasSpeacker",hasSpeacker());
            insertFirstRules();
        }
 
@@ -104,6 +116,8 @@ public class MainActivity extends Activity {
 
     public void startHomeActivity(View view)
     {
+
+
         //disallow the access if the user has not given the autorisation
         //ask for all the permission
 
@@ -333,6 +347,7 @@ public class MainActivity extends Activity {
             Log.d("ShowingMeasure_CATEGORY",aMeasure.getCategory()+"");
             Log.d("ShowingMeasure_END","*********************************************");
         }
-
     }
+
+
 }

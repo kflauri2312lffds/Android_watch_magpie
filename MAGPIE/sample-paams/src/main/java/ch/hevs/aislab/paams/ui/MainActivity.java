@@ -33,7 +33,6 @@ public class MainActivity extends MagpieActivity implements AddValueFragment.OnA
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle drawerToggle;
     private AlertDAO alertDAO;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

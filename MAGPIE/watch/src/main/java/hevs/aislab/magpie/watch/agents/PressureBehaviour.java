@@ -11,6 +11,7 @@ import ch.hevs.aislab.magpie.behavior.Behavior;
 import ch.hevs.aislab.magpie.event.LogicTupleEvent;
 import ch.hevs.aislab.magpie.event.MagpieEvent;
 import hevs.aislab.magpie.watch.HomeActivity;
+import hevs.aislab.magpie.watch.R;
 import hevs.aislab.magpie.watch.libs.Const;
 import hevs.aislab.magpie.watch.models.Alertes;
 import hevs.aislab.magpie.watch.models.CustomRules;
@@ -18,6 +19,7 @@ import hevs.aislab.magpie.watch.models.Measure;
 import hevs.aislab.magpie.watch.repository.AlertRepository;
 import hevs.aislab.magpie.watch.repository.MeasuresRepository;
 import hevs.aislab.magpie.watch.repository.RulesRepository;
+import hevs.aislab.magpie.watch.threads.CreateNotification;
 import hevs.aislab.magpie.watch.threads.DisplayGUI;
 
 /**
@@ -49,6 +51,15 @@ public class PressureBehaviour extends Behavior {
         HomeActivity context=((HomeActivity)getContext());
         Runnable threadGUI=new Thread(new DisplayGUI(context, Const.CATEGORY_PRESSURE,valueSystol,valueDiastol));
         context.runOnUiThread(threadGUI);
+
+
+        //teste
+        //launch the notification
+        Thread notificationThread=new Thread(new CreateNotification(context,context.getString(R.string.category_pressure),context.getString(R.string.notification_high_pressure)));
+        context.runOnUiThread(notificationThread);
+
+
+
 
         //APPLY THE RULES BASED ON THE PROLOG RULES
 
@@ -96,6 +107,8 @@ public class PressureBehaviour extends Behavior {
 
 
         Log.d("pressureAlertStatus","AlertHasBen trigered");
+
+
 
     }
 

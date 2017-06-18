@@ -1,6 +1,8 @@
 package hevs.aislab.magpie.watch;
 
+import android.app.PendingIntent;
 import android.hardware.SensorManager;
+import android.media.MediaPlayer;
 import android.support.v4.app.FragmentManager;
 import android.content.Intent;
 import android.hardware.Sensor;
@@ -8,9 +10,10 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewAnimationUtils;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -35,6 +38,9 @@ import hevs.aislab.magpie.watch.gui.dialogfragment.DialogFragmentSetWeight;
 import hevs.aislab.magpie.watch.libs.Const;
 import hevs.aislab.magpie.watch.threads.IhomeActivity;
 import hevs.aislab.magpie.watch.threads.SensorsThreadLifecircle;
+
+
+
 
 /**
  * Created by teuft on 31.05.2017.
@@ -90,6 +96,7 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
         //activate a thread for the pulse sensors
         Thread threadSensorsPulse=new Thread(new SensorsThreadLifecircle(this,sensor_pulse,30000,30000));
         threadSensorsPulse.start();
+
 
 
 
@@ -404,6 +411,7 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
             }
         }
     }
+
 
     //    @Override
 //    protected void onSaveInstanceState(Bundle outState) {

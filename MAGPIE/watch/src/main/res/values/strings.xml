@@ -26,7 +26,15 @@
     <string name="voice_pressure" translatable="false">pression</string>
     <string name="information_pulse_device" translatable="false">Pulse are taken automatical by the device</string>
     <string name="information_step_device" translatable="false">Step are taken automaticaly by the device</string>
-    <string name="weight_level">Enter your current weight</string>
-    <string name="weight">weight in kg</string>
-    <string name="voice_weight">poids</string>
+    <string name="weight_level" translatable="false">Enter your current weight</string>
+    <string name="weight" translatable="false">weight in kg</string>
+    <string name="voice_weight" translatable="false">poids</string>
+    <string name="notification_high_pressure" translatable="false">high pressure detected</string>
+    <string name="notification_high_glucose" translatable="false">High glucose detected</string>
+    <string name="notification_high_pulse" translatable="false">high pulse detected</string>
+    <string name="category_pressure">blood pressure</string>
+    <string name="category_glucose">glucose</string>
+    <string name="category_weight">weight</string>
+    <string name="category_pulse">heart pulse</string>
+    <string name="category_step">step</string>
 </resources>
