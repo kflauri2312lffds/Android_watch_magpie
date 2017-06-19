@@ -72,7 +72,7 @@ public class FragmentHome extends Fragment {
         txtViewDiastol.setText( measureList.size()>=2 ? String.format(formatNodigit, measureList.get(1).getValue2()):"/");
         txtViewPulse.setText( measureList.size()>=3 ?   String.format(formatNodigit, measureList.get(2).getValue1()):"/");
         txtViewWeight.setText(measureList.size()>=4 ?   String.format(format1Digit,  measureList.get(3).getValue1()) :"/");
- 
+
 
 
 ;

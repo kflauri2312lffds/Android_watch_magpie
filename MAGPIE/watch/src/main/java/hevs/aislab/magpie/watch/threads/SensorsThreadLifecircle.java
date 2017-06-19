@@ -10,7 +10,7 @@ import android.util.Log;
  *
  */
 
-public class SensorsThreadLifecircle implements Runnable {
+public class SensorsThreadLifecircle extends Thread {
 
     IhomeActivity context;
     //activate this sensors during this time
@@ -19,7 +19,8 @@ public class SensorsThreadLifecircle implements Runnable {
     private int disabledTimeInMillisec;
 
     private Sensor sensor;
-    
+
+  volatile  private boolean isRunning=true;
 
 
 
@@ -35,7 +36,7 @@ public class SensorsThreadLifecircle implements Runnable {
     @Override
     public void run() {
 
-        while (true)
+        while(isRunning)
         {
             try
             {
@@ -43,6 +44,8 @@ public class SensorsThreadLifecircle implements Runnable {
                 context.registerSensor(sensor,Sensor.TYPE_HEART_RATE);
                 Log.d("ThreadSensors","Sensors are activated");
                 Thread.sleep(enabledTimeInMillisec);
+                if (!isRunning)
+                    return;
                 context.processPulse();
                 context.unregisterSensors(sensor);
                 Log.d("ThreadSensors","Sensors are DISACTIVATED");
@@ -56,4 +59,15 @@ public class SensorsThreadLifecircle implements Runnable {
         }
 
     }
+
+    /**
+     * use this methode to stop the thread and destroy it
+     */
+    public void cancel()
+    {
+        Log.d("DestroyHasBennCalled","Cancel method has been called");
+
+        isRunning=false;
+    }
+
 }

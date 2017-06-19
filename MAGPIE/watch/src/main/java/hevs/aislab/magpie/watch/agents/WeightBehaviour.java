@@ -2,14 +2,19 @@ package hevs.aislab.magpie.watch.agents;
 
 import android.content.Context;
 
+import java.util.List;
+
 import ch.hevs.aislab.magpie.agent.MagpieAgent;
 import ch.hevs.aislab.magpie.behavior.Behavior;
 import ch.hevs.aislab.magpie.event.LogicTupleEvent;
 import ch.hevs.aislab.magpie.event.MagpieEvent;
 import hevs.aislab.magpie.watch.HomeActivity;
 import hevs.aislab.magpie.watch.libs.Const;
+import hevs.aislab.magpie.watch.models.CustomRules;
 import hevs.aislab.magpie.watch.models.Measure;
+import hevs.aislab.magpie.watch.repository.AlertRepository;
 import hevs.aislab.magpie.watch.repository.MeasuresRepository;
+import hevs.aislab.magpie.watch.repository.RulesRepository;
 import hevs.aislab.magpie.watch.threads.DisplayGUI;
 
 /**
@@ -45,7 +50,22 @@ public class WeightBehaviour extends Behavior {
         Runnable threadGUI=new Thread(new DisplayGUI(context, Const.CATEGORY_WEIGHT,value));
         context.runOnUiThread(threadGUI);
 
-        //TODO: DEFINE THE RULES FOR THE STEPS
+
+
+        //GET THE RULES RELATED ON THE WEIGHT
+        CustomRules weightRules= RulesRepository.getInstance().getByCategory(Const.CATEGORY_WEIGHT);
+        //DEFIN THE BEGIN AND THE END TIME STAMP, BASED ON THE WINDOWS
+        long endTimeStamp=event.getTimestamp();
+        long startTimeSTamp=event.getTimestamp()-weightRules.getTimeWindow();
+
+        //check if an alert in the timewindows aldready exist
+        if (AlertRepository.getINSTANCE().getAllByCategoryBetweenTimeStamp(Const.CATEGORY_WEIGHT,startTimeSTamp,endTimeStamp).size() >=1)
+            return;
+
+        //get the measure related to the weight inside the timewindow
+        List<Measure>weightsMeasures=MeasuresRepository.getInstance().getByCategoryWhereTimeStampBetween(Const.CATEGORY_WEIGHT,startTimeSTamp,endTimeStamp);
+
+
     }
     @Override
     public boolean isTriggered(MagpieEvent event) {

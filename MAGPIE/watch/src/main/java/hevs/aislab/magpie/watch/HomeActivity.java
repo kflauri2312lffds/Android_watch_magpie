@@ -1,8 +1,6 @@
 package hevs.aislab.magpie.watch;
 
-import android.app.PendingIntent;
 import android.hardware.SensorManager;
-import android.media.MediaPlayer;
 import android.support.v4.app.FragmentManager;
 import android.content.Intent;
 import android.hardware.Sensor;
@@ -10,8 +8,6 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.NotificationManagerCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -74,6 +70,8 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
     private String currentValue_diastol;
     private String currentValue_weight;
 
+    private Thread threadPulse;
+
     //List where we will store value in the pulse to make the average
     private ArrayList<Double>listPulse=new ArrayList<Double>();
 
@@ -93,8 +91,13 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
         //register the sensors
         sensorManager.registerListener(this,sensor_step,SensorManager.SENSOR_DELAY_NORMAL);
         //activate a thread for the pulse sensors
-        Thread threadSensorsPulse=new Thread(new SensorsThreadLifecircle(this,sensor_pulse,30000,30000));
-        threadSensorsPulse.start();
+
+
+            Log.d("TreadInformation_","THREAD IS INITIALIZED AND LAUNCHED");
+            threadPulse=new SensorsThreadLifecircle(this,sensor_pulse,30000,30000);
+            threadPulse.start();
+
+
 
         displayFragmentHome("");
     }
@@ -408,8 +411,27 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        finish();
+        super.onBackPressed();
+    }
 
-    //    @Override
+    /**
+     * used to destroy the current thread running (thread that manage pulse
+     */
+    @Override
+    protected void onDestroy() {
+
+        Log.d("DestroyHasBennCalled","blablalbalblablablablabl");
+        //close the current thread for the pulse
+        //interrupt and stop the current running thread
+        ((SensorsThreadLifecircle)threadPulse).cancel();
+        threadPulse.interrupt();
+        super.onDestroy();
+    }
+
+//    @Override
 //    protected void onSaveInstanceState(Bundle outState) {
 //        //No call for super(). Bug on API Level > 11.
 //    }
