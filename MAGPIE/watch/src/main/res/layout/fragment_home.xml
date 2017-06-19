@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+
     <ImageButton
         android:onClick="click_setSteps"
         android:background="@null"
@@ -65,7 +66,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@+id/img_severity_weight"
         app:layout_constraintVertical_bias="1.0"
-        app:layout_constraintHorizontal_bias="0.5" />
+        app:layout_constraintHorizontal_bias="0.53" />
 
     <ImageButton
         android:onClick="click_setPulse"
@@ -81,7 +82,7 @@
         android:layout_weight="1"
         android:src="@drawable/pulse_lv0"
         app:layout_constraintBottom_toBottomOf="@+id/img_severity_glucose"
-        app:layout_constraintHorizontal_bias="0.163"
+        app:layout_constraintHorizontal_bias="0.22"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@+id/img_severity_glucose" />
@@ -212,5 +213,18 @@
         app:layout_constraintLeft_toRightOf="@+id/txtView_systolValue"
         android:layout_marginLeft="5dp"
         app:layout_constraintVertical_bias="0.0" />
+
+    <include
+        layout="@layout/fragment_barlevel"
+        android:layout_width="12dp"
+        android:layout_height="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.597"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.74" />
+
+
 
 </android.support.constraint.ConstraintLayout>

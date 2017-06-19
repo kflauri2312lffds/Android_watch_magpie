@@ -29,6 +29,8 @@ public class WeightBehaviour extends Behavior {
         LogicTupleEvent lte = (LogicTupleEvent) event;
         final double value = Double.parseDouble(lte.getArguments().get(0));
 
+
+        //TODO : IMPLEMENT THE PROLOG: RULES:  >1% AND <2%
         //write the measure in the database
 
 

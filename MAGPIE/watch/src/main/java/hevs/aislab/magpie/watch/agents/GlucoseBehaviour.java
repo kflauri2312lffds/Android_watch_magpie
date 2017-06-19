@@ -11,6 +11,7 @@ import ch.hevs.aislab.magpie.event.LogicTupleEvent;
 import ch.hevs.aislab.magpie.event.MagpieEvent;
 
 import hevs.aislab.magpie.watch.HomeActivity;
+import hevs.aislab.magpie.watch.R;
 import hevs.aislab.magpie.watch.libs.Const;
 import hevs.aislab.magpie.watch.models.Alertes;
 import hevs.aislab.magpie.watch.models.CustomRules;
@@ -18,6 +19,7 @@ import hevs.aislab.magpie.watch.models.Measure;
 import hevs.aislab.magpie.watch.repository.AlertRepository;
 import hevs.aislab.magpie.watch.repository.MeasuresRepository;
 import hevs.aislab.magpie.watch.repository.RulesRepository;
+import hevs.aislab.magpie.watch.threads.CreateNotification;
 import hevs.aislab.magpie.watch.threads.DisplayGUI;
 
 /**
@@ -47,8 +49,6 @@ public class GlucoseBehaviour extends Behavior {
         Measure measure=new Measure();
         insertInDB(lte, value, measure);
 
-
-
         //GET THE RULE RELATED TO THE GLUCOSE
         CustomRules rules =RulesRepository.getInstance().getByCategory(Const.CATEGORY_GLUCOSE);
 
@@ -56,11 +56,17 @@ public class GlucoseBehaviour extends Behavior {
         Long endTimeSTamp=measure.getTimeStamp();
         Long startTimeStamp=endTimeSTamp-rules.getTimeWindow();
 
+        //check if an alert exist aldready in the timestamp
+        List<Alertes>alertesList=AlertRepository.getINSTANCE().getAllByCategoryBetweenTimeStamp(Const.CATEGORY_GLUCOSE,startTimeStamp,endTimeSTamp);
+        if (alertesList.size()!=0)
+            return;
+
         //now we query the db to find all event inside the timestamp
         List<Measure>measureList= MeasuresRepository.getInstance().getByCategoryWhereTimeStampBetween(Const.CATEGORY_GLUCOSE,startTimeStamp,endTimeSTamp);
         //we need to have at least 2 glucose measure to be able to make a comparison
         if (measureList.size()<=1)
             return;
+
         Log.d("InfoRulesAgent","Measure size greater than 1");
         //CHECK IF THERE IS A MEASURE THAT IS BELOW 3.8 AND TAKE IT. iT'S ORDER BY TIMESTAMP, SO WE START IN THE ARRAY
         int counter=0;
@@ -77,6 +83,7 @@ public class GlucoseBehaviour extends Behavior {
        //if null: no measure below 3.8 so we don't check further
         if (firstMeasure==null)
             return;
+
         Log.d("InfoRulesAgent","First loop");
         Measure secondeMeasure=null;
         //now we will compare measure that comme later in the time stamp is higher than the max (in our case, it's 8.0
@@ -93,11 +100,14 @@ public class GlucoseBehaviour extends Behavior {
         if (secondeMeasure==null)
             return;
 
-        //now, we check if an alert exist in the time stamp
+        //now, we check if an alert exist in the time stamp.
+        //todo put it in the first position
         Log.d("InfoRulesAgent","Seconde measure is not null");
-       List<Alertes>alertesList=AlertRepository.getINSTANCE().getAllByCategoryBetweenTimeStamp(Const.CATEGORY_GLUCOSE,startTimeStamp,endTimeSTamp);
-        if (alertesList.size()!=0)
-            return;
+
+        //launch the notification
+        Thread notificationThread=new Thread(new CreateNotification(context,context.getString(R.string.category_glucose),context.getString(R.string.notification_high_glucose)));
+        context.runOnUiThread(notificationThread);
+
         //there is no alert existing, so we create one and we link it with the measure
         Alertes alertes=new Alertes();
         alertes.setMeasure(measure);
@@ -106,6 +116,7 @@ public class GlucoseBehaviour extends Behavior {
 
         Log.d("InfoRulesAgent","Alert has been trigered");
         //TODO DISPLAY THE ALERT OF RULES
+
     }
 
 

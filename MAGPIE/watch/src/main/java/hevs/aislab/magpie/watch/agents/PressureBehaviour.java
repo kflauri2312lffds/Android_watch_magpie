@@ -53,16 +53,7 @@ public class PressureBehaviour extends Behavior {
         context.runOnUiThread(threadGUI);
 
 
-        //teste
-        //launch the notification
-        Thread notificationThread=new Thread(new CreateNotification(context,context.getString(R.string.category_pressure),context.getString(R.string.notification_high_pressure)));
-        context.runOnUiThread(notificationThread);
-
-
-
-
         //APPLY THE RULES BASED ON THE PROLOG RULES
-
         //get the rules related to blood pressure
         CustomRules pressureRules= RulesRepository.getInstance().getByCategory(Const.CATEGORY_PRESSURE);
 
@@ -70,6 +61,12 @@ public class PressureBehaviour extends Behavior {
 
         long endTimeStamp=event.getTimestamp();
         long startTimeStamp=endTimeStamp-pressureRules.getTimeWindow();
+
+        //WE CHECK IF AN ALERT EXIST FOR THE TIMESTAMP AND THE CATEGORY. If yes, we don't triger a new alert. If no, we trigger a new alert.
+        List<Alertes>alertesList=  AlertRepository.getINSTANCE().getAllByCategoryBetweenTimeStamp(Const.CATEGORY_PRESSURE,startTimeStamp,endTimeStamp);
+        if (alertesList.size()!=0)
+            return;
+
 
         //get measure in db  between the timestamp
         List<Measure>measureList= MeasuresRepository.getInstance().getByCategoryWhereTimeStampBetween(Const.CATEGORY_PRESSURE,startTimeStamp,endTimeStamp);
@@ -93,17 +90,16 @@ public class PressureBehaviour extends Behavior {
         if (severMeasure.size()<=1)
             return;
 
-
-        Log.d("pressureAlertStatus","Alert has been detected");
-        //NOW WE CHECK IF AN ALERT EXIST FOR THE TIMESTAMP. If yes, we don't triger a new alert. If no, we triger a new alert.
-        List<Alertes>alertesList=  AlertRepository.getINSTANCE().getAllByCategoryBetweenTimeStamp(Const.CATEGORY_PRESSURE,startTimeStamp,endTimeStamp);
-        if (alertesList.size()!=0)
-            return;
+        //launch the notification
+        Thread notificationThread=new Thread(new CreateNotification(context,context.getString(R.string.category_pressure),context.getString(R.string.notification_high_pressure)));
+        context.runOnUiThread(notificationThread);
 
         Alertes alertes=new Alertes();
         alertes.setRule(pressureRules);
         alertes.setMeasure(measure);
         AlertRepository.getINSTANCE().insert(alertes);
+
+
 
 
         Log.d("pressureAlertStatus","AlertHasBen trigered");

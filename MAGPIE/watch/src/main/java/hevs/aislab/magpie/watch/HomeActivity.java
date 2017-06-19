@@ -287,11 +287,17 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
 
     private void displayFragmentHome(String value)
     {
-        fragmentHome=new  FragmentHome();
-        Bundle bundle=new Bundle();
-        bundle.putString("glucoseValue",value);
-        fragmentHome.setArguments(bundle);
+        fragmentHome=(FragmentHome)getSupportFragmentManager().findFragmentByTag("homeTag");
 
+        if (fragmentHome==null)
+        {
+            fragmentHome=new  FragmentHome();
+            Bundle bundle=new Bundle();
+            bundle.putString("glucoseValue",value);
+            fragmentHome.setArguments(bundle);
+        }
+
+     
         getSupportFragmentManager().beginTransaction().replace(R.id.main_container, fragmentHome,"homeTag").addToBackStack(null).commit(); // newInstance() is a static factory method.
 
         Log.d("stateofMessage","display fragment");
