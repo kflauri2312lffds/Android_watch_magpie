@@ -16,7 +16,11 @@ import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
+import java.util.List;
+
 import hevs.aislab.magpie.watch.R;
+import hevs.aislab.magpie.watch.models.Measure;
+import hevs.aislab.magpie.watch.repository.MeasuresRepository;
 
 /**
  * Created by teuft on 30.05.2017.
@@ -56,11 +60,24 @@ public class FragmentHome extends Fragment {
         imgSeverity_glucose=(ImageView)view.findViewById(R.id.img_severity_glucose);
         imgSeverity_pulse=(ImageButton) view.findViewById(R.id.img_severity_pulse);
 
-        //retrive data from the bundle and set it to texte view
-//        Bundle bundle=this.getArguments();
-//        String value=bundle.getString("glucoseValue","");
-//        if (!value.equals(""))
-//            txtViewGlucose.setText(value);
+        //define the format of integer and numeric number
+        String format1Digit="%(,.1f";
+        String formatNodigit="%(,.0f";
+
+
+        //get all measure and display. Measure are sorted alphabeticaly by category
+        List<Measure>measureList=MeasuresRepository.getInstance().getLastMeasure();
+         txtViewGlucose.setText( measureList.size()>=1 ? String.format( format1Digit,measureList.get(0).getValue1()) : "/");
+        txtViewSystol.setText( measureList.size()>=2 ?  String.format(formatNodigit, measureList.get(1).getValue1()):"/");
+        txtViewDiastol.setText( measureList.size()>=2 ? String.format(formatNodigit, measureList.get(1).getValue2()):"/");
+        txtViewPulse.setText( measureList.size()>=3 ?   String.format(formatNodigit, measureList.get(2).getValue1()):"/");
+        txtViewWeight.setText(measureList.size()>=4 ?   String.format(format1Digit,  measureList.get(3).getValue1()) :"/");
+ 
+
+
+;
+
+
         return view;
     }
 
@@ -126,6 +143,11 @@ public class FragmentHome extends Fragment {
         int id = context.getResources().getIdentifier(category+"_lv"+severity, "drawable", context.getPackageName());
         Drawable img=ContextCompat.getDrawable(getContext(), id);
         return img;
+    }
+    //set the values of the GUI with the last values in the databse. each time the framgnet is created
+    private void setGuiValues()
+    {
+
     }
 
 }

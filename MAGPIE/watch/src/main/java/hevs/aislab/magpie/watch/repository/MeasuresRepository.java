@@ -1,10 +1,16 @@
 package hevs.aislab.magpie.watch.repository;
 
+import android.database.Cursor;
+
+import org.greenrobot.greendao.query.WhereCondition;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import hevs.aislab.magpie.watch.db.Core;
 import hevs.aislab.magpie.watch.models.CustomRules;
 import hevs.aislab.magpie.watch.models.CustomRulesDao;
+import hevs.aislab.magpie.watch.models.DaoMaster;
 import hevs.aislab.magpie.watch.models.Measure;
 import hevs.aislab.magpie.watch.models.MeasureDao;
 
@@ -65,5 +71,43 @@ public class MeasuresRepository {
         return measuresDao.queryBuilder()
                 .where(MeasureDao.Properties.Category.eq(category))
                 .list();
+    }
+
+    /**
+     * this methode will return the last measure stored in the database of each category, and then
+     * sorted them alphabetically
+     * @return lastMeasure
+     */
+    public List<Measure>getLastMeasure()
+    {
+      String SQL_DISTINCT_ENAME = "SELECT max("+MeasureDao.Properties.TimeStamp.columnName+"),"
+              +MeasureDao.Properties.Id.columnName+","
+              +MeasureDao.Properties.Value1.columnName+","
+              +MeasureDao.Properties.Value2.columnName+","
+              +MeasureDao.Properties.Category.columnName
+              +" FROM "+MeasureDao.TABLENAME
+              +" GROUP BY  "+MeasureDao.Properties.Category.columnName
+              +" ORDER BY "+MeasureDao.Properties.Category.columnName;
+
+
+        ArrayList<Measure> result = new ArrayList<Measure>();
+        Cursor c = Core.getInstance().getDaoSession().getDatabase().rawQuery(SQL_DISTINCT_ENAME, null);
+        try{
+            if (c.moveToFirst()) {
+                do {
+                    Measure measure=new Measure();
+                    measure.setTimeStamp(c.getLong(0));
+                    measure.setId(c.getLong(1));
+                    measure.setValue1(c.getDouble(2));
+                    measure.setValue2(c.getDouble(3));
+                    measure.setCategory(c.getString(4));
+                    result.add(measure);
+                } while (c.moveToNext());
+            }
+        } finally {
+            c.close();
+
+        return result;
+    }
     }
 }

@@ -69,7 +69,7 @@ public class MainActivity extends Activity {
            PrefAccessor.getInstance().save(this,"hasSpeacker",hasSpeacker());
            insertFirstRules();
        }
-
+        testGetFirstCategory();
         Log.d("speackerInformation",this.hasSpeacker()+"");
 
         testDisplayAllMeasure();
@@ -346,6 +346,20 @@ public class MainActivity extends Activity {
             Log.d("ShowingMeasure_VALUE",aMeasure.getValue1()+"");
             Log.d("ShowingMeasure_CATEGORY",aMeasure.getCategory()+"");
             Log.d("ShowingMeasure_END","*********************************************");
+        }
+    }
+
+    private void testGetFirstCategory()
+    {
+        List<Measure>measureList=MeasuresRepository.getInstance().getLastMeasure();
+        for (Measure aMeasure : measureList)
+        {
+            Log.d("DisplayMeaInfo_Begin","*******************************************");
+            Log.d("DisplayMeaInfo_category",aMeasure.getCategory());
+            Log.d("DisplayMeaInfo_TimeStam",aMeasure.getTimeStamp()+"");
+            Log.d("DisplayMeaInfo_Value1",aMeasure.getValue1()+"");
+            Log.d("DisplayMeaInfo_ENDOF","*******************************************");
+
         }
     }
 

@@ -78,7 +78,6 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
     private ArrayList<Double>listPulse=new ArrayList<Double>();
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
