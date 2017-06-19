@@ -83,9 +83,9 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
+        initFragment();
         //display the fragment home witout any value
-        displayFragmentHome("");
+
 
         //init the sensors
         this.sensorManager=(SensorManager) getSystemService(SENSOR_SERVICE);
@@ -97,11 +97,15 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
         Thread threadSensorsPulse=new Thread(new SensorsThreadLifecircle(this,sensor_pulse,30000,30000));
         threadSensorsPulse.start();
 
+        displayFragmentHome("");
+    }
 
-
-
-        //Db
-      //  Core.getInstance().setDaoSession((Core.getInstance().getDaoMaster().newSession()));
+    private void initFragment()
+    {
+        fragmentSettings=new FragmentSettings();
+        fragmentHome=new FragmentHome();
+        getSupportFragmentManager().beginTransaction().add(R.id.main_container,fragmentSettings,"settingsFrag").commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.main_container,fragmentHome,"homeFrag").commit();
     }
 
 
@@ -287,26 +291,13 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
 
     private void displayFragmentHome(String value)
     {
-        fragmentHome=(FragmentHome)getSupportFragmentManager().findFragmentByTag("homeTag");
-
-        if (fragmentHome==null)
-        {
-            fragmentHome=new  FragmentHome();
-            Bundle bundle=new Bundle();
-            bundle.putString("glucoseValue",value);
-            fragmentHome.setArguments(bundle);
-        }
-
-     
-        getSupportFragmentManager().beginTransaction().replace(R.id.main_container, fragmentHome,"homeTag").addToBackStack(null).commit(); // newInstance() is a static factory method.
-
-        Log.d("stateofMessage","display fragment");
-       // fragmentHome.setGlucoseValue(value);
+        getSupportFragmentManager().beginTransaction().hide(fragmentSettings).commit();
+        getSupportFragmentManager().beginTransaction().show(fragmentHome).commit();
     }
     private void displayFragmentSettings()
     {
-        fragmentSettings=new FragmentSettings();
-        getSupportFragmentManager().beginTransaction().replace(R.id.main_container, fragmentSettings,"settingsTag").addToBackStack(null).commit(); // newInstance() is a static factory method.
+        getSupportFragmentManager().beginTransaction().hide(fragmentHome).commit();
+        getSupportFragmentManager().beginTransaction().show(fragmentSettings).commit(); // newInstance() is a static factory method.
     }
 
 

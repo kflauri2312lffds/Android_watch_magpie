@@ -57,10 +57,10 @@ public class FragmentHome extends Fragment {
         imgSeverity_pulse=(ImageButton) view.findViewById(R.id.img_severity_pulse);
 
         //retrive data from the bundle and set it to texte view
-        Bundle bundle=this.getArguments();
-        String value=bundle.getString("glucoseValue","");
-        if (!value.equals(""))
-            txtViewGlucose.setText(value);
+//        Bundle bundle=this.getArguments();
+//        String value=bundle.getString("glucoseValue","");
+//        if (!value.equals(""))
+//            txtViewGlucose.setText(value);
         return view;
     }
 
@@ -127,4 +127,5 @@ public class FragmentHome extends Fragment {
         Drawable img=ContextCompat.getDrawable(getContext(), id);
         return img;
     }
+
 }
