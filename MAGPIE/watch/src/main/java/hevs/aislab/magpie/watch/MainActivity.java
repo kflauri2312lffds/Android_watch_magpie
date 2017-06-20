@@ -137,8 +137,8 @@ public class MainActivity extends Activity {
         CustomRules glucoseRules=new CustomRules();
         glucoseRules.setCategory(Const.CATEGORY_GLUCOSE);
         //6 HOURS
-        long timewindows= 1000*60*60*6;
-        glucoseRules.setTimeWindow(timewindows);
+        long glucoseTimeWindow= 1000*60*60*6;
+        glucoseRules.setTimeWindow(glucoseTimeWindow);
         glucoseRules.setConstraint_1("Val1<=Val1Min");
         glucoseRules.setConstraint_2("Val2>=Val2Max");
         glucoseRules.setConstraint_3("Tev2>Tev1");
@@ -153,9 +153,9 @@ public class MainActivity extends Activity {
         pressureRules.setCategory(Const.CATEGORY_PRESSURE);
 
         //1 WEEK
-        long timewindow2=1000*60*60*24*7;
+        long pressuresTimeWindow=1000*60*60*24*7;
 
-        pressureRules.setTimeWindow(timewindow2);
+        pressureRules.setTimeWindow(pressuresTimeWindow);
         pressureRules.setVal_1_max(130.0);
         pressureRules.setVal_2_max(80.0);
         pressureRules.setConstraint_1("Sys>=130");
@@ -163,7 +163,19 @@ public class MainActivity extends Activity {
         RulesRepository.getInstance().insert(pressureRules);
 
 
-      //  Rule
+      //  Rule for the weight
+
+        long weightTimeWindows=1000*60*60*24*7;
+
+        CustomRules weightRules=new CustomRules();
+        weightRules.setTimeWindow(weightTimeWindows);
+        weightRules.setConstraint_1("Value_2>=101%*value_1 OR Value_2<=98%*value_1");
+        // max % of weight loss allowed
+        weightRules.setVal__2_min(98.0);
+        // max % of weight gain allowed
+        weightRules.setVal_2_max(101.0);
+        weightRules.setCategory(Const.CATEGORY_WEIGHT);
+        RulesRepository.getInstance().insert(weightRules);
 
 
 
@@ -351,16 +363,7 @@ public class MainActivity extends Activity {
 
     private void testGetFirstCategory()
     {
-        List<Measure>measureList=MeasuresRepository.getInstance().getLastMeasure();
-        for (Measure aMeasure : measureList)
-        {
-            Log.d("DisplayMeaInfo_Begin","*******************************************");
-            Log.d("DisplayMeaInfo_category",aMeasure.getCategory());
-            Log.d("DisplayMeaInfo_TimeStam",aMeasure.getTimeStamp()+"");
-            Log.d("DisplayMeaInfo_Value1",aMeasure.getValue1()+"");
-            Log.d("DisplayMeaInfo_ENDOF","*******************************************");
 
-        }
     }
 
 

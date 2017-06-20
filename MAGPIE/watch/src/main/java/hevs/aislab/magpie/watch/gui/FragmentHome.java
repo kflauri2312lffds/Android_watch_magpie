@@ -16,9 +16,11 @@ import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
+import java.util.HashMap;
 import java.util.List;
 
 import hevs.aislab.magpie.watch.R;
+import hevs.aislab.magpie.watch.libs.Const;
 import hevs.aislab.magpie.watch.models.Measure;
 import hevs.aislab.magpie.watch.repository.MeasuresRepository;
 
@@ -65,13 +67,14 @@ public class FragmentHome extends Fragment {
         String formatNodigit="%(,.0f";
 
 
-        //get all measure and display. Measure are sorted alphabeticaly by category
-        List<Measure>measureList=MeasuresRepository.getInstance().getLastMeasure();
-         txtViewGlucose.setText( measureList.size()>=1 ? String.format( format1Digit,measureList.get(0).getValue1()) : "/");
-        txtViewSystol.setText( measureList.size()>=2 ?  String.format(formatNodigit, measureList.get(1).getValue1()):"/");
-        txtViewDiastol.setText( measureList.size()>=2 ? String.format(formatNodigit, measureList.get(1).getValue2()):"/");
-        txtViewPulse.setText( measureList.size()>=3 ?   String.format(formatNodigit, measureList.get(2).getValue1()):"/");
-        txtViewWeight.setText(measureList.size()>=4 ?   String.format(format1Digit,  measureList.get(3).getValue1()) :"/");
+        //get all measure and display.
+        HashMap<String, Measure>measureList=MeasuresRepository.getInstance().getLastMeasure();
+
+         txtViewGlucose.setText( measureList.containsKey(Const.CATEGORY_GLUCOSE) ? String.format( format1Digit,measureList.get(Const.CATEGORY_GLUCOSE).getValue1()) : "/");
+        txtViewSystol.setText(  measureList.containsKey(Const.CATEGORY_PRESSURE)?  String.format(formatNodigit, measureList.get(Const.CATEGORY_PRESSURE).getValue1()):"/");
+        txtViewDiastol.setText( measureList.containsKey(Const.CATEGORY_PRESSURE) ? String.format(formatNodigit, measureList.get(Const.CATEGORY_PRESSURE).getValue2()):"/");
+        txtViewPulse.setText( measureList.containsKey(Const.CATEGORY_PULSE) ?   String.format(formatNodigit, measureList.get(Const.CATEGORY_PULSE).getValue1()):"/");
+        txtViewWeight.setText(measureList.containsKey(Const.CATEGORY_WEIGHT) ?   String.format(format1Digit,  measureList.get(Const.CATEGORY_WEIGHT).getValue1()) :"/");
 
 
 

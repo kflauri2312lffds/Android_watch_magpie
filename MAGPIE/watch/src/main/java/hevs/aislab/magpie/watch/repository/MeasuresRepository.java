@@ -5,6 +5,7 @@ import android.database.Cursor;
 import org.greenrobot.greendao.query.WhereCondition;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import hevs.aislab.magpie.watch.db.Core;
@@ -73,12 +74,13 @@ public class MeasuresRepository {
                 .list();
     }
 
+
     /**
      * this methode will return the last measure stored in the database of each category, and then
      * sorted them alphabetically
      * @return lastMeasure
      */
-    public List<Measure>getLastMeasure()
+    public HashMap<String,Measure>getLastMeasure()
     {
       String SQL_DISTINCT_ENAME = "SELECT max("+MeasureDao.Properties.TimeStamp.columnName+"),"
               +MeasureDao.Properties.Id.columnName+","
@@ -90,7 +92,7 @@ public class MeasuresRepository {
               +" ORDER BY "+MeasureDao.Properties.Category.columnName;
 
 
-        ArrayList<Measure> result = new ArrayList<Measure>();
+        HashMap<String,Measure> result = new HashMap<String, Measure>();
         Cursor c = Core.getInstance().getDaoSession().getDatabase().rawQuery(SQL_DISTINCT_ENAME, null);
         try{
             if (c.moveToFirst()) {
@@ -101,7 +103,7 @@ public class MeasuresRepository {
                     measure.setValue1(c.getDouble(2));
                     measure.setValue2(c.getDouble(3));
                     measure.setCategory(c.getString(4));
-                    result.add(measure);
+                    result.put(measure.getCategory(),measure);
                 } while (c.moveToNext());
             }
         } finally {

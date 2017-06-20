@@ -1,4 +1,4 @@
-package hevs.aislab.magpie.watch.threads;
+package hevs.aislab.magpie.watch.notification;
 
 import android.app.Notification;
 import android.app.PendingIntent;
@@ -16,7 +16,7 @@ import hevs.aislab.magpie.watch.shared_pref.PrefAccessor;
  * Created by teuft on 18.06.2017.
  */
 
-public class CreateNotification implements Runnable {
+public class NotificationGenerator implements Runnable {
 
     Context context;
     String title;
@@ -29,7 +29,7 @@ public class CreateNotification implements Runnable {
             playSong();
     }
 
-    public CreateNotification(Context context, String title, String content)
+    public NotificationGenerator(Context context, String title, String content)
     {
         this.context=context;
         this.title=title;

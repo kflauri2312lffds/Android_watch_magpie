@@ -260,7 +260,6 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
             Toast.makeText(this, getString(R.string.voice_incorrect), Toast.LENGTH_SHORT).show();
         }
 
-
             Toast.makeText(this, getString(R.string.voice_not_found), Toast.LENGTH_SHORT).show();
     }
 
@@ -288,8 +287,6 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
             Toast.makeText(this, "Error with the value inserted", Toast.LENGTH_SHORT).show();
         }
     }
-
-
 
     private void displayFragmentHome(String value)
     {

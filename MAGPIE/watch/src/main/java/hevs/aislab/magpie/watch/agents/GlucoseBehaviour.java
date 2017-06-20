@@ -19,7 +19,7 @@ import hevs.aislab.magpie.watch.models.Measure;
 import hevs.aislab.magpie.watch.repository.AlertRepository;
 import hevs.aislab.magpie.watch.repository.MeasuresRepository;
 import hevs.aislab.magpie.watch.repository.RulesRepository;
-import hevs.aislab.magpie.watch.threads.CreateNotification;
+import hevs.aislab.magpie.watch.notification.NotificationGenerator;
 import hevs.aislab.magpie.watch.threads.DisplayGUI;
 
 /**
@@ -105,7 +105,7 @@ public class GlucoseBehaviour extends Behavior {
         Log.d("InfoRulesAgent","Seconde measure is not null");
 
         //launch the notification
-        Thread notificationThread=new Thread(new CreateNotification(context,context.getString(R.string.category_glucose),context.getString(R.string.notification_high_glucose)));
+        Thread notificationThread=new Thread(new NotificationGenerator(context,context.getString(R.string.category_glucose),context.getString(R.string.notification_high_glucose)));
         context.runOnUiThread(notificationThread);
 
         //there is no alert existing, so we create one and we link it with the measure

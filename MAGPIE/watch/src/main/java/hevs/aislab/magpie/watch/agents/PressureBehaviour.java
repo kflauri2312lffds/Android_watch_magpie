@@ -19,7 +19,7 @@ import hevs.aislab.magpie.watch.models.Measure;
 import hevs.aislab.magpie.watch.repository.AlertRepository;
 import hevs.aislab.magpie.watch.repository.MeasuresRepository;
 import hevs.aislab.magpie.watch.repository.RulesRepository;
-import hevs.aislab.magpie.watch.threads.CreateNotification;
+import hevs.aislab.magpie.watch.notification.NotificationGenerator;
 import hevs.aislab.magpie.watch.threads.DisplayGUI;
 
 /**
@@ -91,7 +91,7 @@ public class PressureBehaviour extends Behavior {
             return;
 
         //launch the notification
-        Thread notificationThread=new Thread(new CreateNotification(context,context.getString(R.string.category_pressure),context.getString(R.string.notification_high_pressure)));
+        Thread notificationThread=new Thread(new NotificationGenerator(context,context.getString(R.string.category_pressure),context.getString(R.string.notification_high_pressure)));
         context.runOnUiThread(notificationThread);
 
         Alertes alertes=new Alertes();

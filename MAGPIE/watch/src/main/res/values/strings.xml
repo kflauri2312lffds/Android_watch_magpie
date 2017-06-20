@@ -37,4 +37,6 @@
     <string name="category_weight">weight</string>
     <string name="category_pulse">heart pulse</string>
     <string name="category_step">step</string>
+    <string name="notification_high_weight" translatable="false">high weight gain has been detected in short time</string>
+    <string name="notification_low_weight" translatable="false">high weith loss has been detected</string>
 </resources>
