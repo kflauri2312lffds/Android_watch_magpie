@@ -22,6 +22,7 @@ public class Alertes {
 
     @Id(autoincrement = true)
     private Long id;
+    private String message;
     @NotNull
     private long measure_id;
     @NotNull
@@ -39,34 +40,21 @@ public class Alertes {
     /** Used for active entity operations. */
     @Generated(hash = 1259768704)
     private transient AlertesDao myDao;
-
-
-
-
-
-
-
-    @Generated(hash = 550830157)
-    public Alertes(Long id, long measure_id, long rule_id) {
-        this.id = id;
-        this.measure_id = measure_id;
-        this.rule_id = rule_id;
-    }
-
-    @Generated(hash = 1614529119)
-    public Alertes() {
-    }
-
     @Generated(hash = 2039194280)
     private transient Long measure__resolvedKey;
     @Generated(hash = 1580548308)
     private transient Long rule__resolvedKey;
 
+    public Alertes() {
+    }
 
-
-
-
-
+    @Generated(hash = 640696675)
+    public Alertes(Long id, String message, long measure_id, long rule_id) {
+        this.id = id;
+        this.message = message;
+        this.measure_id = measure_id;
+        this.rule_id = rule_id;
+    }
 
     public Long getId() {
         return id;
@@ -76,32 +64,28 @@ public class Alertes {
         this.id = id;
     }
 
-    public Long getMeasure_id() {
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public long getMeasure_id() {
         return measure_id;
-    }
-
-    public void setMeasure_id(Long measure_id) {
-        this.measure_id = measure_id;
-    }
-
-    public long getRules_id() {
-        return rule_id;
-    }
-
-    public void setRules_id(long rule_id) {
-        this.rule_id = rule_id;
-    }
-
-    public long getRule_id() {
-        return this.rule_id;
-    }
-
-    public void setRule_id(long rule_id) {
-        this.rule_id = rule_id;
     }
 
     public void setMeasure_id(long measure_id) {
         this.measure_id = measure_id;
+    }
+
+    public long getRule_id() {
+        return rule_id;
+    }
+
+    public void setRule_id(long rule_id) {
+        this.rule_id = rule_id;
     }
 
     /** To-one relationship, resolved on first access. */
@@ -213,9 +197,6 @@ public class Alertes {
         myDao = daoSession != null ? daoSession.getAlertesDao() : null;
     }
 
-
-   
-
-
+    
 
 }

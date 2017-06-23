@@ -25,6 +25,7 @@ import hevs.aislab.magpie.watch.agents.PressureBehaviour;
 import hevs.aislab.magpie.watch.agents.PulseBehaviour;
 import hevs.aislab.magpie.watch.agents.StepBehaviour;
 import hevs.aislab.magpie.watch.agents.WeightBehaviour;
+import hevs.aislab.magpie.watch.gui.FragmentDisplayAlertes;
 import hevs.aislab.magpie.watch.gui.dialogfragment.DialogFragmentSetPressure;
 import hevs.aislab.magpie.watch.gui.dialogfragment.DialogFragmentSetValue;
 import hevs.aislab.magpie.watch.gui.dialogfragment.DialogFragmentSetGlucose;
@@ -50,11 +51,12 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
 
     //handle the voice variable
     private static final int SPEECH_REQUEST_CODE = 0;
-    FragmentManager manager;
+
 
     //fragment
     private FragmentHome fragmentHome;
     private FragmentSettings fragmentSettings;
+    private FragmentDisplayAlertes fragmentDisplayAlertes;
 
     //sensors
     private SensorManager sensorManager;
@@ -99,15 +101,17 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
 
 
 
-        displayFragmentHome("");
+        displayFragmentHome();
     }
 
     private void initFragment()
     {
         fragmentSettings=new FragmentSettings();
         fragmentHome=new FragmentHome();
+        fragmentDisplayAlertes=new FragmentDisplayAlertes();
         getSupportFragmentManager().beginTransaction().add(R.id.main_container,fragmentSettings,"settingsFrag").commit();
         getSupportFragmentManager().beginTransaction().add(R.id.main_container,fragmentHome,"homeFrag").commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.main_container,fragmentDisplayAlertes,"display_alertTag").commit();
     }
 
 
@@ -122,18 +126,17 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
     public void click_home(View view )
     {
 
-        displayFragmentHome("");
-
+        displayFragmentHome();
     }
     public void click_settings(View view )
     {
         displayFragmentSettings();
     }
-    //UPDATE VIEW IN FRAGMENT
 
+    //UPDATE VIEW IN FRAGMENT
     public void click_alert(View view)
     {
-        //TODO : DISPLAY THE ALERT FRAGMENT
+        displayFragmentAlert();
     }
 
     //------------------METHODE TO PROCESS VALUE FROM THE DIALOG FRAGMENT---------------------
@@ -288,15 +291,23 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
         }
     }
 
-    private void displayFragmentHome(String value)
+    private void displayFragmentHome()
     {
         getSupportFragmentManager().beginTransaction().hide(fragmentSettings).commit();
+        getSupportFragmentManager().beginTransaction().hide(fragmentDisplayAlertes).commit();
         getSupportFragmentManager().beginTransaction().show(fragmentHome).commit();
     }
     private void displayFragmentSettings()
     {
+        getSupportFragmentManager().beginTransaction().hide(fragmentDisplayAlertes).commit();
         getSupportFragmentManager().beginTransaction().hide(fragmentHome).commit();
         getSupportFragmentManager().beginTransaction().show(fragmentSettings).commit(); // newInstance() is a static factory method.
+    }
+    private void displayFragmentAlert()
+    {
+        getSupportFragmentManager().beginTransaction().hide(fragmentSettings).commit();
+        getSupportFragmentManager().beginTransaction().hide(fragmentHome).commit();
+        getSupportFragmentManager().beginTransaction().show(fragmentDisplayAlertes).commit();
     }
 
 
