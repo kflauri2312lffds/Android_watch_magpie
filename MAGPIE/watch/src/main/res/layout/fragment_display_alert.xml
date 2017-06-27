@@ -24,18 +24,18 @@
             android:scaleType="fitXY"
             android:src="@drawable/pulse_lv0"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintHorizontal_bias="0.094"
+            app:layout_constraintHorizontal_bias="0.14"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.386" />
+            app:layout_constraintVertical_bias="0.95" />
 
         <ImageButton
             android:id="@+id/button_display_alert_glucose"
             style="@style/img_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="0dp"
             android:layout_marginEnd="8dp"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
@@ -46,18 +46,18 @@
             android:scaleType="fitXY"
             android:src="@drawable/glucose_lv0"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintHorizontal_bias="0.31"
+            app:layout_constraintHorizontal_bias="0.253"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.14999998" />
+            app:layout_constraintVertical_bias="1.0" />
 
         <ImageButton
             android:id="@+id/button_display_alert_weight"
             style="@style/img_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="0dp"
             android:layout_marginEnd="8dp"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
@@ -68,11 +68,10 @@
             android:scaleType="fitXY"
             android:src="@drawable/weight_lv0"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintHorizontal_bias="0.54"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.048" />
+            app:layout_constraintVertical_bias="1.0" />
 
         <ImageButton
             android:id="@+id/button_display_alert_pressure"
@@ -90,11 +89,11 @@
             android:scaleType="fitXY"
             android:src="@drawable/pressure_lv0"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintHorizontal_bias="0.953"
+            app:layout_constraintHorizontal_bias="0.9"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.386" />
+            app:layout_constraintVertical_bias="0.958" />
 
         <ImageButton
             android:id="@+id/button_display_alert_step"
@@ -112,28 +111,28 @@
             android:scaleType="fitXY"
             android:src="@drawable/step_lv0"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintHorizontal_bias="0.825"
+            app:layout_constraintHorizontal_bias="0.715"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.175" />
+            app:layout_constraintVertical_bias="1.0" />
 
         <ListView
             android:id="@+id/list_alert"
             android:layout_width="0dp"
-            android:layout_height="67dp"
+            android:layout_height="100dp"
             android:layout_marginBottom="8dp"
+            android:layout_marginEnd="24dp"
             android:layout_marginLeft="24dp"
             android:layout_marginRight="24dp"
+            android:layout_marginStart="24dp"
             android:layout_marginTop="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0"
-            android:layout_marginStart="24dp"
-            android:layout_marginEnd="24dp" />
+            app:layout_constraintVertical_bias="0.222" />
 
     </android.support.constraint.ConstraintLayout>
 </LinearLayout>

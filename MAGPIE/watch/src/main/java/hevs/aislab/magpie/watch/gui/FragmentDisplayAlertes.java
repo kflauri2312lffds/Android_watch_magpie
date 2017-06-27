@@ -1,7 +1,12 @@
 package hevs.aislab.magpie.watch.gui;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,8 +17,12 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.List;
 
+import hevs.aislab.magpie.watch.HomeActivity;
 import hevs.aislab.magpie.watch.R;
 import hevs.aislab.magpie.watch.gui.adapter.AlertAdapter;
+import hevs.aislab.magpie.watch.gui.dialogfragment.DialogFragmentListAlert;
+import hevs.aislab.magpie.watch.gui.dialogfragment.DialogFragmentSetGlucose;
+import hevs.aislab.magpie.watch.gui.dialogfragment.DialogFragmentSetValue;
 import hevs.aislab.magpie.watch.libs.Const;
 import hevs.aislab.magpie.watch.models.Alertes;
 import hevs.aislab.magpie.watch.repository.AlertRepository;
@@ -35,6 +44,8 @@ public class FragmentDisplayAlertes extends Fragment {
     ImageButton buttonPressure;
     ImageButton buttonStep;
 
+    private FragmentActivity contextActivity;
+
     //listner for button
     private class ListnerButton implements View.OnClickListener
     {
@@ -49,7 +60,27 @@ public class FragmentDisplayAlertes extends Fragment {
             alertesList.clear();
             alertesList.addAll(AlertRepository.getINSTANCE().getAllByCategory(category));
             alertAdapter.notifyDataSetChanged();
-            Log.d("sizOfArray",alertesList.size()+"");
+
+
+//            //create the bundle for the fragment and set the bundle
+//            DialogFragmentListAlert dialogFragmentListAlert = new DialogFragmentListAlert();
+//            Bundle bundle=new Bundle();
+//            bundle.putString("category",category);
+//            dialogFragmentListAlert.setArguments(bundle);
+//
+//            //show the fragment
+//            FragmentManager fm = contextActivity.getSupportFragmentManager();
+//            dialogFragmentListAlert.show(fm,"tag");
+        }
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try {
+            contextActivity = (HomeActivity) context;
+        } catch (ClassCastException castException) {
+            /** The activity does not implement the listener. */
         }
     }
 
@@ -62,7 +93,7 @@ public class FragmentDisplayAlertes extends Fragment {
         // Inflate the layout for this fragment
         view = lf.inflate(R.layout.fragment_display_alert, container, false);
 
-         listViewAlert=(ListView)view.findViewById(R.id.list_alert) ;
+        listViewAlert=(ListView)view.findViewById(R.id.list_alert) ;
         alertesList= AlertRepository.getINSTANCE().getAll();
         Log.d("Adapter_Creation",alertesList.size()+"");
         alertAdapter=new AlertAdapter(view.getContext(),R.layout.adapter_alert,alertesList);
@@ -87,11 +118,6 @@ public class FragmentDisplayAlertes extends Fragment {
     }
 
 
-    /**
-     * This method is used to display alert based on the button pressed. We will specify the category of alert
-     * @param view
-     * @param category
-     */
 
 
 }

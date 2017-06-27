@@ -8,23 +8,21 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <ImageButton
+            android:id="@+id/imageButton5"
+            style="@style/img_smallimg"
+            android:background="@null"
+            android:src="@drawable/small_glucose" />
+
         <TextView
             style="@style/adapter_cells"
             android:id="@+id/alert_column_timeStamp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TextView"
+            android:scaleType="centerInside"
             android:textAlignment="viewStart"
             android:textColor="@color/black" />
 
-        <TextView
-            style="@style/adapter_cells"
-            android:id="@+id/alert_column_category"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="TextView"
-            android:textAlignment="viewStart"
-            android:textColor="@color/black" />
 
         <TextView
             style="@style/adapter_cells"

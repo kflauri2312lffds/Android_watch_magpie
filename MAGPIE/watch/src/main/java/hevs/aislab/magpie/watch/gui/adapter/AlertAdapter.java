@@ -53,7 +53,6 @@ public class AlertAdapter extends ArrayAdapter<Alertes> {
 
         Log.d("passage_adapter","Alert is not null");
         TextView txtViewTimeStamp=(TextView)view.findViewById(R.id.alert_column_timeStamp);
-        TextView txtViewCategory=(TextView)view.findViewById(R.id.alert_column_category);
         TextView txtViewmessage=(TextView)view.findViewById(R.id.alert_column_message);
         TextView txtViewValue=(TextView)view.findViewById(R.id.alert_column_values);
 
@@ -66,8 +65,7 @@ public class AlertAdapter extends ArrayAdapter<Alertes> {
         if (txtViewmessage!=null)
             txtViewmessage.setText(anAlert.getMessage());
 
-        if (txtViewCategory!=null)
-            txtViewCategory.setText(anAlert.getMeasure().getCategory());
+
 
         if (txtViewValue!=null)
             txtViewValue.setText(anAlert.getMeasure().getValue1()+"");
