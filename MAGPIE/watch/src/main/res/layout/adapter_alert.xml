@@ -9,25 +9,40 @@
         android:layout_height="match_parent">
 
         <TextView
+            style="@style/adapter_cells"
             android:id="@+id/alert_column_timeStamp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:text="TextView" />
+            android:text="TextView"
+            android:textAlignment="viewStart"
+            android:textColor="@color/black" />
 
         <TextView
+            style="@style/adapter_cells"
             android:id="@+id/alert_column_category"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:text="TextView" />
+            android:text="TextView"
+            android:textAlignment="viewStart"
+            android:textColor="@color/black" />
 
         <TextView
+            style="@style/adapter_cells"
+            android:id="@+id/alert_column_values"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            android:textAlignment="viewStart"
+            android:textColor="@color/black" />
+
+        <TextView
+            style="@style/adapter_cells"
             android:id="@+id/alert_column_message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:text="TextView" />
+            android:text="TextView"
+            android:textAlignment="viewStart"
+            android:textColor="@color/black" />
     </TableRow>
 
 </TableLayout>

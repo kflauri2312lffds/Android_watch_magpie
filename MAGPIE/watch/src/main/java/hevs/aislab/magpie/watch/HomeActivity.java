@@ -307,6 +307,11 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
     {
         getSupportFragmentManager().beginTransaction().hide(fragmentSettings).commit();
         getSupportFragmentManager().beginTransaction().hide(fragmentHome).commit();
+        getSupportFragmentManager().beginTransaction().remove(fragmentDisplayAlertes).commit();
+        //create a new fragment each time to be sure to have the last values
+        fragmentDisplayAlertes=new FragmentDisplayAlertes();
+
+        getSupportFragmentManager().beginTransaction().add(R.id.main_container,fragmentDisplayAlertes,"display_alertTag").commit();
         getSupportFragmentManager().beginTransaction().show(fragmentDisplayAlertes).commit();
     }
 

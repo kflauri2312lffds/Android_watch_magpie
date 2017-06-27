@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.wearable.view.BoxInsetLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -11,7 +11,7 @@
         android:layout_height="match_parent">
 
         <ImageButton
-            android:id="@+id/imageButton4"
+            android:id="@+id/button_display_alert_pulse"
             style="@style/img_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -31,7 +31,7 @@
             app:layout_constraintVertical_bias="0.386" />
 
         <ImageButton
-            android:id="@+id/imageButton6"
+            android:id="@+id/button_display_alert_glucose"
             style="@style/img_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -53,7 +53,7 @@
             app:layout_constraintVertical_bias="0.14999998" />
 
         <ImageButton
-            android:id="@+id/imageButton7"
+            android:id="@+id/button_display_alert_weight"
             style="@style/img_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -75,7 +75,7 @@
             app:layout_constraintVertical_bias="0.048" />
 
         <ImageButton
-            android:id="@+id/imageButton8"
+            android:id="@+id/button_display_alert_pressure"
             style="@style/img_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -97,7 +97,7 @@
             app:layout_constraintVertical_bias="0.386" />
 
         <ImageButton
-            android:id="@+id/imageButton9"
+            android:id="@+id/button_display_alert_step"
             style="@style/img_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -120,19 +120,20 @@
 
         <ListView
             android:id="@+id/list_alert"
-            android:layout_width="150dp"
-            android:layout_height="89dp"
+            android:layout_width="0dp"
+            android:layout_height="67dp"
             android:layout_marginBottom="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="24dp"
             android:layout_marginTop="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.95"
-            tools:layout_editor_absoluteY="125dp" />
+            app:layout_constraintVertical_bias="1.0"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp" />
 
     </android.support.constraint.ConstraintLayout>
-</android.support.wearable.view.BoxInsetLayout>
+</LinearLayout>

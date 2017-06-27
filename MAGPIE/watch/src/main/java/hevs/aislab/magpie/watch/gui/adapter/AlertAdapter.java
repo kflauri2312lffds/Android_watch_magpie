@@ -15,6 +15,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import hevs.aislab.magpie.watch.R;
+import hevs.aislab.magpie.watch.libs.Lib;
 import hevs.aislab.magpie.watch.models.Alertes;
 
 /**
@@ -54,13 +55,22 @@ public class AlertAdapter extends ArrayAdapter<Alertes> {
         TextView txtViewTimeStamp=(TextView)view.findViewById(R.id.alert_column_timeStamp);
         TextView txtViewCategory=(TextView)view.findViewById(R.id.alert_column_category);
         TextView txtViewmessage=(TextView)view.findViewById(R.id.alert_column_message);
+        TextView txtViewValue=(TextView)view.findViewById(R.id.alert_column_values);
 
         if (txtViewTimeStamp!=null)     //TODO PROCESS THE TIMESTAMP AND SHOW A DATE
-            txtViewTimeStamp.setText(anAlert.getMeasure().getTimeStamp()+"");
+        {
+            //get the date of the time stamp
+           String date= Lib.getInstance().getDate(anAlert.getMeasure().getTimeStamp());
+            txtViewTimeStamp.setText(date);
+        }
         if (txtViewmessage!=null)
             txtViewmessage.setText(anAlert.getMessage());
+
         if (txtViewCategory!=null)
             txtViewCategory.setText(anAlert.getMeasure().getCategory());
+
+        if (txtViewValue!=null)
+            txtViewValue.setText(anAlert.getMeasure().getValue1()+"");
 
 
 
