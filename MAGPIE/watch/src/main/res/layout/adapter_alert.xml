@@ -8,11 +8,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageButton
-            android:id="@+id/imageButton5"
+        <ImageView
+            android:id="@+id/alert_column_category"
             style="@style/img_smallimg"
-            android:scaleType="fitCenter"
             android:background="@null"
+            android:scaleType="fitCenter"
             android:src="@drawable/small_glucose" />
 
         <TextView
@@ -26,22 +26,20 @@
 
 
         <TextView
-            style="@style/adapter_cells"
             android:id="@+id/alert_column_values"
+            style="@style/adapter_cells_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="TextView"
-            android:textAlignment="viewStart"
-            android:textColor="@color/black" />
+            android:textAlignment="viewStart" />
 
         <TextView
-            style="@style/adapter_cells_value"
             android:id="@+id/alert_column_message"
+            style="@style/adapter_cells_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="TextView"
-            android:textAlignment="viewStart"
-            android:textColor="@color/black" />
+            android:textAlignment="viewStart" />
 
         <TextView
             style="@style/adapter_cells_value"

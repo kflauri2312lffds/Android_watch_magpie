@@ -57,9 +57,19 @@ public class FragmentDisplayAlertes extends Fragment {
         @Override
         public void onClick(View view) {
             //change the value in the
-            alertesList.clear();
-            alertesList.addAll(AlertRepository.getINSTANCE().getAllByCategory(category));
-            alertAdapter.notifyDataSetChanged();
+            ((HomeActivity) getContext()).runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    alertesList.clear();
+                    alertesList.addAll(AlertRepository.getINSTANCE().getAllByCategory(category));
+
+                    listViewAlert.setAdapter(alertAdapter);
+                    alertAdapter.notifyDataSetChanged();
+                    listViewAlert.refreshDrawableState();
+                }
+            });
+
+
 
 
 //            //create the bundle for the fragment and set the bundle
@@ -97,8 +107,15 @@ public class FragmentDisplayAlertes extends Fragment {
         alertesList= AlertRepository.getINSTANCE().getAll();
         Log.d("Adapter_Creation",alertesList.size()+"");
         alertAdapter=new AlertAdapter(view.getContext(),R.layout.adapter_alert,alertesList);
-        Log.d("displayedAlert","DidplaysedAlert");
-        listViewAlert.setAdapter(alertAdapter);
+
+        ((HomeActivity) getContext()).runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                listViewAlert.setAdapter(alertAdapter);
+                alertAdapter.notifyDataSetChanged();
+                listViewAlert.refreshDrawableState();
+            }
+        });
 
         //generate the button
         buttonGlucose=(ImageButton)view.findViewById(R.id.button_display_alert_glucose);

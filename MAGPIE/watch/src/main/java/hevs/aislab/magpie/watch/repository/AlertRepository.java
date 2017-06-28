@@ -48,6 +48,7 @@ public class AlertRepository {
     public List<Alertes> getAll()
     {
         return  alertesDao.queryBuilder()
+                .orderDesc(AlertesDao.Properties.Measure_id)
                 .list();
     }
 
@@ -56,7 +57,9 @@ public class AlertRepository {
         QueryBuilder<Alertes> queryBuilder = alertesDao.queryBuilder();
         queryBuilder.join(AlertesDao.Properties.Measure_id,Measure.class)
                 .where(MeasureDao.Properties.Category.eq(category));
-        return queryBuilder.list();
+        return queryBuilder
+                .orderDesc(AlertesDao.Properties.Measure_id)
+                .list();
     }
 
     public List<Alertes>getAllByCategoryBetweenTimeStamp(String category, long startTimeStamp, long endTimeStamp )

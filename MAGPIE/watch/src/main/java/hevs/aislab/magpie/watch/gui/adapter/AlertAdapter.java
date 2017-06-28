@@ -1,20 +1,27 @@
 package hevs.aislab.magpie.watch.gui.adapter;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 import java.util.List;
+import java.util.Locale;
 
 import hevs.aislab.magpie.watch.R;
+import hevs.aislab.magpie.watch.libs.Const;
 import hevs.aislab.magpie.watch.libs.Lib;
 import hevs.aislab.magpie.watch.models.Alertes;
 
@@ -45,6 +52,9 @@ public class AlertAdapter extends ArrayAdapter<Alertes> {
         }
 
         Alertes anAlert=getItem(position);
+        Log.d("currentAlert_Category",anAlert.getMeasure().getCategory());
+        Log.d("currentAlert_Value1",anAlert.getMeasure().getValue1()+"");
+        Log.d("currentAlert_Value2",anAlert.getMeasure().getValue2()+"");
 
         if (anAlert==null)
         {
@@ -55,6 +65,8 @@ public class AlertAdapter extends ArrayAdapter<Alertes> {
         TextView txtViewTimeStamp=(TextView)view.findViewById(R.id.alert_column_timeStamp);
         TextView txtViewmessage=(TextView)view.findViewById(R.id.alert_column_message);
         TextView txtViewValue=(TextView)view.findViewById(R.id.alert_column_values);
+        TextView txtViewValue2=(TextView)view.findViewById(R.id.alert_column_values2);
+        ImageView imageCategory=(ImageView)view.findViewById(R.id.alert_column_category);
 
         if (txtViewTimeStamp!=null)     //TODO PROCESS THE TIMESTAMP AND SHOW A DATE
         {
@@ -68,11 +80,43 @@ public class AlertAdapter extends ArrayAdapter<Alertes> {
 
 
         if (txtViewValue!=null)
-            txtViewValue.setText(anAlert.getMeasure().getValue1()+"");
+        {
+            String value;
+            if (anAlert.getMeasure().getCategory().equals(Const.CATEGORY_GLUCOSE) ||anAlert.getMeasure().getCategory().equals(Const.CATEGORY_WEIGHT))
+                value=Lib.getInstance().formatWith1Digit( anAlert.getMeasure().getValue1());
+            else
+                value=Lib.getInstance().formatWithNoDigit( anAlert.getMeasure().getValue1());
+            txtViewValue.setText(value);
+        }
 
 
+        if (txtViewValue2!=null )
+        {
+            String value;
+            if (anAlert.getMeasure().getValue2()!=null)
+            value=Lib.getInstance().formatWithNoDigit(anAlert.getMeasure().getValue2());
+            else
+                value="";
+            txtViewValue2.setText(value);
+        }
+
+        if (imageCategory!=null)
+        {
+            //TODO IMPLEMENT THE DYNAMIC IMAGE
+           imageCategory.setImageDrawable(getDrawable(anAlert.getMeasure().getCategory()));
+        }
 
 
         return view;
+    }
+
+    private Drawable getDrawable(String category) {
+
+        String ressourceName="small_"+category;
+        Context context = getContext();
+        //Get the image with the named based on category and based on name of the category
+        int id = context.getResources().getIdentifier(ressourceName, "drawable", context.getPackageName());
+        Drawable img= ContextCompat.getDrawable(getContext(), id);
+        return img;
     }
 }
