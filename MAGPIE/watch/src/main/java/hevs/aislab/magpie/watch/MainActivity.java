@@ -141,8 +141,8 @@ public class MainActivity extends Activity {
         //6 HOURS
         long glucoseTimeWindow= 1000*60*60*6;
         glucoseRules.setTimeWindow(glucoseTimeWindow);
-        glucoseRules.setConstraint_1("Value_1<=Value_1Min");
-        glucoseRules.setConstraint_2("Value_2>=Value_2Max");
+        glucoseRules.setConstraint_1("oldGlucose<=Value_1Min");
+        glucoseRules.setConstraint_2("currentGlucose>=Value_2Max");
         glucoseRules.setConstraint_3("Tev2>Tev1");
         //SET THE VALUES
         glucoseRules.setVal_1_min(3.8);
@@ -160,8 +160,8 @@ public class MainActivity extends Activity {
         pressureRules.setTimeWindow(pressuresTimeWindow);
         pressureRules.setVal_1_max(130.0);
         pressureRules.setVal_2_max(80.0);
-        pressureRules.setConstraint_1("Sys>=130");
-        pressureRules.setConstraint_2("Dias>=80");
+        pressureRules.setConstraint_1("Sys>=Value_1Max");
+        pressureRules.setConstraint_2("Dias>=Value_2Max");
         RulesRepository.getInstance().insert(pressureRules);
 
 
@@ -171,7 +171,7 @@ public class MainActivity extends Activity {
 
         CustomRules weightRules=new CustomRules();
         weightRules.setTimeWindow(weightTimeWindows);
-        weightRules.setConstraint_1("Value_2>=101%*Value_1 OR Value_2<=98%*Value_1");
+        weightRules.setConstraint_1("Value_2>=Value_2Max%*Value_1 OR Value_2Max<==Value_1Min%*Value_1");
         glucoseRules.setConstraint_2("Tev2>Tev1");
         // max % of weight loss allowed
         weightRules.setVal__2_min(98.0);

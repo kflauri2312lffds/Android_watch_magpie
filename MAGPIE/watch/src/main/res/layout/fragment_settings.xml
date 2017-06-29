@@ -6,16 +6,224 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/textView2"
+    <ImageButton
+        android:id="@+id/button_display_rules_pulse"
+        style="@style/img_status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
-        android:text="fragmentSettings"
+        android:layout_weight="1"
+        android:background="@null"
+        android:scaleType="fitXY"
+        android:src="@drawable/pulse_lv0"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintHorizontal_bias="0.14"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.95" />
+
+    <ImageButton
+        android:id="@+id/button_display_rules_glucose"
+        style="@style/img_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_weight="1"
+        android:background="@null"
+        android:scaleType="fitXY"
+        android:src="@drawable/glucose_lv0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.253"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <ImageButton
+        android:id="@+id/button_display_rules_weight"
+        style="@style/img_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_weight="1"
+        android:background="@null"
+        android:scaleType="fitXY"
+        android:src="@drawable/weight_lv0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <ImageButton
+        android:id="@+id/button_display_rules_pressure"
+        style="@style/img_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_weight="1"
+        android:background="@null"
+        android:scaleType="fitXY"
+        android:src="@drawable/pressure_lv0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.9"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.958" />
+
+    <ImageButton
+        android:id="@+id/button_display_rules_step"
+        style="@style/img_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_weight="1"
+        android:background="@null"
+        android:scaleType="fitXY"
+        android:src="@drawable/step_lv0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.715"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <EditText
+        android:id="@+id/edittxt_value1min"
+        style="@style/edittxt_values"
+        android:layout_marginLeft="0dp"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        android:text="1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.615" />
+
+    <EditText
+        android:id="@+id/edittxt_value1max"
+        style="@style/edittxt_values"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        android:text="2"
+        app:layout_constraintBottom_toBottomOf="@+id/edittxt_value1min"
+        android:layout_marginBottom="-7dp"
+        app:layout_constraintLeft_toRightOf="@+id/edittxt_value1min"
+        android:layout_marginLeft="0dp" />
+
+    <EditText
+        android:id="@+id/edittxt_value2min"
+        style="@style/edittxt_values"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        android:paddingBottom="12sp"
+        android:text="130"
+        app:layout_constraintLeft_toRightOf="@+id/edittxt_value1max"
+        android:layout_marginLeft="35dp"
+        app:layout_constraintBottom_toBottomOf="@+id/edittxt_value1max"
+        android:layout_marginBottom="0dp" />
+
+    <EditText
+        android:id="@+id/edittxt_value2max"
+        style="@style/edittxt_values"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        android:text="120"
+        app:layout_constraintBottom_toBottomOf="@+id/edittxt_value2min"
+        android:layout_marginBottom="-16dp"
+        app:layout_constraintLeft_toRightOf="@+id/edittxt_value2min"
+        android:layout_marginLeft="-3dp" />
+
+    <ScrollView
+        style="@style/scroll_view_display_rules"
+        android:layout_width="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.408"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.053">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txtView_constraint1"
+                style="@style/txtView_displayConstraint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_weight="1"
+                android:text="const1"
+                android:textAlignment="viewStart"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHorizontal_bias="0.503"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.04000002" />
+
+            <TextView
+                android:id="@+id/txtView_constraint2"
+                style="@style/txtView_displayConstraint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="0dp"
+                android:layout_marginTop="0dp"
+                android:layout_weight="1"
+                android:text="TextView"
+                android:textAlignment="viewStart"
+                app:layout_constraintLeft_toLeftOf="@+id/txtView_constraint1"
+                app:layout_constraintTop_toBottomOf="@+id/txtView_constraint1" />
+
+            <TextView
+                android:id="@+id/txtView_constraint3"
+                style="@style/txtView_displayConstraint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="0dp"
+                android:layout_marginTop="0dp"
+                android:layout_weight="1"
+                android:text="TextView"
+                android:textAlignment="viewStart"
+                app:layout_constraintLeft_toLeftOf="@+id/txtView_constraint2"
+                app:layout_constraintTop_toBottomOf="@+id/txtView_constraint2" />
+        </LinearLayout>
+    </ScrollView>
+
 </android.support.constraint.ConstraintLayout>
