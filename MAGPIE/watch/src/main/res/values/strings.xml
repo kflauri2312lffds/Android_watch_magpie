@@ -42,4 +42,5 @@
     <string name="alert_list_date" translatable="false">date</string>
     <string name="alert_list_category" translatable="false">category</string>
     <string name="alert_list_value" translatable="false">value</string>
+    <string name="notification_low_pulse" translatable="false">low pulse detected</string>
 </resources>

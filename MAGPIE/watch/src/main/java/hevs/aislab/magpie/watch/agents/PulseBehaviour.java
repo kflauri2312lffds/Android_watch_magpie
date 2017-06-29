@@ -7,9 +7,15 @@ import ch.hevs.aislab.magpie.behavior.Behavior;
 import ch.hevs.aislab.magpie.event.LogicTupleEvent;
 import ch.hevs.aislab.magpie.event.MagpieEvent;
 import hevs.aislab.magpie.watch.HomeActivity;
+import hevs.aislab.magpie.watch.R;
 import hevs.aislab.magpie.watch.libs.Const;
+import hevs.aislab.magpie.watch.models.Alertes;
+import hevs.aislab.magpie.watch.models.CustomRules;
 import hevs.aislab.magpie.watch.models.Measure;
+import hevs.aislab.magpie.watch.notification.NotificationGenerator;
+import hevs.aislab.magpie.watch.repository.AlertRepository;
 import hevs.aislab.magpie.watch.repository.MeasuresRepository;
+import hevs.aislab.magpie.watch.repository.RulesRepository;
 import hevs.aislab.magpie.watch.threads.DisplayGUI;
 
 /**
@@ -42,24 +48,39 @@ public class PulseBehaviour extends Behavior {
         measure.setValue1(value);
         MeasuresRepository.getInstance().insert(measure);
 
+        //apply the simple rules for the pulse
+
+        //get the rules related to pulse
+
+        CustomRules pulseRules = RulesRepository.getInstance().getByCategory(Const.CATEGORY_PULSE);
+        Double minValue=pulseRules.getVal_1_min();
+        Double maxValue=pulseRules.getVal_1_max();
+        //get the current value of the measure
 
 
-//        List<CustomRules>pulseRules= RulesRepository.getInstance().getByCategory("pulse");
-//
-//        for (final CustomRules aRule : pulseRules)
-//        {
-//            if (value>= aRule.getMinValue() && value< aRule.getMaxValue())
-//            {
-//                ((HomeActivity) getContext()).runOnUiThread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        //set the value and the severity
-//                        ((HomeActivity) getContext()).getFragmentHome().setSeverity(aRule.getCategory(), aRule.getSeverity());
-//                        ((HomeActivity) getContext()).getFragmentHome().setPulseValue(((int)value)+"");
-//                    }
-//                });
-//            }
-//
+        String messageAlert="";
+        if (isGreaterThanMax(value,maxValue))
+            messageAlert=getContext().getString(R.string.notification_high_pressure);
+        else
+            if (isSmallerThanMin(value,minValue))
+                messageAlert=getContext().getString(R.string.notification_low_pulse);
+
+
+        //no alert detected, we return
+        if (messageAlert.equals(""))
+            return;
+
+
+
+        //launch the notification
+        Thread notificationThread=new Thread(new NotificationGenerator(context,context.getString(R.string.category_pulse),messageAlert));
+        context.runOnUiThread(notificationThread);
+        //Create the alert in the database
+        Alertes alertes=new Alertes();
+        alertes.setRule(pulseRules);
+        alertes.setMeasure(measure);
+        AlertRepository.getINSTANCE().insert(alertes);
+
 
     }
 
@@ -67,5 +88,24 @@ public class PulseBehaviour extends Behavior {
     public boolean isTriggered(MagpieEvent event) {
         LogicTupleEvent condition = (LogicTupleEvent) event;
         return condition.getName().equals(Const.CATEGORY_PULSE);
+    }
+    private boolean isSmallerThanMin(double value, Double minValue)
+    {
+        //value not defined, so no alert
+        if (minValue==null)
+            return false;
+
+        return  value<minValue;
+
+
+
+    }
+    private boolean isGreaterThanMax(double value, Double maxValue)
+    {
+        //value not defined, so no alert
+        if (maxValue==null)
+            return false;
+
+        return  value>maxValue;
     }
 }

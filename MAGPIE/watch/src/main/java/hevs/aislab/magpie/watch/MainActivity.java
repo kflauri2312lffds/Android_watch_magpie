@@ -105,6 +105,8 @@ public class MainActivity extends Activity {
        return permissionCheck== PackageManager.PERMISSION_GRANTED;
 
     }
+
+
     private void initDB() {
         //init the session
         Core.getInstance().setHelper(new DaoMaster.DevOpenHelper(this,"Prototype-db",null));
@@ -139,8 +141,8 @@ public class MainActivity extends Activity {
         //6 HOURS
         long glucoseTimeWindow= 1000*60*60*6;
         glucoseRules.setTimeWindow(glucoseTimeWindow);
-        glucoseRules.setConstraint_1("Val1<=Val1Min");
-        glucoseRules.setConstraint_2("Val2>=Val2Max");
+        glucoseRules.setConstraint_1("Value_1<=Value_1Min");
+        glucoseRules.setConstraint_2("Value_2>=Value_2Max");
         glucoseRules.setConstraint_3("Tev2>Tev1");
         //SET THE VALUES
         glucoseRules.setVal_1_min(3.8);
@@ -163,19 +165,49 @@ public class MainActivity extends Activity {
         RulesRepository.getInstance().insert(pressureRules);
 
 
-      //  Rule for the weight
+          // WEIGHT RULES
 
         long weightTimeWindows=1000*60*60*24*7;
 
         CustomRules weightRules=new CustomRules();
         weightRules.setTimeWindow(weightTimeWindows);
-        weightRules.setConstraint_1("Value_2>=101%*value_1 OR Value_2<=98%*value_1");
+        weightRules.setConstraint_1("Value_2>=101%*Value_1 OR Value_2<=98%*Value_1");
+        glucoseRules.setConstraint_2("Tev2>Tev1");
         // max % of weight loss allowed
         weightRules.setVal__2_min(98.0);
         // max % of weight gain allowed
         weightRules.setVal_2_max(101.0);
         weightRules.setCategory(Const.CATEGORY_WEIGHT);
         RulesRepository.getInstance().insert(weightRules);
+
+        //SIMPLE RULES
+        /*the following rules are simple rules. They don't contains any timestamp check and are simple teste if the values if in a certain range
+         * user will be able to change the rules. For thoses rules, we will use only the first value (value1_min and value1_max */
+
+        //PULSE RULES
+        CustomRules pulseRules=new CustomRules();
+        pulseRules.setVal_1_min(30.0);
+        pulseRules.setVal_1_max(150.0);
+        pulseRules.setConstraint_1("Value_1<Value_1Min");
+        pulseRules.setConstraint_2("Value_1>Value_1Max");
+        pulseRules.setCategory(Const.CATEGORY_PULSE);
+
+        RulesRepository.getInstance().insert(pulseRules);
+
+
+        //STEP RULES
+        /*the steps rules will be applied in a day and not at every steps*/
+
+        CustomRules stepRules=new CustomRules();
+        stepRules.setCategory(Const.CATEGORY_STEP);
+        stepRules.setVal_1_min(4000.0);
+        stepRules.setVal_1_max(8000.00);
+
+        stepRules.setConstraint_1("Value_1<Value_1Min");
+        stepRules.setConstraint_2("Value_1>Value_1Max");
+
+        RulesRepository.getInstance().insert(stepRules);
+
 
 
 

@@ -187,8 +187,11 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
     public void click_setPulse(View view)
     {
         Toast.makeText(this, getString(R.string.information_pulse_device), Toast.LENGTH_SHORT).show();
-    }
 
+        //TODO TESTE IMPLEMENTATION ! REMOVE THIS METHODE
+
+        processEvent(System.currentTimeMillis(),Const.CATEGORY_PULSE,"100");
+    }
     public void click_setSteps(View view)
     {
         Toast.makeText(this, getString(R.string.information_step_device), Toast.LENGTH_SHORT).show();
@@ -345,9 +348,9 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
 
     //PROCESS EVENT WITH MAGPIE
 
-    public void processEvent(long timeStamp, String type, String ... value )
+    public void processEvent(long timeStamp, String category, String ... value )
     {
-        LogicTupleEvent lte = new LogicTupleEvent(type, value);
+        LogicTupleEvent lte = new LogicTupleEvent(category, value);
 
         lte.setTimestamp(timeStamp);
         sendEvent(lte);

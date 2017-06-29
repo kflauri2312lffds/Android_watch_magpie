@@ -63,9 +63,9 @@ public class FragmentDisplayAlertes extends Fragment {
                     alertesList.clear();
                     alertesList.addAll(AlertRepository.getINSTANCE().getAllByCategory(category));
 
-                    listViewAlert.setAdapter(alertAdapter);
+               //     listViewAlert.setAdapter(alertAdapter);
                     alertAdapter.notifyDataSetChanged();
-                    listViewAlert.refreshDrawableState();
+                //    listViewAlert.refreshDrawableState();
                 }
             });
 
@@ -94,9 +94,6 @@ public class FragmentDisplayAlertes extends Fragment {
         }
     }
 
-
-
-
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         LayoutInflater lf = getActivity().getLayoutInflater();
@@ -113,7 +110,7 @@ public class FragmentDisplayAlertes extends Fragment {
             public void run() {
                 listViewAlert.setAdapter(alertAdapter);
                 alertAdapter.notifyDataSetChanged();
-                listViewAlert.refreshDrawableState();
+              //  listViewAlert.refreshDrawableState();
             }
         });
 
@@ -129,7 +126,6 @@ public class FragmentDisplayAlertes extends Fragment {
         buttonPulse.setOnClickListener(new ListnerButton(Const.CATEGORY_PULSE));
         buttonStep.setOnClickListener(new ListnerButton(Const.CATEGORY_STEP));
         buttonWeight.setOnClickListener(new ListnerButton(Const.CATEGORY_WEIGHT));
-
 
         return view;
     }
