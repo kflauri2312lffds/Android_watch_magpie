@@ -12,6 +12,9 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import hevs.aislab.magpie.watch.R;
 import hevs.aislab.magpie.watch.libs.Const;
 import hevs.aislab.magpie.watch.models.CustomRules;
@@ -67,8 +70,6 @@ public class FragmentSettings extends Fragment {
             String constraint_2=currentRules.getConstraint_2();
             String constraint_3=currentRules.getConstraint_3();
 
-
-
             constraint_1=constraint_1!=null ? constraint_1 : "-";
             constraint_2=constraint_2!=null ? constraint_2 : "-";
             constraint_3=constraint_3!=null ? constraint_3 : "-";
@@ -78,9 +79,7 @@ public class FragmentSettings extends Fragment {
             String value2_min=currentRules.getVal__2_min()!= null ?currentRules.getVal__2_min()+"" :"";
             String value_2max=currentRules.getVal_2_max()!= null ?currentRules.getVal_2_max()+"" :"";
 
-
             //replace the value in the constraints by the values of the rules
-
 
 
             //set the values to the view element
@@ -100,13 +99,31 @@ public class FragmentSettings extends Fragment {
             edit_value2Min.setText(value2_min);
             edit_value2Max.setText(value_2max);
 
+            //disable the text view with no value
 
+            String mergedRules=currentRules.getConstraint_1()+currentRules.getConstraint_2()+currentRules.getConstraint_3();
+
+
+            disableEditing(edit_value1min);
+            disableEditing(edit_value1Max);
+            disableEditing(edit_value2Min);
+            disableEditing(edit_value2Max);
+
+           //by default, we disalbe the value editing of all fields
+            disableEditing(edit_value1min,edit_value1Max,edit_value2Min,edit_value2Max);
+
+            if (category.equals(Const.CATEGORY_PULSE) || category.equals(Const.CATEGORY_STEP))
+                enableValuesEditingIfExistInRules(mergedRules);
 
         }
-
     }
 
-    //************************************LISTNER FOR EDITTEXT
+    //************************************LISTNER FOR EDITTEXT****************************
+
+    /**
+     * This internal class will manage the interaction of the user with the edit text. It will upload the display of the rules after modification,
+     * allow the value (min and max) and save it in the database if the value is valide
+     */
     class ListenerEditText implements TextWatcher
     {
         String valueCode;
@@ -135,16 +152,18 @@ public class FragmentSettings extends Fragment {
             Log.d("passageDansMethodeChan","fdsafasdfds");
             if (currentEditText==null)
                 return;
+            //check if the value is correct
 
-            String   constraint_1="";
-            String   constraint_2="";
-            String   constraint_3="";
+            updateDisplayOfConstraints();
 
+        }
+
+        private void updateDisplayOfConstraints() {
             if (currentRules.getConstraint_1()!=null)
             {
                 if (isRulesContainsDesignation(currentRules.getConstraint_1(),valueCode))
                 {
-                    constraint_1=replaceValueByNumber(currentRules.getConstraint_1(),valueCode,currentEditText.getText().toString());
+                   String constraint_1=replaceValueByNumber(currentRules.getConstraint_1(),valueCode,currentEditText.getText().toString());
                     txtConstraint1.setText(constraint_1);
                 }
             }
@@ -153,22 +172,19 @@ public class FragmentSettings extends Fragment {
             {
                 if (isRulesContainsDesignation(currentRules.getConstraint_2(),valueCode))
                 {
-                    constraint_2=replaceValueByNumber(currentRules.getConstraint_2(),valueCode,currentEditText.getText().toString());
+                    String constraint_2=replaceValueByNumber(currentRules.getConstraint_2(),valueCode,currentEditText.getText().toString());
                     txtConstraint2.setText(constraint_2);
                 }
-
             }
 
             if (currentRules.getConstraint_3()!=null)
             {
                 if (isRulesContainsDesignation(currentRules.getConstraint_3(),valueCode))
                 {
-                    constraint_3=replaceValueByNumber(currentRules.getConstraint_3(),valueCode,currentEditText.getText().toString());
+                    String constraint_3=replaceValueByNumber(currentRules.getConstraint_3(),valueCode,currentEditText.getText().toString());
                     txtConstraint3.setText(constraint_3);
                 }
-
             }
-
         }
     }
 
@@ -189,10 +205,10 @@ public class FragmentSettings extends Fragment {
         button_display_pressure.setOnClickListener(new ListenerButton(Const.CATEGORY_PRESSURE));
 
         //add listener to edit Text
-        edit_value1min.addTextChangedListener(new ListenerEditText("Value_1Min",edit_value1min));
-        edit_value1Max.addTextChangedListener(new ListenerEditText("Value_1Max",edit_value1Max));
-        edit_value2Min.addTextChangedListener(new ListenerEditText("Value_2Min",edit_value2Min));
-        edit_value2Max.addTextChangedListener(new ListenerEditText("Value_2Max",edit_value2Max));
+        edit_value1min.addTextChangedListener(new ListenerEditText(Const.VALUE_Value_1Min,edit_value1min));
+        edit_value1Max.addTextChangedListener(new ListenerEditText(Const.VALUE_Value_1Max,edit_value1Max));
+        edit_value2Min.addTextChangedListener(new ListenerEditText(Const.VALUE_Value_2Min,edit_value2Min));
+        edit_value2Max.addTextChangedListener(new ListenerEditText(Const.VALUE_Value_2Max,edit_value2Max));
 
         return view;
     }
@@ -216,10 +232,10 @@ public class FragmentSettings extends Fragment {
     private String formatConstraints(String constraints, CustomRules rule)
     {
         String bulletPoint="\u2022";
-        constraints=replaceValueByNumber(constraints,"Value_1Min",rule.getVal_1_min()+"");
-        constraints=replaceValueByNumber(constraints,"Value_1Max",rule.getVal_1_max()+"");
-        constraints=replaceValueByNumber(constraints,"Value_2Min",rule.getVal__2_min()+"");
-        constraints=replaceValueByNumber(constraints,"Value_2Max",rule.getVal_2_max()+"");
+        constraints=replaceValueByNumber(constraints,Const.VALUE_Value_1Min,rule.getVal_1_min()+"");
+        constraints=replaceValueByNumber(constraints,Const.VALUE_Value_1Max,rule.getVal_1_max()+"");
+        constraints=replaceValueByNumber(constraints,Const.VALUE_Value_2Min,rule.getVal__2_min()+"");
+        constraints=replaceValueByNumber(constraints,Const.VALUE_Value_2Max,rule.getVal_2_max()+"");
         return bulletPoint+constraints;
     }
 
@@ -231,6 +247,47 @@ public class FragmentSettings extends Fragment {
     {
         return rules.contains(designation);
 
+    }
+
+    /**
+     * this method will enable the values eiditing. it will check if the values exist in the rules and activate the editText
+     * @param mergedRules
+     */
+    private void enableValuesEditingIfExistInRules(String mergedRules)
+    {
+
+        if (mergedRules.contains(Const.VALUE_Value_1Min))
+            enableEditing( edit_value1min);
+
+        if (mergedRules.contains(Const.VALUE_Value_1Max))
+            enableEditing( edit_value1Max);
+
+        if (mergedRules.contains(Const.VALUE_Value_2Min))
+            enableEditing( edit_value2Min);
+
+        if (mergedRules.contains(Const.VALUE_Value_2Max))
+            enableEditing( edit_value2Max);
 
     }
+    private void enableEditing(EditText ... editTexts)
+    {
+        for (EditText anEditText : editTexts)
+        {
+            anEditText.setEnabled(true);
+            anEditText.setClickable(true);
+
+            anEditText.setVisibility(View.VISIBLE);
+        }
+    }
+    private void disableEditing(EditText ... editTexts)
+    {
+        for (EditText anEditText : editTexts)
+        {
+            anEditText.setEnabled(false);
+            anEditText.setClickable(false);
+            anEditText.setVisibility(View.GONE);
+        }
+    }
+
+
 }

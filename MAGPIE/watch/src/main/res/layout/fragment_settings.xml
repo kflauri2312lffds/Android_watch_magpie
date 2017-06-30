@@ -111,51 +111,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0" />
 
-    <EditText
-        android:id="@+id/edittxt_value1min"
-        style="@style/edittxt_values"
-        android:layout_marginLeft="0dp"
-        android:ems="10"
-        android:inputType="numberDecimal"
-        android:text="1"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.615" />
-
-    <EditText
-        android:id="@+id/edittxt_value1max"
-        style="@style/edittxt_values"
-        android:ems="10"
-        android:inputType="numberDecimal"
-        android:text="2"
-        app:layout_constraintBottom_toBottomOf="@+id/edittxt_value1min"
-        android:layout_marginBottom="-7dp"
-        app:layout_constraintLeft_toRightOf="@+id/edittxt_value1min"
-        android:layout_marginLeft="0dp" />
-
-    <EditText
-        android:id="@+id/edittxt_value2min"
-        style="@style/edittxt_values"
-        android:ems="10"
-        android:inputType="numberDecimal"
-        android:paddingBottom="12sp"
-        android:text="130"
-        app:layout_constraintLeft_toRightOf="@+id/edittxt_value1max"
-        android:layout_marginLeft="35dp"
-        app:layout_constraintBottom_toBottomOf="@+id/edittxt_value1max"
-        android:layout_marginBottom="0dp" />
-
-    <EditText
-        android:id="@+id/edittxt_value2max"
-        style="@style/edittxt_values"
-        android:ems="10"
-        android:inputType="numberDecimal"
-        android:text="120"
-        app:layout_constraintBottom_toBottomOf="@+id/edittxt_value2min"
-        android:layout_marginBottom="-16dp"
-        app:layout_constraintLeft_toRightOf="@+id/edittxt_value2min"
-        android:layout_marginLeft="-3dp" />
 
     <ScrollView
         style="@style/scroll_view_display_rules"
@@ -180,7 +135,7 @@
             <TextView
                 android:id="@+id/txtView_constraint1"
                 style="@style/txtView_displayConstraint"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:layout_marginEnd="8dp"
@@ -201,7 +156,7 @@
             <TextView
                 android:id="@+id/txtView_constraint2"
                 style="@style/txtView_displayConstraint"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="0dp"
                 android:layout_marginTop="0dp"
@@ -214,7 +169,7 @@
             <TextView
                 android:id="@+id/txtView_constraint3"
                 style="@style/txtView_displayConstraint"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="0dp"
                 android:layout_marginTop="0dp"
@@ -225,5 +180,85 @@
                 app:layout_constraintTop_toBottomOf="@+id/txtView_constraint2" />
         </LinearLayout>
     </ScrollView>
+
+    <TableLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintVertical_bias="0.63">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <EditText
+                android:id="@+id/edittxt_value1min"
+                style="@style/edittxt_values"
+                android:clickable="false"
+                android:ems="10"
+                android:enabled="false"
+                android:inputType="numberDecimal"
+                android:text="1"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.67" />
+
+            <EditText
+                android:id="@+id/edittxt_value1max"
+                style="@style/edittxt_values"
+                android:clickable="false"
+                android:ems="10"
+                android:enabled="false"
+                android:inputType="numberDecimal"
+                android:text="2"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHorizontal_bias="0.197"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.684" />
+
+            <EditText
+                android:id="@+id/edittxt_value2min"
+                style="@style/edittxt_values"
+                android:clickable="false"
+                android:ems="10"
+                android:enabled="false"
+                android:inputType="numberDecimal"
+                android:paddingBottom="12sp"
+                android:text="130"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHorizontal_bias="0.703"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.684" />
+
+            <EditText
+                android:id="@+id/edittxt_value2max"
+                style="@style/edittxt_values"
+                android:clickable="false"
+                android:ems="10"
+                android:enabled="false"
+                android:inputType="numberDecimal"
+                android:text="120"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.684" />
+
+        </TableRow>
+    </TableLayout>
 
 </android.support.constraint.ConstraintLayout>

@@ -171,7 +171,7 @@ public class MainActivity extends Activity {
 
         CustomRules weightRules=new CustomRules();
         weightRules.setTimeWindow(weightTimeWindows);
-        weightRules.setConstraint_1("Value_2>=Value_2Max%*Value_1 OR Value_2Max<==Value_1Min%*Value_1");
+        weightRules.setConstraint_1("Actual weight>=Value_2Max%*old weight OR Actual weight<==Value_2Min%*Value_1");
         glucoseRules.setConstraint_2("Tev2>Tev1");
         // max % of weight loss allowed
         weightRules.setVal__2_min(98.0);
@@ -188,8 +188,8 @@ public class MainActivity extends Activity {
         CustomRules pulseRules=new CustomRules();
         pulseRules.setVal_1_min(30.0);
         pulseRules.setVal_1_max(150.0);
-        pulseRules.setConstraint_1("Value_1<Value_1Min");
-        pulseRules.setConstraint_2("Value_1>Value_1Max");
+        pulseRules.setConstraint_1("pulse<Value_1Min");
+        pulseRules.setConstraint_2("pulse>Value_1Max");
         pulseRules.setCategory(Const.CATEGORY_PULSE);
 
         RulesRepository.getInstance().insert(pulseRules);
