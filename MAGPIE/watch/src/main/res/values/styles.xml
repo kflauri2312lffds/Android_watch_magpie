@@ -30,6 +30,12 @@
         <item name="android:textSize">20sp</item>
     </style>
 
+    <style name="txtView_toast" parent="txtView">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">#000</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
     <style name="txtView_displayConstraint">
         <item name="android:textColor">#000</item>
         <item name="android:textSize">16sp</item>

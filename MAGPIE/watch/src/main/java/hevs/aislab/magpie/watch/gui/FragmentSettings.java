@@ -3,6 +3,7 @@ package hevs.aislab.magpie.watch.gui;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,10 +13,8 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import hevs.aislab.magpie.watch.R;
+import hevs.aislab.magpie.watch.notification.CustomToast;
 import hevs.aislab.magpie.watch.libs.Const;
 import hevs.aislab.magpie.watch.models.CustomRules;
 import hevs.aislab.magpie.watch.repository.RulesRepository;
@@ -143,13 +142,13 @@ public class FragmentSettings extends Fragment {
 
         @Override
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
+            Log.d("pppp_passage","on text change");
         }
 
         @Override
         public void afterTextChanged(Editable editable) {
             //SET THE VALUE TO THE DISPLAY TEXT
-            Log.d("passageDansMethodeChan","fdsafasdfds");
+            Log.d("pppp_passage","after text changed");
             if (currentEditText==null)
                 return;
             //check if the value is correct
@@ -228,6 +227,42 @@ public class FragmentSettings extends Fragment {
         edit_value1Max =(EditText)view.findViewById(R.id.edittxt_value1max);
         edit_value2Min =(EditText)view.findViewById(R.id.edittxt_value2min);
         edit_value2Max =(EditText)view.findViewById(R.id.edittxt_value2max);
+
+        //init the imageButton
+
+        ImageButton buttonValidate=(ImageButton)view.findViewById(R.id.button_update_rules);
+        buttonValidate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+              //TODO CHECK IF THE ENTRIES ARE VALIDE
+
+                //Get all the fields
+                String value1_min=edit_value1min.getText().toString();
+                String value1_max=edit_value1Max.getText().toString();
+                String value2_min=edit_value2Min.getText().toString();
+                String value2_max=edit_value2Max.getText().toString();
+
+
+               if ( !TextUtils.isEmpty(value1_min))
+                    currentRules.setVal_1_min(Double.parseDouble(value1_min));
+
+                if ( !TextUtils.isEmpty(value1_max))
+                    currentRules.setVal_1_max(Double.parseDouble(value1_max));
+
+                if ( !TextUtils.isEmpty(value2_min))
+                    currentRules.setVal__2_min(Double.parseDouble(value2_min));
+
+                if ( !TextUtils.isEmpty(value2_max))
+                    currentRules.setVal_2_max(Double.parseDouble(value2_max));
+
+                //now we update the rules in the database
+                RulesRepository.getInstance().update(currentRules);
+
+                CustomToast.getInstance().confirmToast(getContext().getString(R.string.change_saved),getActivity());
+
+            }
+        });
     }
     private String formatConstraints(String constraints, CustomRules rule)
     {
@@ -288,6 +323,8 @@ public class FragmentSettings extends Fragment {
             anEditText.setVisibility(View.GONE);
         }
     }
+
+
 
 
 }

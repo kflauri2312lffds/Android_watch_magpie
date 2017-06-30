@@ -33,6 +33,7 @@ import hevs.aislab.magpie.watch.gui.FragmentHome;
 import hevs.aislab.magpie.watch.gui.FragmentSettings;
 import hevs.aislab.magpie.watch.gui.dialogfragment.DialogFragmentSetWeight;
 import hevs.aislab.magpie.watch.libs.Const;
+import hevs.aislab.magpie.watch.notification.CustomToast;
 import hevs.aislab.magpie.watch.threads.IhomeActivity;
 import hevs.aislab.magpie.watch.threads.SensorsThreadLifecircle;
 
@@ -181,20 +182,17 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
         FragmentManager fm = getSupportFragmentManager();
         DialogFragmentSetPressure myDialogFragment = new DialogFragmentSetPressure();
         myDialogFragment.show(fm,"tag");
-
     }
     //only inform the user that the measure are taken automaticaly
     public void click_setPulse(View view)
     {
-        Toast.makeText(this, getString(R.string.information_pulse_device), Toast.LENGTH_SHORT).show();
-
+        CustomToast.getInstance().warningToast(getString(R.string.information_pulse_device),this);
         //TODO TESTE IMPLEMENTATION ! REMOVE THIS METHODE
-
         processEvent(System.currentTimeMillis(),Const.CATEGORY_PULSE,"100");
     }
     public void click_setSteps(View view)
     {
-        Toast.makeText(this, getString(R.string.information_step_device), Toast.LENGTH_SHORT).show();
+        CustomToast.getInstance().warningToast(getString(R.string.information_step_device),this);
     }
 
     //------------VOICE RECOGNITION HANDLER------------------

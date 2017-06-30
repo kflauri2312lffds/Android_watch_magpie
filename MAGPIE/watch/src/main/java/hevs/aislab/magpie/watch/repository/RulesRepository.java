@@ -89,5 +89,10 @@ public class RulesRepository {
         rulesDao.save(rule);
     }
 
+    public void update(CustomRules rule)
+    {
+        rule.update();
+    }
+
 
 }
