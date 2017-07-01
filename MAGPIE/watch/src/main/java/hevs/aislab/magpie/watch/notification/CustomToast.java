@@ -8,8 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,10 +31,11 @@ public class CustomToast {
         return INSTANCE;
     }
 
+    Toast toast;
+
     public void  confirmToast(final String text, final Activity activity)
     {
-        View layout = getView(activity);
-        Toast toast = getToast(activity, layout);
+        View layout = initView(activity);
 
         //define the icon that will be displayed
          int icon=R.drawable.notif_success;
@@ -47,8 +46,7 @@ public class CustomToast {
     }
     public void warningToast(final String text, final Activity activity)
     {
-        View layout = getView(activity);
-        Toast toast = getToast(activity, layout);
+        View layout = initView(activity);
 
         //define the icon that will be displayed
         int icon=R.drawable.notif_warning;
@@ -58,14 +56,38 @@ public class CustomToast {
         showToast(text, activity, layout, toast, icon,border);
     }
 
+    public void errorTOast(final String text, final Activity activity)
+    {
+        View layout = initView(activity);
+
+        //define the icon that will be displayed
+        int icon=R.drawable.notif_error;
+        //define the border and the background color that will be displayed
+        Drawable border=activity.getResources().getDrawable(R.drawable.border_red);
+        //sho the toast
+        showToast(text, activity, layout, toast, icon,border);
+    }
+
+    private View initView(Activity activity) {
+        //cancel the display of the toast (if a toast is displayed)
+        if (toast != null)
+            toast.cancel();
+
+        View layout = getView(activity);
+        createToast(activity, layout);
+
+        return layout;
+    }
+
+
     @NonNull
-    private Toast getToast(Activity activity, View layout) {
+    private void createToast(Activity activity, View layout) {
         //Creating the Toast object
-        Toast toast = new Toast(activity.getApplicationContext());
+        toast = new Toast(activity.getApplicationContext());
         toast.setDuration(Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
         toast.setView(layout);//setting the view of custom toast layout
-        return toast;
+
     }
 
     private View getView(Activity activity) {

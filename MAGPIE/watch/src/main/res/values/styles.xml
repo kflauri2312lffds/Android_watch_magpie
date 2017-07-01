@@ -52,12 +52,13 @@
         <item name="android:textColorHint">#000</item>
     </style>
 
+
+    <!--    SMALL EDIT TEXT IN THE FRAGMENT SETTINGS. WILL CONTAINS THE VALUES OF THE RULES !-->
     <style name="edittxt_values">
-        <item name="android:textStyle"></item>
         <item name="android:textSize">15sp</item>
         <item name="android:textColor">#000</item>
         <item name="android:textColorHint">#000</item>
-        <item name="android:layout_width">40dp</item>
+        <item name="android:layout_width">60dp</item>
         <item name="android:layout_height">40dp</item>
         <item name="android:textAlignment">viewEnd</item>
     </style>

@@ -69,7 +69,6 @@ public class MainActivity extends Activity {
            PrefAccessor.getInstance().save(this,"hasSpeacker",hasSpeacker());
            insertFirstRules();
        }
-        testGetFirstCategory();
         Log.d("speackerInformation",this.hasSpeacker()+"");
 
         testDisplayAllMeasure();
@@ -213,149 +212,7 @@ public class MainActivity extends Activity {
 
     }
     //methode used to create the first rules in our DB
-    public void testInsertDB()
-    {
-        CustomRules rule =new CustomRules();
-        rule.setCategory("cat1");
-        rule.setVal_1_max((double)2);
 
-
-        RulesRepository.getInstance().insert(rule);
-
-        CustomRules myRules=RulesRepository.getInstance().getById(1);
-        Log.d("Affichage_BD rules",myRules.getCategory());
-
-        Measure measure=new Measure();
-        measure.setCategory(Const.CATEGORY_GLUCOSE);
-        measure.setTimeStamp(System.currentTimeMillis());
-        measure.setValue1((double)33);
-
-        MeasuresRepository.getInstance().insert(measure);
-
-        Measure myMeasure=MeasuresRepository.getInstance().getById(1);
-        Log.d("Affichage_BD measure",myMeasure.getCategory());
-
-        Alertes alertes=new Alertes();
-        alertes.setRule(myRules);
-        alertes.setMeasure(myMeasure);
-        AlertRepository.getINSTANCE().insert(alertes);
-
-        Alertes myAlert=AlertRepository.getINSTANCE().getByIdWithRelations(1);
-
-        List<Alertes>listAlert=AlertRepository.getINSTANCE().getAll();
-        Log.d("Affichage_BD arraysize",listAlert.get(0).getId()+"");
-        Log.d("Affichage_BD alert",myAlert.getMeasure().getCategory());
-    }
-    private void displayFirstData()
-    {
-
-    }
-    private void testBetween()
-    {
-        //create 2 values
-        Measure measure=new Measure();
-        measure.setTimeStamp(10);
-        measure.setCategory("cate");
-        measure.setValue1(1.0);
-
-
-        Measure measure2=new Measure();
-        measure2.setTimeStamp(20);
-        measure2.setCategory("cate");
-        measure2.setValue1(1.0);
-
-
-        Measure measure3=new Measure();
-        measure3.setTimeStamp(30);
-        measure3.setCategory("cate");
-        measure3.setValue1(1.0);
-
-
-        Measure measure4=new Measure();
-        measure4.setTimeStamp(40);
-        measure4.setCategory("cate");
-        measure4.setValue1(1.0);
-
-        Measure measure5=new Measure();
-        measure5.setTimeStamp(50);
-        measure5.setCategory("cate");
-        measure5.setValue1(1.0);
-
-        Log.d("PassageDansMethode,","passageDansMethode");
-        MeasuresRepository.getInstance().insert(measure);
-        MeasuresRepository.getInstance().insert(measure2);
-        MeasuresRepository.getInstance().insert(measure3);
-        MeasuresRepository.getInstance().insert(measure4);
-        MeasuresRepository.getInstance().insert(measure5);
-
-        //affichage des resultats
-
-        List<Measure>list= MeasuresRepository.getInstance().getByCategoryWhereTimeStampBetween("cate",1,31);
-        Log.d("AffichageResult",list.size()+"");
-    }
-
-    public void testShowRelationRules()
-    {
-        CustomRules custRules=RulesRepository.getInstance().getByCategory(Const.CATEGORY_GLUCOSE);
-        Log.d("AffInMAINE",custRules.getCategory());
-    }
-    public void testAlertes()
-    {
-
-        List<Alertes>alertesList=AlertRepository.getINSTANCE().getAllByCategory(Const.CATEGORY_GLUCOSE);
-        Log.d("affichageAlertSize",alertesList.size()+"");
-
-
-    }
-    public void testBetweenALert()
-    {
-        //create 2 values
-        Measure measure=new Measure();
-        measure.setTimeStamp(10);
-        measure.setCategory(Const.CATEGORY_GLUCOSE);
-        measure.setValue1(1.0);
-
-
-        Measure measure2=new Measure();
-        measure2.setTimeStamp(20);
-        measure2.setCategory(Const.CATEGORY_GLUCOSE);
-        measure2.setValue1(1.0);
-
-
-        Measure measure3=new Measure();
-        measure3.setTimeStamp(30);
-        measure3.setCategory(Const.CATEGORY_GLUCOSE);
-        measure3.setValue1(1.0);
-
-
-        Measure measure4=new Measure();
-        measure4.setTimeStamp(40);
-        measure4.setCategory(Const.CATEGORY_GLUCOSE);
-        measure4.setValue1(1.0);
-
-
-        MeasuresRepository.getInstance().insert(measure);
-        MeasuresRepository.getInstance().insert(measure2);
-        MeasuresRepository.getInstance().insert(measure3);
-        MeasuresRepository.getInstance().insert(measure4);
-
-        //create the rules
-        CustomRules rule= RulesRepository.getInstance().getByCategory(Const.CATEGORY_GLUCOSE);
-
-        Alertes alertes=new Alertes();
-        alertes.setMeasure(measure);
-        AlertRepository.getINSTANCE().insert(alertes);
-
-
-        //now we teste the repository
-
-        //First one
-      List<Alertes> alertGood=  AlertRepository.getINSTANCE().getAllByCategoryBetweenTimeStamp(Const.CATEGORY_GLUCOSE,0,30);
-        List<Alertes>alertBGad=AlertRepository.getINSTANCE().getAllByCategoryBetweenTimeStamp(Const.CATEGORY_GLUCOSE,100,430);
-
-        Log.d("SHOWSITEOF_Correct",alertGood.size()+"");
-        Log.d("SHOWSITEOF_notCorrect",alertBGad.size()+"");
-    }
 
     public boolean hasSpeacker()
     {
@@ -391,11 +248,6 @@ public class MainActivity extends Activity {
             Log.d("ShowingMeasure_CATEGORY",aMeasure.getCategory()+"");
             Log.d("ShowingMeasure_END","*********************************************");
         }
-    }
-
-    private void testGetFirstCategory()
-    {
-
     }
 
 

@@ -25,6 +25,8 @@ import hevs.aislab.magpie.watch.gui.dialogfragment.DialogFragmentSetGlucose;
 import hevs.aislab.magpie.watch.gui.dialogfragment.DialogFragmentSetValue;
 import hevs.aislab.magpie.watch.libs.Const;
 import hevs.aislab.magpie.watch.models.Alertes;
+import hevs.aislab.magpie.watch.models.CustomRules;
+import hevs.aislab.magpie.watch.notification.CustomToast;
 import hevs.aislab.magpie.watch.repository.AlertRepository;
 
 /**
@@ -64,8 +66,8 @@ public class FragmentDisplayAlertes extends Fragment {
                     alertesList.addAll(AlertRepository.getINSTANCE().getAllByCategory(category));
 
                //     listViewAlert.setAdapter(alertAdapter);
-                    alertAdapter.notifyDataSetChanged();
-                //    listViewAlert.refreshDrawableState();
+                    updateViewList();
+                    //    listViewAlert.refreshDrawableState();
                 }
             });
 
@@ -83,6 +85,8 @@ public class FragmentDisplayAlertes extends Fragment {
 //            dialogFragmentListAlert.show(fm,"tag");
         }
     }
+
+
 
     @Override
     public void onAttach(Context context) {
@@ -105,12 +109,13 @@ public class FragmentDisplayAlertes extends Fragment {
         Log.d("Adapter_Creation",alertesList.size()+"");
         alertAdapter=new AlertAdapter(view.getContext(),R.layout.adapter_alert,alertesList);
 
+
         ((HomeActivity) getContext()).runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 listViewAlert.setAdapter(alertAdapter);
-                alertAdapter.notifyDataSetChanged();
-              //  listViewAlert.refreshDrawableState();
+                updateViewList();
+                //  listViewAlert.refreshDrawableState();
             }
         });
 
@@ -130,6 +135,12 @@ public class FragmentDisplayAlertes extends Fragment {
         return view;
     }
 
+
+    private void updateViewList() {
+        if (alertesList.size()==0)
+            CustomToast.getInstance().warningToast(getString(R.string.toast_noalert),getActivity());
+        alertAdapter.notifyDataSetChanged();
+    }
 
 
 

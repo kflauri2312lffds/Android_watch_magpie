@@ -44,4 +44,5 @@
     <string name="alert_list_value" translatable="false">value</string>
     <string name="notification_low_pulse" translatable="false">low pulse detected</string>
     <string name="change_saved" translatable="false">change has been saved</string>
+    <string name="toast_noalert" translatable="false">no data</string>
 </resources>

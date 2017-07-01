@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import hevs.aislab.magpie.watch.R;
 import hevs.aislab.magpie.watch.libs.Const;
+import hevs.aislab.magpie.watch.notification.CustomToast;
 
 /**
  * Created by teuft on 16.06.2017.
@@ -64,7 +65,7 @@ import hevs.aislab.magpie.watch.libs.Const;
                 }
                 catch (Exception ex)
                 {
-                    Toast.makeText(getContext(), getString(R.string.incorrect_value), Toast.LENGTH_SHORT).show();
+                    CustomToast.getInstance().errorTOast(getString(R.string.incorrect_value),getActivity());
                 }
             }
         });

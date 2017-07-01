@@ -236,7 +236,7 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
                 return;
             }
             // no number has been specified, so command is not complet
-            Toast.makeText(this, getString(R.string.voice_incomplet_number), Toast.LENGTH_SHORT).show();
+            CustomToast.getInstance().warningToast(getString(R.string.voice_incomplet_number), this);
             return;
         }
 
@@ -249,7 +249,7 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
                 return;
             }
             // no number has been specified, so command is not complet
-            Toast.makeText(this, getString(R.string.voice_incomplet_number), Toast.LENGTH_SHORT).show();
+            CustomToast.getInstance().errorTOast(getString(R.string.voice_incomplet_number), this);
             return;
         }
         String weight=getString(R.string.voice_weight);
@@ -261,10 +261,9 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
                 voiceAction_addValue(Const.CATEGORY_WEIGHT,arraySpocken[1]);
                 return;
             }
-            Toast.makeText(this, getString(R.string.voice_incorrect), Toast.LENGTH_SHORT).show();
+            CustomToast.getInstance().errorTOast(getString(R.string.voice_incorrect), this);
         }
-
-            Toast.makeText(this, getString(R.string.voice_not_found), Toast.LENGTH_SHORT).show();
+        CustomToast.getInstance().errorTOast(getString(R.string.voice_not_found), this);
     }
 
     private void voiceAction_addValue( String category, String ... rawvalue) {
@@ -283,12 +282,13 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
         catch (NumberFormatException ex)
         {
             ex.printStackTrace();
-            Toast.makeText(this, getString(R.string.voice_incorrect), Toast.LENGTH_SHORT).show();
+            CustomToast.getInstance().errorTOast(getString(R.string.voice_incorrect), this);
+
         }
         catch (NullPointerException ex)
         {
             ex.printStackTrace();
-            Toast.makeText(this, "Error with the value inserted", Toast.LENGTH_SHORT).show();
+            CustomToast.getInstance().errorTOast("unespected error", this);
         }
     }
 
