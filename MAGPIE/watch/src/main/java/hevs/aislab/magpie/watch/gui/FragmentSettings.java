@@ -1,7 +1,9 @@
 package hevs.aislab.magpie.watch.gui;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -12,6 +14,10 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import hevs.aislab.magpie.watch.R;
 import hevs.aislab.magpie.watch.notification.CustomToast;
@@ -28,11 +34,12 @@ public class FragmentSettings extends Fragment {
     View view;
 
     //button
-    ImageButton button_displayPulse;
-    ImageButton button_display_glucose;
-    ImageButton button_display_weight;
-    ImageButton button_display_steps;
-    ImageButton button_display_pressure;
+
+
+    Map<String, ImageButton> buttonMap=new HashMap<>();
+
+
+    ImageButton buttonSaveValues;
 
     // textview of the constraints
     TextView txtConstraint1;
@@ -46,10 +53,12 @@ public class FragmentSettings extends Fragment {
     EditText edit_value2Max;
 
 
+
+
     String currentCategory;
     //listener class
     CustomRules currentRules;
-    //--------------------------LISTENER FOR BUTTONS-----------------------------
+    //--------------------------LISTENER FOR BUTTONS, CHANGE THE CATEGORY DISPLAYED -----------------------------
     private class ListenerButton implements View.OnClickListener
     {
         String category;
@@ -102,18 +111,55 @@ public class FragmentSettings extends Fragment {
 
             String mergedRules=currentRules.getConstraint_1()+currentRules.getConstraint_2()+currentRules.getConstraint_3();
 
-
-            disableEditing(edit_value1min);
-            disableEditing(edit_value1Max);
-            disableEditing(edit_value2Min);
-            disableEditing(edit_value2Max);
-
-           //by default, we disalbe the value editing of all fields
-            disableEditing(edit_value1min,edit_value1Max,edit_value2Min,edit_value2Max);
+           //by default, we disable the value editing of all fields
+            hideEditText(edit_value1min,edit_value1Max,edit_value2Min,edit_value2Max);
+            hideButtonSave();
 
             if (category.equals(Const.CATEGORY_PULSE) || category.equals(Const.CATEGORY_STEP))
+            {
                 enableValuesEditingIfExistInRules(mergedRules);
+                displayButtonSave();
+            }
 
+
+            //***********************USED TO CHANGE THE DISPLAY (RED AND GRREN BUTTON)
+            //Create map with all the imageButton
+
+
+            setButtonsToGreen(buttonMap);
+
+            setButtonToRed(buttonMap.get(category));
+
+        }
+
+
+
+
+
+
+        /**
+         * Set the color of the category displayed to green. It's mean the category is not displayed
+         *
+         */
+        private void setButtonsToGreen(Map<String, ImageButton> imageButtonMap)
+        {
+            for (Map.Entry<String, ImageButton> entry : imageButtonMap.entrySet())
+            {
+                int id = getContext().getResources().getIdentifier(entry.getKey()+"_green", "drawable", getContext().getPackageName());
+                Drawable img= ContextCompat.getDrawable(getContext(), id);
+                entry.getValue().setImageDrawable(img);
+            }
+        }
+
+        /**
+         * Set the color of the category displayed to green. It's mean the category is displayed
+         *
+         */
+        private void setButtonToRed(ImageButton imagebutton)
+        {
+            int id = getContext().getResources().getIdentifier(category+"_red", "drawable", getContext().getPackageName());
+            Drawable img= ContextCompat.getDrawable(getContext(), id);
+            imagebutton.setImageDrawable(img);
         }
     }
 
@@ -197,11 +243,11 @@ public class FragmentSettings extends Fragment {
         initView();
 
         //add the listener to the button
-        button_displayPulse.setOnClickListener(new ListenerButton(Const.CATEGORY_PULSE));
-        button_display_glucose.setOnClickListener(new ListenerButton(Const.CATEGORY_GLUCOSE));
-        button_display_weight.setOnClickListener(new ListenerButton(Const.CATEGORY_WEIGHT));
-        button_display_steps.setOnClickListener(new ListenerButton(Const.CATEGORY_STEP));
-        button_display_pressure.setOnClickListener(new ListenerButton(Const.CATEGORY_PRESSURE));
+        buttonMap.get(Const.CATEGORY_PULSE).setOnClickListener(new ListenerButton(Const.CATEGORY_PULSE));
+        buttonMap.get(Const.CATEGORY_GLUCOSE).setOnClickListener(new ListenerButton(Const.CATEGORY_GLUCOSE));
+        buttonMap.get(Const.CATEGORY_WEIGHT).setOnClickListener(new ListenerButton(Const.CATEGORY_WEIGHT));
+        buttonMap.get(Const.CATEGORY_STEP).setOnClickListener(new ListenerButton(Const.CATEGORY_STEP));
+        buttonMap.get(Const.CATEGORY_PRESSURE).setOnClickListener(new ListenerButton(Const.CATEGORY_PRESSURE));
 
         //add listener to edit Text
         edit_value1min.addTextChangedListener(new ListenerEditText(Const.VALUE_Value_1Min,edit_value1min));
@@ -213,11 +259,17 @@ public class FragmentSettings extends Fragment {
     }
 
     private void initView() {
-        button_displayPulse=(ImageButton)view.findViewById(R.id.button_display_rules_pulse);
-        button_display_glucose=(ImageButton)view.findViewById(R.id.button_display_rules_glucose);
-        button_display_weight=(ImageButton)view.findViewById(R.id.button_display_rules_weight);
-        button_display_steps=(ImageButton)view.findViewById(R.id.button_display_rules_step);
-        button_display_pressure=(ImageButton)view.findViewById(R.id.button_display_rules_pressure);
+        ImageButton button_displayPulse=(ImageButton)view.findViewById(R.id.button_display_rules_pulse);
+        ImageButton button_display_glucose=(ImageButton)view.findViewById(R.id.button_display_rules_glucose);
+        ImageButton button_display_weight=(ImageButton)view.findViewById(R.id.button_display_rules_weight);
+        ImageButton button_display_steps=(ImageButton)view.findViewById(R.id.button_display_rules_step);
+        ImageButton   button_display_pressure=(ImageButton)view.findViewById(R.id.button_display_rules_pressure);
+
+        buttonMap.put(Const.CATEGORY_PULSE,button_displayPulse);
+        buttonMap.put(Const.CATEGORY_GLUCOSE,button_display_glucose);
+        buttonMap.put(Const.CATEGORY_WEIGHT,button_display_weight);
+        buttonMap.put(Const.CATEGORY_STEP,button_display_steps);
+        buttonMap.put(Const.CATEGORY_PRESSURE,button_display_pressure);
 
         txtConstraint1 =(TextView)view.findViewById(R.id.txtView_constraint1);
         txtConstraint2 =(TextView)view.findViewById(R.id.txtView_constraint2);
@@ -228,10 +280,13 @@ public class FragmentSettings extends Fragment {
         edit_value2Min =(EditText)view.findViewById(R.id.edittxt_value2min);
         edit_value2Max =(EditText)view.findViewById(R.id.edittxt_value2max);
 
-        //init the imageButton
+        //add all button into the hashmap
 
-        ImageButton buttonValidate=(ImageButton)view.findViewById(R.id.button_update_rules);
-        buttonValidate.setOnClickListener(new View.OnClickListener() {
+
+        //init the imageButton
+        //add the listener for the button save
+         buttonSaveValues =(ImageButton)view.findViewById(R.id.button_update_rules);
+        buttonSaveValues.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -243,18 +298,52 @@ public class FragmentSettings extends Fragment {
                 String value2_min=edit_value2Min.getText().toString();
                 String value2_max=edit_value2Max.getText().toString();
 
+            //try catch to handle number format exceptino
 
-               if ( !TextUtils.isEmpty(value1_min))
-                    currentRules.setVal_1_min(Double.parseDouble(value1_min));
 
-                if ( !TextUtils.isEmpty(value1_max))
+
+                //we insert only the values from the editText that are visible and activated
+                if ( edit_value1min.getVisibility()==View.VISIBLE)
+                   {
+                       if (!is_aValideNumber(value1_min) || TextUtils.isEmpty(value1_min))
+                       {
+                           CustomToast.getInstance().errorTOast("incorrect value",getActivity());
+                           return;
+                       }
+                       currentRules.setVal_1_min(Double.parseDouble(value1_min));
+                   }
+
+
+                if ( edit_value1Max.getVisibility()==View.VISIBLE)
+                {
+                    if (!is_aValideNumber(value1_max) || TextUtils.isEmpty(value1_max) )
+                    {
+                        CustomToast.getInstance().errorTOast("incorrect value",getActivity());
+                        return;
+                    }
                     currentRules.setVal_1_max(Double.parseDouble(value1_max));
+                }
 
-                if ( !TextUtils.isEmpty(value2_min))
+
+                if (edit_value2Min.getVisibility()==View.VISIBLE)
+                {
+                    if (!is_aValideNumber(value2_min) || TextUtils.isEmpty(value2_min))
+                    {
+                        CustomToast.getInstance().errorTOast("incorrect value",getActivity());
+                        return;
+                    }
                     currentRules.setVal__2_min(Double.parseDouble(value2_min));
+                }
 
-                if ( !TextUtils.isEmpty(value2_max))
+                if (edit_value2Max.getVisibility()==View.VISIBLE)
+                {
+                    if (!is_aValideNumber(value2_max) || TextUtils.isEmpty(value2_max))
+                    {
+                        CustomToast.getInstance().errorTOast("incorrect value",getActivity());
+                        return;
+                    }
                     currentRules.setVal_2_max(Double.parseDouble(value2_max));
+                }
 
                 //now we update the rules in the database
                 RulesRepository.getInstance().update(currentRules);
@@ -263,6 +352,10 @@ public class FragmentSettings extends Fragment {
 
             }
         });
+
+        //hide the current edit text
+       hideEditText( edit_value1min, edit_value1Max,edit_value2Min,edit_value2Max);
+        hideButtonSave();
     }
     private String formatConstraints(String constraints, CustomRules rule)
     {
@@ -292,19 +385,19 @@ public class FragmentSettings extends Fragment {
     {
 
         if (mergedRules.contains(Const.VALUE_Value_1Min))
-            enableEditing( edit_value1min);
+            showEditText( edit_value1min);
 
         if (mergedRules.contains(Const.VALUE_Value_1Max))
-            enableEditing( edit_value1Max);
+            showEditText( edit_value1Max);
 
         if (mergedRules.contains(Const.VALUE_Value_2Min))
-            enableEditing( edit_value2Min);
+            showEditText( edit_value2Min);
 
         if (mergedRules.contains(Const.VALUE_Value_2Max))
-            enableEditing( edit_value2Max);
+            showEditText( edit_value2Max);
 
     }
-    private void enableEditing(EditText ... editTexts)
+    private void showEditText(EditText ... editTexts)
     {
         for (EditText anEditText : editTexts)
         {
@@ -314,7 +407,7 @@ public class FragmentSettings extends Fragment {
             anEditText.setVisibility(View.VISIBLE);
         }
     }
-    private void disableEditing(EditText ... editTexts)
+    private void hideEditText(EditText ... editTexts)
     {
         for (EditText anEditText : editTexts)
         {
@@ -323,8 +416,26 @@ public class FragmentSettings extends Fragment {
             anEditText.setVisibility(View.GONE);
         }
     }
-
-
-
-
+    private void hideButtonSave()
+    {
+        buttonSaveValues.setVisibility(View.INVISIBLE);
+    }
+    private void displayButtonSave()
+    {
+        buttonSaveValues.setVisibility(View.VISIBLE);
+    }
+    private boolean is_aValideNumber(String ... number)
+    {
+        try
+        {
+            for (String aNumber : number) {
+                Double.parseDouble(aNumber);
+            }
+        }
+        catch (NumberFormatException ex)
+        {
+            return false;
+        }
+        return true;
+    }
 }
