@@ -45,6 +45,12 @@ public class FragmentHome extends Fragment {
 
     private ImageView imgSeverity_glucose;
     private ImageButton imgSeverity_pulse;
+
+
+    //min and max value foreach category
+    double minPulse=0;
+    float maxPulse=220;
+
     View view;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -81,7 +87,7 @@ public class FragmentHome extends Fragment {
         txtViewPulse.setText( measureList.containsKey(Const.CATEGORY_PULSE) ?   String.format(formatNodigit, measureList.get(Const.CATEGORY_PULSE).getValue1()):"/");
         txtViewWeight.setText(measureList.containsKey(Const.CATEGORY_WEIGHT) ?   String.format(format1Digit,  measureList.get(Const.CATEGORY_WEIGHT).getValue1()) :"/");
 
-        setBarLevel(Const.CATEGORY_PULSE, 0.2F);
+        setBarLevel(Const.CATEGORY_PULSE, 90);
         return view;
     }
 
@@ -150,10 +156,23 @@ public class FragmentHome extends Fragment {
 
     //set the cursore to display the current level
 
+
+    /**
+     * Set the current level of measure on the bar level. The max and minumum value are fixed and cannot be changed. however, the red and green
+     * value can be changed when rules are changed
+     * @param category
+     * @param value
+     */
     public void setBarLevel(String category, float value)
     {
         if (category.equals(Const.CATEGORY_PULSE))
         {
+            //format the value based on the max value of the pulse. And take the %
+
+            value/=maxPulse;
+
+            //because the order of the layout is inversed (from the top to the bottom and we want from the bottom to the top), we have to take the max and remove the value from the max
+            value=1-value;
             setLevel(barPulse,value);
         }
     }
