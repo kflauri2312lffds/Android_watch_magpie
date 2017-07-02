@@ -99,6 +99,16 @@
         <item name="android:layout_height">60dp</item>
     </style>
 
+<!--  BAR LEVEL STYLE  !-->
+    <style name="bar_level_icon" parent="img_status">
+        <item name="android:layout_width">10dp</item>
+        <item name="android:layout_height">50dp</item>
+        </style>
+
+    <style name="cursor_barlevel">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">5dp</item>
+    </style>
 
 
 

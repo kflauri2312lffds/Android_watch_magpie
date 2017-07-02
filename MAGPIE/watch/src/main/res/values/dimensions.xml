@@ -3,7 +3,8 @@
 
 <resources>
     <integer name="dialog_size">200</integer>
-
+    <dimen name="bar_level_width">20dp</dimen>
+    <dimen name="bar_level_height">40dp</dimen>
 
 
 </resources>

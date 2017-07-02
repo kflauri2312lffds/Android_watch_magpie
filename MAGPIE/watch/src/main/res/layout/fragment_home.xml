@@ -22,10 +22,10 @@
         android:layout_weight="1"
         android:src="@drawable/step_green"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.63"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.836"
+        app:layout_constraintVertical_bias="0.679"
         app:layout_constraintLeft_toRightOf="@+id/img_severity_pressure" />
 
     <ImageButton
@@ -65,7 +65,8 @@
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginRight="8dp"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintVertical_bias="0.097" />
+        app:layout_constraintVertical_bias="0.097"
+        app:layout_constraintHorizontal_bias="0.55" />
 
     <ImageButton
         android:onClick="click_setPulse"
@@ -84,7 +85,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginRight="8dp"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.19"
         app:layout_constraintVertical_bias="0.097" />
 
     <TextView
@@ -177,11 +178,11 @@
         android:layout_marginTop="8dp"
         android:text="120"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.761"
+        app:layout_constraintHorizontal_bias="0.88"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.899" />
 
     <TextView
         android:id="@+id/txtView_systolValue"
@@ -215,17 +216,70 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <include
-        layout="@layout/fragment_barlevel"
-        android:layout_width="12dp"
-        android:layout_height="50dp"
+        android:id="@+id/bar_step"
+        style="@style/bar_level_icon"
+        layout="@layout/fragment_barlevel_2level"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.59"
+        app:layout_constraintHorizontal_bias="0.697"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.847"
-        android:id="@+id/include" />
+        app:layout_constraintVertical_bias="0.64" />
 
+    <include
+        android:id="@+id/bar_pulse"
+        style="@style/bar_level_icon"
+        layout="@layout/fragment_barlevel_2level"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.09"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.100000024" />
+
+    <include
+        android:id="@+id/bar_sys"
+        style="@style/bar_level_icon"
+        layout="@layout/fragment_barlevel_2level"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.139"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.647" />
+
+    <include
+        android:id="@+id/bar_dias"
+        style="@style/bar_level_icon"
+        layout="@layout/fragment_barlevel_2level"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.647"
+        app:layout_constraintHorizontal_bias="0.379" />
+
+    <include
+        android:id="@+id/bar_weight"
+        style="@style/bar_level_icon"
+        layout="@layout/fragment_barlevel_2level"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.769"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.084" />
+
+    <include
+        android:id="@+id/bar_glucose"
+        style="@style/bar_level_icon"
+        layout="@layout/fragment_barlevel_2level"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.4"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.11" />
 
 
 </android.support.constraint.ConstraintLayout>

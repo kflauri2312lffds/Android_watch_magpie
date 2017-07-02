@@ -96,9 +96,6 @@ public class PulseBehaviour extends Behavior {
             return false;
 
         return  value<minValue;
-
-
-
     }
     private boolean isGreaterThanMax(double value, Double maxValue)
     {

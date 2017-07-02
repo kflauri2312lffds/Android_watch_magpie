@@ -3,6 +3,8 @@ package hevs.aislab.magpie.watch.gui;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.media.Image;
+import android.support.constraint.ConstraintLayout;
+import android.support.constraint.ConstraintSet;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -39,6 +41,8 @@ public class FragmentHome extends Fragment {
     private TextView txtViewSteps;
     private TextView txtViewWeight;
 
+    private ConstraintLayout barPulse;
+
     private ImageView imgSeverity_glucose;
     private ImageButton imgSeverity_pulse;
     View view;
@@ -57,6 +61,7 @@ public class FragmentHome extends Fragment {
         txtViewSteps=(TextView)view.findViewById(R.id.txtView_stepValue);
         txtViewWeight=(TextView)view.findViewById(R.id.txtView_weightValue);
 
+        barPulse=(ConstraintLayout)view.findViewById(R.id.bar_pulse);
 
 
         imgSeverity_glucose=(ImageView)view.findViewById(R.id.img_severity_glucose);
@@ -76,11 +81,7 @@ public class FragmentHome extends Fragment {
         txtViewPulse.setText( measureList.containsKey(Const.CATEGORY_PULSE) ?   String.format(formatNodigit, measureList.get(Const.CATEGORY_PULSE).getValue1()):"/");
         txtViewWeight.setText(measureList.containsKey(Const.CATEGORY_WEIGHT) ?   String.format(format1Digit,  measureList.get(Const.CATEGORY_WEIGHT).getValue1()) :"/");
 
-
-
-;
-
-
+        setBarLevel(Const.CATEGORY_PULSE, 0.2F);
         return view;
     }
 
@@ -137,7 +138,6 @@ public class FragmentHome extends Fragment {
 
         }
     }
-
     private Drawable getDrawable(String category,int severity) {
 
         Log.d("RessourceName",category+"_lv"+severity);
@@ -147,10 +147,28 @@ public class FragmentHome extends Fragment {
         Drawable img=ContextCompat.getDrawable(getContext(), id);
         return img;
     }
-    //set the values of the GUI with the last values in the databse. each time the framgnet is created
-    private void setGuiValues()
-    {
 
+    //set the cursore to display the current level
+
+    public void setBarLevel(String category, float value)
+    {
+        if (category.equals(Const.CATEGORY_PULSE))
+        {
+            setLevel(barPulse,value);
+        }
     }
+
+    private void setLevel(ConstraintLayout layout, float value) {
+        //get the element we want to change the constraint
+        ImageView cursor=(ImageView) layout.findViewById(R.id.cursor);
+        //get the actual constraint
+        ConstraintSet set = new ConstraintSet();
+        set.clone(layout);
+        //change actual constraint
+        set.setVerticalBias(cursor.getId(), value);
+        // Apply the changes
+        set.applyTo(layout); // this is my… (ConstraintLayout) findViewById(R.id.rootLayout);
+    }
+
 
 }
