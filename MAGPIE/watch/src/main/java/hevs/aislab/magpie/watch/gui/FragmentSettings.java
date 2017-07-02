@@ -182,14 +182,10 @@ public class FragmentSettings extends Fragment {
 
 
         @Override
-        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-        }
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
 
         @Override
-        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            Log.d("pppp_passage","on text change");
-        }
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
 
         @Override
         public void afterTextChanged(Editable editable) {
@@ -280,8 +276,6 @@ public class FragmentSettings extends Fragment {
         edit_value2Min =(EditText)view.findViewById(R.id.edittxt_value2min);
         edit_value2Max =(EditText)view.findViewById(R.id.edittxt_value2max);
 
-        //add all button into the hashmap
-
 
         //init the imageButton
         //add the listener for the button save
@@ -299,7 +293,6 @@ public class FragmentSettings extends Fragment {
                 String value2_max=edit_value2Max.getText().toString();
 
             //try catch to handle number format exceptino
-
 
 
                 //we insert only the values from the editText that are visible and activated

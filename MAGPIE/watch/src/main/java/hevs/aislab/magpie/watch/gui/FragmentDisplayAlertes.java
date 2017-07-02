@@ -2,11 +2,13 @@ package hevs.aislab.magpie.watch.gui;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +17,9 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import hevs.aislab.magpie.watch.HomeActivity;
 import hevs.aislab.magpie.watch.R;
@@ -40,11 +44,8 @@ public class FragmentDisplayAlertes extends Fragment {
     List<Alertes>alertesList;
 
     //BUtton
-    ImageButton buttonPulse;
-    ImageButton buttonGlucose;
-    ImageButton buttonWeight;
-    ImageButton buttonPressure;
-    ImageButton buttonStep;
+
+    Map<String, ImageButton> mapButton=new HashMap<>();
 
     private FragmentActivity contextActivity;
 
@@ -71,18 +72,35 @@ public class FragmentDisplayAlertes extends Fragment {
                 }
             });
 
+            //change the button selected
+            setButtonsToGreen(mapButton);
+            setButtonToRed(mapButton.get(category));
+        }
 
 
+        /**
+         * Set the color of the category displayed to green. It's mean the category is not displayed
+         *
+         */
+        private void setButtonsToGreen(Map<String, ImageButton> imageButtonMap)
+        {
+            for (Map.Entry<String, ImageButton> entry : imageButtonMap.entrySet())
+            {
+                int id = getContext().getResources().getIdentifier(entry.getKey()+"_green", "drawable", getContext().getPackageName());
+                Drawable img= ContextCompat.getDrawable(getContext(), id);
+                entry.getValue().setImageDrawable(img);
+            }
+        }
 
-//            //create the bundle for the fragment and set the bundle
-//            DialogFragmentListAlert dialogFragmentListAlert = new DialogFragmentListAlert();
-//            Bundle bundle=new Bundle();
-//            bundle.putString("category",category);
-//            dialogFragmentListAlert.setArguments(bundle);
-//
-//            //show the fragment
-//            FragmentManager fm = contextActivity.getSupportFragmentManager();
-//            dialogFragmentListAlert.show(fm,"tag");
+        /**
+         * Set the color of the category displayed to green. It's mean the category is displayed
+         *
+         */
+        private void setButtonToRed(ImageButton imagebutton)
+        {
+            int id = getContext().getResources().getIdentifier(category+"_red", "drawable", getContext().getPackageName());
+            Drawable img= ContextCompat.getDrawable(getContext(), id);
+            imagebutton.setImageDrawable(img);
         }
     }
 
@@ -109,6 +127,8 @@ public class FragmentDisplayAlertes extends Fragment {
         Log.d("Adapter_Creation",alertesList.size()+"");
         alertAdapter=new AlertAdapter(view.getContext(),R.layout.adapter_alert,alertesList);
 
+        instanciateView();
+        addListenerToButton();
 
         ((HomeActivity) getContext()).runOnUiThread(new Runnable() {
             @Override
@@ -119,20 +139,23 @@ public class FragmentDisplayAlertes extends Fragment {
             }
         });
 
-        //generate the button
-        buttonGlucose=(ImageButton)view.findViewById(R.id.button_display_alert_glucose);
-        buttonPressure=(ImageButton)view.findViewById(R.id.button_display_alert_pressure);
-        buttonPulse=(ImageButton)view.findViewById(R.id.button_display_alert_pulse);
-        buttonStep=(ImageButton)view.findViewById(R.id.button_display_alert_step);
-        buttonWeight=(ImageButton)view.findViewById(R.id.button_display_alert_weight);
-
-        buttonGlucose.setOnClickListener(new ListnerButton(Const.CATEGORY_GLUCOSE));
-        buttonPressure.setOnClickListener(new ListnerButton(Const.CATEGORY_PRESSURE));
-        buttonPulse.setOnClickListener(new ListnerButton(Const.CATEGORY_PULSE));
-        buttonStep.setOnClickListener(new ListnerButton(Const.CATEGORY_STEP));
-        buttonWeight.setOnClickListener(new ListnerButton(Const.CATEGORY_WEIGHT));
-
         return view;
+    }
+
+    private void addListenerToButton() {
+        mapButton.get(Const.CATEGORY_GLUCOSE).setOnClickListener(new ListnerButton(Const.CATEGORY_GLUCOSE));
+        mapButton.get(Const.CATEGORY_PRESSURE).setOnClickListener(new ListnerButton(Const.CATEGORY_PRESSURE));
+        mapButton.get(Const.CATEGORY_PULSE).setOnClickListener(new ListnerButton(Const.CATEGORY_PULSE));
+        mapButton.get(Const.CATEGORY_STEP).setOnClickListener(new ListnerButton(Const.CATEGORY_STEP));
+        mapButton.get(Const.CATEGORY_WEIGHT).setOnClickListener(new ListnerButton(Const.CATEGORY_WEIGHT));
+    }
+
+    private void instanciateView() {
+        mapButton.put(Const.CATEGORY_GLUCOSE,(ImageButton)view.findViewById(R.id.button_display_alert_glucose));
+        mapButton.put(Const.CATEGORY_PRESSURE,(ImageButton)view.findViewById(R.id.button_display_alert_pressure));
+        mapButton.put(Const.CATEGORY_PULSE,(ImageButton)view.findViewById(R.id.button_display_alert_pulse));
+        mapButton.put(Const.CATEGORY_STEP,(ImageButton)view.findViewById(R.id.button_display_alert_step));
+        mapButton.put(Const.CATEGORY_WEIGHT,(ImageButton)view.findViewById(R.id.button_display_alert_weight));
     }
 
 
