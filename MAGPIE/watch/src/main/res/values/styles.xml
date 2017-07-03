@@ -86,8 +86,8 @@
 
 
 <style name="adapter_cells">
-    <item name="android:layout_marginLeft">3dp</item>
-    <item name="android:layout_marginRight">3dp</item>
+    <item name="android:layout_marginLeft">2dp</item>
+    <item name="android:layout_marginRight">2dp</item>
     <item name="android:textSize">17sp</item>
 
 </style>

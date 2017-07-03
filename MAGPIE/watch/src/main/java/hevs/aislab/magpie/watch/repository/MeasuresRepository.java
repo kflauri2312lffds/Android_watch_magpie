@@ -50,6 +50,12 @@ public class MeasuresRepository {
     {
         measuresDao.insert(measure);
     }
+
+    public void update(Measure measure)
+    {
+        measuresDao.update(measure);
+    }
+
     public Measure getById(long id)
     {
         return  measuresDao.queryBuilder()
@@ -110,6 +116,40 @@ public class MeasuresRepository {
             c.close();
 
         return result;
+        }
     }
+
+    public Measure getLastMeasureFromCategory(String category) {
+        String querry = "SELECT max(" + MeasureDao.Properties.TimeStamp.columnName + "),"
+                + MeasureDao.Properties.Id.columnName + ","
+                + MeasureDao.Properties.Value1.columnName + ","
+                + MeasureDao.Properties.Value2.columnName + ","
+                + MeasureDao.Properties.Category.columnName
+                + " FROM " + MeasureDao.TABLENAME
+                + " ORDER BY " + MeasureDao.Properties.TimeStamp.columnName;
+
+        Cursor c = Core.getInstance().getDaoSession().getDatabase().rawQuery(querry, null);
+        Measure measure = null;
+        try
+        {
+            if (c.moveToFirst())
+            {
+                measure=new Measure();
+                do {
+
+                    measure.setTimeStamp(c.getLong(0));
+                    measure.setId(c.getLong(1));
+                    measure.setValue1(c.getDouble(2));
+                    measure.setValue2(c.getDouble(3));
+                    measure.setCategory(c.getString(4));
+                } while (c.moveToNext());
+            }
+        }
+        finally {
+            c.close();
+
+        }
+
+        return measure;
     }
 }

@@ -1,6 +1,7 @@
 package hevs.aislab.magpie.watch.agents;
 
 import android.content.Context;
+import android.util.Log;
 
 import java.util.List;
 import java.util.Objects;
@@ -41,17 +42,37 @@ public class WeightBehaviour extends Behavior {
 
         //TODO : IMPLEMENT THE PROLOG: RULES:  >1% AND <2%
 
-        //TODO CHCKER QUE C'EST EN ORDRE
-        //write the measure in the database
+
+        //get the last value
+
+
+
+
+        //TODO : CHANGER LES DIAGRAM D'ACTIVITE ET INFORMER!
+        //process variation of the weight
+        double currentWeight1=value;
+        Measure previousMeaure=MeasuresRepository.getInstance().getLastMeasureFromCategory(Const.CATEGORY_WEIGHT);
+
+
+        //if no previous value, variation is 0
+        double previousWeight1=previousMeaure.getValue1()!= null ? previousMeaure.getValue1(): 0;
+        Double variation= currentWeight1-previousWeight1;
+        variation=variation/previousWeight1;
+
+
+        Log.d("displaydisplayVar",variation+"");
+
+        //write the measure in the database, inbcluding the variation
         Measure measure=new Measure();
         measure.setValue1(value);
+        measure.setValue2(variation);
         measure.setCategory(Const.CATEGORY_WEIGHT);
         measure.setTimeStamp(event.getTimestamp());
         MeasuresRepository.getInstance().insert(measure);
 
-        //SET THE VALUE ON THE GUI
+        //SET THE VALUE ON THE GUI (set the new weight, and up)
         HomeActivity context=((HomeActivity)getContext());
-        Runnable threadGUI=new Thread(new DisplayGUI(context, Const.CATEGORY_WEIGHT,value));
+        Runnable threadGUI=new Thread(new DisplayGUI(context, Const.CATEGORY_WEIGHT,value,variation));
         context.runOnUiThread(threadGUI);
 
         //GET THE RULES RELATED ON THE WEIGHT
@@ -60,9 +81,7 @@ public class WeightBehaviour extends Behavior {
         long endTimeStamp=measure.getTimeStamp();
         long startTimeSTamp=endTimeStamp-weightRules.getTimeWindow();
 
-        //check if an alert in the timewindows aldready exist. If yes, we leave
-        if (AlertRepository.getINSTANCE().getAllByCategoryBetweenTimeStamp(Const.CATEGORY_WEIGHT,startTimeSTamp,endTimeStamp).size() >=1)
-            return;
+
         //get the measure related to the weight inside the timewindow
         List<Measure>weightsMeasures=MeasuresRepository.getInstance().getByCategoryWhereTimeStampBetween(Const.CATEGORY_WEIGHT,startTimeSTamp,endTimeStamp);
         //if no more than 2 values, we return
@@ -74,7 +93,7 @@ public class WeightBehaviour extends Behavior {
 
 
        //we take the current weight of the measure
-        double actualWeight=measure.getValue1();
+        double currentWeight=measure.getValue1();
 
         //save the weight fluctuation in a variable
         String message="";
@@ -87,15 +106,21 @@ public class WeightBehaviour extends Behavior {
             //idem for the max value
             double maxValueAllowed=previousWeight*(weightRules.getVal_2_max()/100);
 
-            if (actualWeight>=maxValueAllowed)
+            if (currentWeight>=maxValueAllowed)
                 message=context.getString(R.string.notification_high_weight);
             else
-                if (actualWeight<=minValueAllowed)
+                if (currentWeight<=minValueAllowed)
                     message=  context.getString(R.string.notification_low_weight);
 
             //if no alert detected, we return
             if (message.equals(""))
                 return;
+
+
+
+        //check if an alert in the timewindows aldready exist. If yes, we leave
+//        if (AlertRepository.getINSTANCE().getAllByCategoryBetweenTimeStamp(Const.CATEGORY_WEIGHT,startTimeSTamp,endTimeStamp).size() >=1)
+//            return;
 
         //we launch the notification
         NotificationGenerator notificationGenerator=new NotificationGenerator(context,"Weight",message);

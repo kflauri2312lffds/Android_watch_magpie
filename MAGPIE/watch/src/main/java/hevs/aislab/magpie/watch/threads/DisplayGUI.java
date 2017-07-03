@@ -49,32 +49,32 @@ public class DisplayGUI implements Runnable {
     {
         if (category.equals(Const.CATEGORY_GLUCOSE))
         {
-            context.getFragmentHome().setGlucoseValue(value[0]+"");
+            context.getFragmentHome().setGlucoseValue(value[0]);
             return;
         }
 
         if (category.equals(Const.CATEGORY_PRESSURE))
         {
                                                         //we cast in it to remove the comma.
-            context.getFragmentHome().setSystolValue(((int)value[0])+"");
-            context.getFragmentHome().setDiastolValue((int)value[1]+"");
+            context.getFragmentHome().setSystolValue(value[0]);
+            context.getFragmentHome().setDiastolValue(value[1]);
             return;
         }
 
         if (category.equals(Const.CATEGORY_STEP))
         {
-            context.getFragmentHome().setStepValue((int)value[0]+"");
+            context.getFragmentHome().setStepValue(value[0]);
             return;
         }
 
         if (category.equals(Const.CATEGORY_PULSE))
         {
-            context.getFragmentHome().setPulseValue((int)value[0]+"");
+            context.getFragmentHome().setPulseValue(value[0]);
         }
 
         if (category.equals(Const.CATEGORY_WEIGHT))
         {
-            context.getFragmentHome().setWeightValue(value[0]+"");
+            context.getFragmentHome().setWeightValue(value[0],value[1]);
         }
 
     }

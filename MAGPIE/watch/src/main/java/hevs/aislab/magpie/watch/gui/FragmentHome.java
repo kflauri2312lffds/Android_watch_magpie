@@ -2,7 +2,6 @@ package hevs.aislab.magpie.watch.gui;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.ConstraintSet;
 import android.support.v4.app.Fragment;
@@ -16,13 +15,12 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import java.util.HashMap;
-import java.util.List;
 
 import hevs.aislab.magpie.watch.R;
 import hevs.aislab.magpie.watch.libs.Const;
+import hevs.aislab.magpie.watch.libs.Lib;
+import hevs.aislab.magpie.watch.models.CustomRules;
 import hevs.aislab.magpie.watch.models.Measure;
 import hevs.aislab.magpie.watch.repository.MeasuresRepository;
 
@@ -42,14 +40,25 @@ public class FragmentHome extends Fragment {
     private TextView txtViewWeight;
 
     private ConstraintLayout barPulse;
+    private ConstraintLayout barGlucose;
+    private ConstraintLayout barWeight;
+    private ConstraintLayout barStep;
+    private ConstraintLayout barSystol;
+    private ConstraintLayout barDiastol;
+
 
     private ImageView imgSeverity_glucose;
     private ImageButton imgSeverity_pulse;
 
 
     //min and max value foreach category
-    double minPulse=0;
     float maxPulse=220;
+    float maxGlucose=20;
+    //max weight is a variation (10 % higher, 10% lower)
+    float maxWeightVariation =5;
+    float maxStep=20000;
+    float maxSystol=200;
+    float maxDiastol=150;
 
     View view;
     @Override
@@ -67,7 +76,13 @@ public class FragmentHome extends Fragment {
         txtViewSteps=(TextView)view.findViewById(R.id.txtView_stepValue);
         txtViewWeight=(TextView)view.findViewById(R.id.txtView_weightValue);
 
+        //create the bar object
         barPulse=(ConstraintLayout)view.findViewById(R.id.bar_pulse);
+        barGlucose=(ConstraintLayout)view.findViewById(R.id.bar_glucose);
+        barSystol=(ConstraintLayout)view.findViewById(R.id.bar_sys);
+        barDiastol=(ConstraintLayout)view.findViewById(R.id.bar_dias);
+        barStep=(ConstraintLayout)view.findViewById(R.id.bar_step);
+        barWeight=(ConstraintLayout)view.findViewById(R.id.bar_weight);
 
 
         imgSeverity_glucose=(ImageView)view.findViewById(R.id.img_severity_glucose);
@@ -81,49 +96,89 @@ public class FragmentHome extends Fragment {
         //get all measure and display.
         HashMap<String, Measure>measureList=MeasuresRepository.getInstance().getLastMeasure();
 
-         txtViewGlucose.setText( measureList.containsKey(Const.CATEGORY_GLUCOSE) ? String.format( format1Digit,measureList.get(Const.CATEGORY_GLUCOSE).getValue1()) : "/");
-        txtViewSystol.setText(  measureList.containsKey(Const.CATEGORY_PRESSURE)?  String.format(formatNodigit, measureList.get(Const.CATEGORY_PRESSURE).getValue1()):"/");
-        txtViewDiastol.setText( measureList.containsKey(Const.CATEGORY_PRESSURE) ? String.format(formatNodigit, measureList.get(Const.CATEGORY_PRESSURE).getValue2()):"/");
-        txtViewPulse.setText( measureList.containsKey(Const.CATEGORY_PULSE) ?   String.format(formatNodigit, measureList.get(Const.CATEGORY_PULSE).getValue1()):"/");
-        txtViewWeight.setText(measureList.containsKey(Const.CATEGORY_WEIGHT) ?   String.format(format1Digit,  measureList.get(Const.CATEGORY_WEIGHT).getValue1()) :"/");
 
-        setBarLevel(Const.CATEGORY_PULSE, 90);
+        //set all values and display it
+        if (measureList.containsKey(Const.CATEGORY_GLUCOSE))
+        {
+            setGlucoseValue(measureList.get(Const.CATEGORY_GLUCOSE).getValue1());
+        }
+        if (measureList.containsKey(Const.CATEGORY_PRESSURE))
+        {
+            setSystolValue(measureList.get(Const.CATEGORY_PRESSURE).getValue1());
+            setDiastolValue(measureList.get(Const.CATEGORY_PRESSURE).getValue1());
+        }
+        if (measureList.containsKey(Const.CATEGORY_PULSE))
+        {
+            setPulseValue(measureList.get(Const.CATEGORY_PULSE).getValue1());
+        }
+        if (measureList.containsKey(Const.CATEGORY_WEIGHT))
+        {
+            setWeightValue(measureList.get(Const.CATEGORY_WEIGHT).getValue1(),measureList.get(Const.CATEGORY_WEIGHT).getValue2());
+        }
+
         return view;
     }
 
-    public void setGlucoseValue(String value)
+    public void setGlucoseValue(Double value)
     {
+        if (value.equals("/"))
+            return;
         if (txtViewGlucose!=null)
-            txtViewGlucose.setText(value);
+            txtViewGlucose.setText(Lib.getInstance().formatWith1Digit(value));
+        if (barGlucose!=null)
+            setCursor(Const.CATEGORY_GLUCOSE, value.floatValue());
     }
 
-    public void setSystolValue(String value)
+    public void setSystolValue(Double value)
     {
+        if (value.equals("/"))
+            return;
         if (txtViewDiastol!=null)
-            txtViewSystol.setText(value);
+            txtViewSystol.setText(Lib.getInstance().formatWith1Digit(value));
+        if (barSystol!=null)
+            setCursor(Const.CATEGORY_SYSTOL,value.floatValue());
     }
 
-    public void setDiastolValue(String value)
+    public void setDiastolValue(Double value)
     {
+        if (value.equals("/"))
+            return;
         if (txtViewDiastol!=null)
-            txtViewDiastol.setText(value);
+            txtViewDiastol.setText(Lib.getInstance().formatWith1Digit(value));
+        if (barDiastol!=null)
+            setCursor(Const.CATEGORY_DIASTOL,value.floatValue());
     }
 
-    public void setStepValue(String value)
+    public void setStepValue(Double value)
     {
+        if (value.equals("/"))
+            return;
         if (txtViewSteps!=null)
-            txtViewSteps.setText(value);
+            txtViewSteps.setText(Lib.getInstance().formatWith1Digit(value));
+        if (barStep!=null)
+            setCursor(Const.CATEGORY_STEP, value.floatValue());
     }
 
-    public void setPulseValue(String value)
+    public void setPulseValue(Double value)
     {
+        //check if there is a value. if not, it will be a "/"
+        if (value.equals("/"))
+            return;
+
         if (txtViewPulse!=null)
-        txtViewPulse.setText(value);
+        txtViewPulse.setText(Lib.getInstance().formatWith1Digit(value));
+        if (barPulse!=null)
+            setCursor(Const.CATEGORY_PULSE, value.floatValue());
     }
-    public void setWeightValue(String value)
+    public void setWeightValue(Double value, Double variation)
     {
+
+
         if (txtViewWeight!=null)
-            txtViewWeight.setText(value);
+            txtViewWeight.setText(Lib.getInstance().formatWith1Digit(value));
+
+        if (barWeight!=null)
+            setCursor(Const.CATEGORY_WEIGHT, value.floatValue(),variation.floatValue());
     }
 
     public void setSeverity(String category, int severity)
@@ -163,20 +218,90 @@ public class FragmentHome extends Fragment {
      * @param category
      * @param value
      */
-    public void setBarLevel(String category, float value)
+    public void setCursor(String category, float ... value)
     {
-        if (category.equals(Const.CATEGORY_PULSE))
-        {
-            //format the value based on the max value of the pulse. And take the %
 
-            value/=maxPulse;
+        switch (category) {
+            case Const.CATEGORY_PULSE:
+                value[0] = formatValueForBarLevel(value[0],maxPulse);
+                setLevel(barPulse, value[0]);
+                break;
 
-            //because the order of the layout is inversed (from the top to the bottom and we want from the bottom to the top), we have to take the max and remove the value from the max
-            value=1-value;
-            setLevel(barPulse,value);
+            case   Const.CATEGORY_GLUCOSE :
+                value[0]=formatValueForBarLevel(value[0],maxGlucose);
+                setLevel(barGlucose,value[0]);
+                break;
+            //for this one, we have the systol and diastol
+            case  Const.CATEGORY_SYSTOL :
+                //systol processing
+                value[0]=formatValueForBarLevel(value[0],maxSystol);
+                setLevel(barSystol,value[0]);
+                //diastol processing
+                break;
+            case Const.CATEGORY_DIASTOL :
+                value[0]=formatValueForBarLevel(value[0],maxDiastol);
+                setLevel(barDiastol,value[0]);
+                break;
+            case Const.CATEGORY_STEP :
+                value[0]=formatValueForBarLevel(value[0],maxStep);
+                setLevel(barStep, value[0]);
+                break;
+                case Const.CATEGORY_WEIGHT :
+                    //this value will be formated with the variation only
+                    double cursorPosition = formatValueForWeightBar(value[1]);
+
+                setLevel(barWeight,(float)cursorPosition);
+                break;
+
         }
     }
 
+    private double formatValueForWeightBar(float value) {
+        //set the max value and the min value of the weight
+
+        double variation= value;
+        Log.d("vaal_debut",variation+"");
+        double variationWithMaxWeight=variation*maxWeightVariation;
+        double processedValue=1-(0.5+variationWithMaxWeight);
+
+        //don't allow to exceed the range
+        if (processedValue<0)
+            return 0;
+        if (processedValue>1)
+            return 1;
+        return processedValue;
+    }
+
+    /**
+     *
+     * Format the value in %.
+     * @param value
+     * @param maxValue
+     * @return
+     */
+    private float formatValueForBarLevel(float value, float maxValue) {
+
+        //format the value based on the max value of the pulse. And take the %
+        value /= maxValue;
+        //because the order of the layout is inversed (from the top to the bottom and we want from the bottom to the top), we have to take the max and remove the value from the max
+        value = 1 - value;
+        Log.d("displayValue",value+"---");
+        //don't allow to exceed the range
+        if (value<0)
+            return 0;
+        if (value>1)
+            return 1;
+        return value;
+    }
+
+
+
+
+    /**
+     * this methode is used to set the level of the cursor (set the current statuts)
+     * @param layout
+     * @param value
+     */
     private void setLevel(ConstraintLayout layout, float value) {
         //get the element we want to change the constraint
         ImageView cursor=(ImageView) layout.findViewById(R.id.cursor);
@@ -186,8 +311,29 @@ public class FragmentHome extends Fragment {
         //change actual constraint
         set.setVerticalBias(cursor.getId(), value);
         // Apply the changes
-        set.applyTo(layout); // this is my… (ConstraintLayout) findViewById(R.id.rootLayout);
+        set.applyTo(layout);
+        layout.refreshDrawableState();
     }
+
+    /**
+     * This methode is used to set the diffent bar level (the size of the green and red area into the bar level)
+     * it will be used when we initialize the fragment and when we add a new value
+     * @param rule
+     */
+    public void ajustBarLevel( CustomRules rule)
+    {
+        switch (rule.getCategory())
+        {
+            case Const.CATEGORY_WEIGHT :
+                //Get the 3 area
+
+
+
+                break;
+        }
+
+    }
+
 
 
 }

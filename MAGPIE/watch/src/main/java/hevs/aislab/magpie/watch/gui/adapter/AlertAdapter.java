@@ -94,7 +94,24 @@ public class AlertAdapter extends ArrayAdapter<Alertes> {
         {
             String value;
             if (anAlert.getMeasure().getValue2()!=null)
-            value=Lib.getInstance().formatWithNoDigit(anAlert.getMeasure().getValue2());
+            {
+                //if the alert is a  weight category, we have to process the weight to get the percentage
+                if (anAlert.getMeasure().getCategory().equals(Const.CATEGORY_WEIGHT))
+                {
+                    Double variation=(anAlert.getMeasure().getValue2()*100);
+                    value =Lib.getInstance().formatWithNoDigit(variation)+"%";
+                    value=value.replace("(","");
+                    value=value.replace(")","");
+
+                    if (variation<0)
+                    value="-"+value;
+                }
+
+                else
+                    value=Lib.getInstance().formatWithNoDigit(anAlert.getMeasure().getValue2());
+
+            }
+
             else
                 value="";
             txtViewValue2.setText(value);
