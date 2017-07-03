@@ -2,7 +2,9 @@ package hevs.aislab.magpie.watch.repository;
 
 import android.database.sqlite.SQLiteConstraintException;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import hevs.aislab.magpie.watch.db.Core;
 import hevs.aislab.magpie.watch.models.CustomRules;
@@ -43,13 +45,23 @@ public class RulesRepository {
         return rules.get(0);
     }
 
-    public List<CustomRules>getAllRules()
+    public Map<String, CustomRules> getAllRules()
     {
         List<CustomRules> rules = rulesDao.queryBuilder()
                 .list();
         if (rules.size()==0)
             return null;
-        return rules;
+
+
+        //Create the map for the return
+
+        Map<String, CustomRules>mapRules=new HashMap<>();
+
+        for (CustomRules aRules : rules)
+        {
+            mapRules.put(aRules.getCategory(),aRules);
+        }
+        return mapRules;
     }
 
     public CustomRules getByCategory(String category)

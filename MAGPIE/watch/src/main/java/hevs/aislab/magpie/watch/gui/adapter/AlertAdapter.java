@@ -104,7 +104,9 @@ public class AlertAdapter extends ArrayAdapter<Alertes> {
                     value=value.replace(")","");
 
                     if (variation<0)
-                    value="-"+value;
+                        value="-"+value;
+                    else
+                        value="+"+value;
                 }
 
                 else

@@ -13,16 +13,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.HashMap;
+import java.util.Map;
 
+import ch.hevs.aislab.magpie.support.Rule;
 import hevs.aislab.magpie.watch.R;
 import hevs.aislab.magpie.watch.libs.Const;
 import hevs.aislab.magpie.watch.libs.Lib;
 import hevs.aislab.magpie.watch.models.CustomRules;
 import hevs.aislab.magpie.watch.models.Measure;
 import hevs.aislab.magpie.watch.repository.MeasuresRepository;
+import hevs.aislab.magpie.watch.repository.RulesRepository;
 
 /**
  * Created by teuft on 30.05.2017.
@@ -68,6 +72,20 @@ public class FragmentHome extends Fragment {
         // Inflate the layout for this fragment
         view=lf.inflate(R.layout.fragment_home, container, false);
 
+        initViews();
+        HashMap<String, Measure>measureList=MeasuresRepository.getInstance().getLastMeasure();
+        displayLastMeasure(measureList);
+        setBarLevelArea();
+
+
+        return view;
+    }
+
+    /**
+     * This method will create the view object from XLM to Java and instanciate objects. Used when the user reboots it's device
+     *
+     */
+    private void initViews() {
         //init graphical element
         txtViewGlucose=(TextView)view.findViewById(R.id.txtView_GlucoseValue);
         txtViewPulse=(TextView)view.findViewById(R.id.txtView_pulseValue);
@@ -84,19 +102,15 @@ public class FragmentHome extends Fragment {
         barStep=(ConstraintLayout)view.findViewById(R.id.bar_step);
         barWeight=(ConstraintLayout)view.findViewById(R.id.bar_weight);
 
-
         imgSeverity_glucose=(ImageView)view.findViewById(R.id.img_severity_glucose);
         imgSeverity_pulse=(ImageButton) view.findViewById(R.id.img_severity_pulse);
+    }
 
-        //define the format of integer and numeric number
-        String format1Digit="%(,.1f";
-        String formatNodigit="%(,.0f";
-
-
-        //get all measure and display.
-        HashMap<String, Measure>measureList=MeasuresRepository.getInstance().getLastMeasure();
-
-
+    /**
+     * This methode will display the last measure for all category. Used when the user reboot it's device
+     * @param measureList
+     */
+    private void displayLastMeasure(HashMap<String, Measure> measureList) {
         //set all values and display it
         if (measureList.containsKey(Const.CATEGORY_GLUCOSE))
         {
@@ -115,14 +129,28 @@ public class FragmentHome extends Fragment {
         {
             setWeightValue(measureList.get(Const.CATEGORY_WEIGHT).getValue1(),measureList.get(Const.CATEGORY_WEIGHT).getValue2());
         }
-
-        return view;
     }
+
+    /**
+     * This method will set the area (green and red) on each bar level. Used when the user reboot the system
+     */
+    private void setBarLevelArea() {
+        //get all the rules
+        Map<String, CustomRules> rulesMap= RulesRepository.getInstance().getAllRules();
+        //set all the progress bar depending on the rules
+
+        ajustBarLevel(rulesMap.get(Const.CATEGORY_GLUCOSE),Const.CATEGORY_GLUCOSE);
+        ajustBarLevel(rulesMap.get(Const.CATEGORY_WEIGHT),Const.CATEGORY_WEIGHT);
+        ajustBarLevel(rulesMap.get(Const.CATEGORY_PULSE),Const.CATEGORY_PULSE);
+        ajustBarLevel(rulesMap.get(Const.CATEGORY_PRESSURE),Const.CATEGORY_SYSTOL);
+        ajustBarLevel(rulesMap.get(Const.CATEGORY_PRESSURE),Const.CATEGORY_DIASTOL);
+
+//        ajustBarLevel(rulesMap.get(Const.CATEGORY_STEP));
+    }
+
 
     public void setGlucoseValue(Double value)
     {
-        if (value.equals("/"))
-            return;
         if (txtViewGlucose!=null)
             txtViewGlucose.setText(Lib.getInstance().formatWith1Digit(value));
         if (barGlucose!=null)
@@ -131,8 +159,6 @@ public class FragmentHome extends Fragment {
 
     public void setSystolValue(Double value)
     {
-        if (value.equals("/"))
-            return;
         if (txtViewDiastol!=null)
             txtViewSystol.setText(Lib.getInstance().formatWith1Digit(value));
         if (barSystol!=null)
@@ -141,8 +167,6 @@ public class FragmentHome extends Fragment {
 
     public void setDiastolValue(Double value)
     {
-        if (value.equals("/"))
-            return;
         if (txtViewDiastol!=null)
             txtViewDiastol.setText(Lib.getInstance().formatWith1Digit(value));
         if (barDiastol!=null)
@@ -151,8 +175,6 @@ public class FragmentHome extends Fragment {
 
     public void setStepValue(Double value)
     {
-        if (value.equals("/"))
-            return;
         if (txtViewSteps!=null)
             txtViewSteps.setText(Lib.getInstance().formatWith1Digit(value));
         if (barStep!=null)
@@ -161,10 +183,6 @@ public class FragmentHome extends Fragment {
 
     public void setPulseValue(Double value)
     {
-        //check if there is a value. if not, it will be a "/"
-        if (value.equals("/"))
-            return;
-
         if (txtViewPulse!=null)
         txtViewPulse.setText(Lib.getInstance().formatWith1Digit(value));
         if (barPulse!=null)
@@ -184,7 +202,7 @@ public class FragmentHome extends Fragment {
     public void setSeverity(String category, int severity)
     {
         //TODO IF ELSE FOR THE SEVERITY
-        Drawable img=null;
+        Drawable img;
         img = getDrawable(category,severity);
         if (category.equals("pulse"))
         {
@@ -205,8 +223,8 @@ public class FragmentHome extends Fragment {
         Context context = view.getContext();
         //Get the image with the named based on category and based on name of the category
         int id = context.getResources().getIdentifier(category+"_lv"+severity, "drawable", context.getPackageName());
-        Drawable img=ContextCompat.getDrawable(getContext(), id);
-        return img;
+
+        return ContextCompat.getDrawable(getContext(), id);
     }
 
     //set the cursore to display the current level
@@ -218,7 +236,7 @@ public class FragmentHome extends Fragment {
      * @param category
      * @param value
      */
-    public void setCursor(String category, float ... value)
+    private void setCursor(String category, float ... value)
     {
 
         switch (category) {
@@ -231,6 +249,7 @@ public class FragmentHome extends Fragment {
                 value[0]=formatValueForBarLevel(value[0],maxGlucose);
                 setLevel(barGlucose,value[0]);
                 break;
+
             //for this one, we have the systol and diastol
             case  Const.CATEGORY_SYSTOL :
                 //systol processing
@@ -238,18 +257,20 @@ public class FragmentHome extends Fragment {
                 setLevel(barSystol,value[0]);
                 //diastol processing
                 break;
+
             case Const.CATEGORY_DIASTOL :
                 value[0]=formatValueForBarLevel(value[0],maxDiastol);
                 setLevel(barDiastol,value[0]);
                 break;
+
             case Const.CATEGORY_STEP :
                 value[0]=formatValueForBarLevel(value[0],maxStep);
                 setLevel(barStep, value[0]);
                 break;
-                case Const.CATEGORY_WEIGHT :
+
+            case Const.CATEGORY_WEIGHT :
                     //this value will be formated with the variation only
                     double cursorPosition = formatValueForWeightBar(value[1]);
-
                 setLevel(barWeight,(float)cursorPosition);
                 break;
 
@@ -320,18 +341,123 @@ public class FragmentHome extends Fragment {
      * it will be used when we initialize the fragment and when we add a new value
      * @param rule
      */
-    public void ajustBarLevel( CustomRules rule)
+    public void ajustBarLevel( CustomRules rule, String category)
     {
-        switch (rule.getCategory())
+
+        /*
+        the display of the area inside the layout  is the followings. we will specify the weight (space that take) for each layout
+
+        *****************
+        *     area 3  RED  *
+        *****************
+        *****************
+        *     area 2 GREEN   *
+        *****************
+        *****************
+        *     area 1  RED  *
+        *****************
+         */
+
+
+        //define the layout
+        LinearLayout area1=null;
+        LinearLayout area2=null;
+        LinearLayout area3=null;
+
+        float weightArea1=0F;
+        float weightArea2=0F;
+        float weightArea3=0F;
+
+        switch (category)
         {
+            //get the value and the layout based on the category
             case Const.CATEGORY_WEIGHT :
                 //Get the 3 area
+                 area1=(LinearLayout) barWeight.findViewById(R.id.bar_level_area1);
+                 area2=(LinearLayout) barWeight.findViewById(R.id.bar_level_area2);
+                 area3=(LinearLayout) barWeight.findViewById(R.id.bar_level_area3);
 
+                //now we get the number based on the rules. The value are in % (ex 98 or 101)
+                float minVariationValue=100-rule.getVal__2_min().floatValue();
+                float maxValueVariationValue=rule.getVal_2_max().floatValue()-100;
 
-
+                //the area 2 correspond to the "good" zone (green)
+                weightArea2=maxValueVariationValue+minVariationValue;
+                //are 1 correspond to a important weight loss
+                weightArea1=this.maxWeightVariation- minVariationValue;
+                //area 3 correspond to an important gain of weight
+                weightArea3=this.maxWeightVariation-maxValueVariationValue;
                 break;
+
+            case Const.CATEGORY_GLUCOSE :
+                area1=(LinearLayout) barGlucose.findViewById(R.id.bar_level_area1);
+                area2=(LinearLayout) barGlucose.findViewById(R.id.bar_level_area2);
+                area3=(LinearLayout) barGlucose.findViewById(R.id.bar_level_area3);
+
+                float minValueGlucose=rule.getVal_1_min().floatValue();
+                float maxValueGlucose=rule.getVal_2_max().floatValue();
+
+                weightArea1=minValueGlucose;
+                weightArea2=maxValueGlucose-minValueGlucose;
+                weightArea3=this.maxGlucose-maxValueGlucose;
+                break;
+
+            case Const.CATEGORY_PULSE :
+                area1=(LinearLayout) barPulse.findViewById(R.id.bar_level_area1);
+                area2=(LinearLayout) barPulse.findViewById(R.id.bar_level_area2);
+                area3=(LinearLayout) barPulse.findViewById(R.id.bar_level_area3);
+
+                float minValuePulse=rule.getVal_1_min().floatValue();
+                float maxValuePulse=rule.getVal_1_max().floatValue();
+
+                weightArea1=minValuePulse;
+                weightArea2=maxValuePulse-minValuePulse;
+                weightArea3=this.maxPulse-maxValuePulse;
+
+                Log.d("weightArea__1",weightArea1+"");
+                Log.d("weightArea__2",weightArea2+"");
+                Log.d("weightArea__3",weightArea3+"");
+                break;
+
+            case Const.CATEGORY_SYSTOL :
+                area1=(LinearLayout) barSystol.findViewById(R.id.bar_level_area1);
+                area2=(LinearLayout) barSystol.findViewById(R.id.bar_level_area2);
+                area3=(LinearLayout) barSystol.findViewById(R.id.bar_level_area3);
+                //this category will contains only 2 area: low is green (good) high is bad (red)
+                weightArea1=0F;
+                weightArea2=rule.getVal_1_max().floatValue();
+                weightArea3=this.maxSystol-rule.getVal_1_max().floatValue();
+                Log.d("PassageDansSystolCase","passage");
+                break;
+            case Const.CATEGORY_DIASTOL :
+                area1=(LinearLayout) barDiastol.findViewById(R.id.bar_level_area1);
+                area2=(LinearLayout) barDiastol.findViewById(R.id.bar_level_area2);
+                area3=(LinearLayout) barDiastol.findViewById(R.id.bar_level_area3);
+                //same principe as diastol
+                //this category will contains only 2 area: low is green (good) high is bad (red)
+                weightArea1=0F;
+                weightArea2=rule.getVal_2_max().floatValue();
+                weightArea3=this.maxDiastol-rule.getVal_2_max().floatValue();
+                Log.d("PassageDansSystolCase","passage");
+                break;
+
+
+           // default:
+              //  return;
         }
 
+        //we set the values
+        ajustArea(area1,weightArea1);
+        ajustArea(area2, weightArea2);
+        ajustArea(area3,weightArea3);
+
+
+    }
+    private void ajustArea(LinearLayout area, float weight)
+    {
+        LinearLayout.LayoutParams param =new LinearLayout.LayoutParams(area.getLayoutParams());
+        param.weight=weight;
+        area.setLayoutParams(param);
     }
 
 
