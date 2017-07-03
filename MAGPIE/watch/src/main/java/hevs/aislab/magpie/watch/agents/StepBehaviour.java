@@ -45,10 +45,8 @@ public class StepBehaviour extends Behavior {
         measure.setTimeStamp(event.getTimestamp());
         MeasuresRepository.getInstance().insert(measure);
 
-        //SET THE VALUE ON THE GUI
-        HomeActivity context=((HomeActivity)getContext());
-        Runnable threadGUI=new Thread(new DisplayGUI(context, Const.CATEGORY_STEP,steps));
-        context.runOnUiThread(threadGUI);
+        //We do not need to set the value in GUI her
+
 
         //APPLY THE RULES FOR THE STEP
 
@@ -61,13 +59,11 @@ public class StepBehaviour extends Behavior {
 
         //now we apply the rules
 
-
-
         //no alert trigered if the steps are in the range
         if (steps>minValue ||steps<maxValue)
             return;
 
-        //insert the alere in the db, but we don't trigger any alert in this case.
+        //insert the alere in the db, but we don't display
         Alertes alertes=new Alertes();
         alertes.setRule(stepRules);
         alertes.setMeasure(measure);

@@ -27,6 +27,7 @@ import hevs.aislab.magpie.watch.models.CustomRules;
 import hevs.aislab.magpie.watch.models.Measure;
 import hevs.aislab.magpie.watch.repository.MeasuresRepository;
 import hevs.aislab.magpie.watch.repository.RulesRepository;
+import hevs.aislab.magpie.watch.shared_pref.PrefAccessor;
 
 /**
  * Created by teuft on 30.05.2017.
@@ -129,6 +130,13 @@ public class FragmentHome extends Fragment {
         {
             setWeightValue(measureList.get(Const.CATEGORY_WEIGHT).getValue1(),measureList.get(Const.CATEGORY_WEIGHT).getValue2());
         }
+
+        //the step work differently. We won't take data directly from the data base. We will check if it's a new day. If it's, we take 0 as value
+        //TODO IMPLEMENT THE NEW DAY CHECK
+        //get the step
+       double currentStep= PrefAccessor.getInstance().getLong(getContext(),Const.KEY_CURRENT_STEP);
+        setStepValue(currentStep);
+
     }
 
     /**
@@ -144,6 +152,7 @@ public class FragmentHome extends Fragment {
         ajustBarLevel(rulesMap.get(Const.CATEGORY_PULSE),Const.CATEGORY_PULSE);
         ajustBarLevel(rulesMap.get(Const.CATEGORY_PRESSURE),Const.CATEGORY_SYSTOL);
         ajustBarLevel(rulesMap.get(Const.CATEGORY_PRESSURE),Const.CATEGORY_DIASTOL);
+        ajustBarLevel(rulesMap.get(Const.CATEGORY_STEP),Const.CATEGORY_STEP);
 
 //        ajustBarLevel(rulesMap.get(Const.CATEGORY_STEP));
     }
@@ -160,7 +169,7 @@ public class FragmentHome extends Fragment {
     public void setSystolValue(Double value)
     {
         if (txtViewDiastol!=null)
-            txtViewSystol.setText(Lib.getInstance().formatWith1Digit(value));
+            txtViewSystol.setText(Lib.getInstance().formatWithNoDigit(value));
         if (barSystol!=null)
             setCursor(Const.CATEGORY_SYSTOL,value.floatValue());
     }
@@ -168,7 +177,7 @@ public class FragmentHome extends Fragment {
     public void setDiastolValue(Double value)
     {
         if (txtViewDiastol!=null)
-            txtViewDiastol.setText(Lib.getInstance().formatWith1Digit(value));
+            txtViewDiastol.setText(Lib.getInstance().formatWithNoDigit(value));
         if (barDiastol!=null)
             setCursor(Const.CATEGORY_DIASTOL,value.floatValue());
     }
@@ -176,7 +185,7 @@ public class FragmentHome extends Fragment {
     public void setStepValue(Double value)
     {
         if (txtViewSteps!=null)
-            txtViewSteps.setText(Lib.getInstance().formatWith1Digit(value));
+            txtViewSteps.setText(Lib.getInstance().formatWithNoDigit(value));
         if (barStep!=null)
             setCursor(Const.CATEGORY_STEP, value.floatValue());
     }
@@ -429,6 +438,7 @@ public class FragmentHome extends Fragment {
                 weightArea3=this.maxSystol-rule.getVal_1_max().floatValue();
                 Log.d("PassageDansSystolCase","passage");
                 break;
+
             case Const.CATEGORY_DIASTOL :
                 area1=(LinearLayout) barDiastol.findViewById(R.id.bar_level_area1);
                 area2=(LinearLayout) barDiastol.findViewById(R.id.bar_level_area2);
@@ -440,6 +450,21 @@ public class FragmentHome extends Fragment {
                 weightArea3=this.maxDiastol-rule.getVal_2_max().floatValue();
                 Log.d("PassageDansSystolCase","passage");
                 break;
+            case Const.CATEGORY_STEP :
+
+                area1=(LinearLayout) barStep.findViewById(R.id.bar_level_area1);
+                area2=(LinearLayout) barStep.findViewById(R.id.bar_level_area2);
+                area3=(LinearLayout) barStep.findViewById(R.id.bar_level_area3);
+
+                float minValueStep=rule.getVal_1_min().floatValue();
+                float maxValueStep=rule.getVal_1_max().floatValue();
+
+                weightArea1=minValueStep;
+                weightArea2=maxValueStep-minValueStep;
+                weightArea3=this.maxStep-maxValueStep;
+
+                break;
+
 
 
            // default:

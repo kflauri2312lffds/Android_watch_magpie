@@ -34,6 +34,7 @@ import hevs.aislab.magpie.watch.gui.FragmentSettings;
 import hevs.aislab.magpie.watch.gui.dialogfragment.DialogFragmentSetWeight;
 import hevs.aislab.magpie.watch.libs.Const;
 import hevs.aislab.magpie.watch.notification.CustomToast;
+import hevs.aislab.magpie.watch.shared_pref.PrefAccessor;
 import hevs.aislab.magpie.watch.threads.IhomeActivity;
 import hevs.aislab.magpie.watch.threads.SensorsThreadLifecircle;
 
@@ -72,6 +73,8 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
     private String currentValue_systol;
     private String currentValue_diastol;
     private String currentValue_weight;
+
+
 
     private Thread threadPulse;
 
@@ -132,6 +135,7 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
     public void click_settings(View view )
     {
         displayFragmentSettings();
+
     }
 
     //UPDATE VIEW IN FRAGMENT
@@ -193,6 +197,7 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
     public void click_setSteps(View view)
     {
         CustomToast.getInstance().warningToast(getString(R.string.information_step_device),this);
+        addStep(1000);
     }
 
     //------------VOICE RECOGNITION HANDLER------------------
@@ -384,10 +389,21 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
                 listPulse.add(value);
                 break;
             case Sensor.TYPE_STEP_COUNTER :
-                processEvent(System.currentTimeMillis(),Const.CATEGORY_STEP,sensorEvent.values[0]+"");
+                //for this sensor, we juste update the value. the value is processed only once a week
+
+                addStep(1);
                 break;
 
         }
+    }
+
+    private void addStep(long stepNumber) {
+        long stepsValue= PrefAccessor.getInstance().getLong(this, "steps_counter");
+        //get the current step. 0 if null.
+        stepsValue+=stepNumber;
+        PrefAccessor.getInstance().save(this,Const.KEY_CURRENT_STEP,stepsValue);
+        //change the display of the step
+        fragmentHome.setStepValue((double)stepsValue);
     }
 
     //***************************************HANDLE THE LIFE CIRCLE OF SENSORS***************************

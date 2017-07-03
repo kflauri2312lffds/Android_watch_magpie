@@ -61,10 +61,11 @@ public class PrefAccessor {
         editor.apply();
     }
 
+
     public long getLong(Context context, String key)
     {
         init(context);
-       return  preferences.getLong(key,-1);
+       return  preferences.getLong(key,0);
     }
 
     public String getString( Context context, String key)
