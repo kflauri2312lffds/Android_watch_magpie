@@ -153,8 +153,6 @@ public class FragmentHome extends Fragment {
         ajustBarLevel(rulesMap.get(Const.CATEGORY_PRESSURE),Const.CATEGORY_SYSTOL);
         ajustBarLevel(rulesMap.get(Const.CATEGORY_PRESSURE),Const.CATEGORY_DIASTOL);
         ajustBarLevel(rulesMap.get(Const.CATEGORY_STEP),Const.CATEGORY_STEP);
-
-//        ajustBarLevel(rulesMap.get(Const.CATEGORY_STEP));
     }
 
 

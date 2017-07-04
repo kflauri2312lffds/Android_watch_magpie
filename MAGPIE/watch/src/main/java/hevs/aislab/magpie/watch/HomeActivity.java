@@ -26,6 +26,7 @@ import hevs.aislab.magpie.watch.agents.PulseBehaviour;
 import hevs.aislab.magpie.watch.agents.StepBehaviour;
 import hevs.aislab.magpie.watch.agents.WeightBehaviour;
 import hevs.aislab.magpie.watch.gui.FragmentDisplayAlertes;
+import hevs.aislab.magpie.watch.gui.IdialogToActivity;
 import hevs.aislab.magpie.watch.gui.dialogfragment.DialogFragmentSetPressure;
 import hevs.aislab.magpie.watch.gui.dialogfragment.DialogFragmentSetValue;
 import hevs.aislab.magpie.watch.gui.dialogfragment.DialogFragmentSetGlucose;
@@ -33,6 +34,8 @@ import hevs.aislab.magpie.watch.gui.FragmentHome;
 import hevs.aislab.magpie.watch.gui.FragmentSettings;
 import hevs.aislab.magpie.watch.gui.dialogfragment.DialogFragmentSetWeight;
 import hevs.aislab.magpie.watch.libs.Const;
+import hevs.aislab.magpie.watch.libs.DateFormater;
+import hevs.aislab.magpie.watch.libs.Validator;
 import hevs.aislab.magpie.watch.notification.CustomToast;
 import hevs.aislab.magpie.watch.shared_pref.PrefAccessor;
 import hevs.aislab.magpie.watch.threads.IhomeActivity;
@@ -47,7 +50,7 @@ import hevs.aislab.magpie.watch.threads.SensorsThreadLifecircle;
  */
 
 //implement the listener for the sensors
-public class HomeActivity extends MagpieActivityWatch implements SensorEventListener,DialogFragmentSetValue.IdialogToActivity, IhomeActivity {
+public class HomeActivity extends MagpieActivityWatch implements SensorEventListener,IdialogToActivity, IhomeActivity {
 
 
 
@@ -64,16 +67,6 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
     private SensorManager sensorManager;
     private Sensor sensor_pulse;
     private Sensor sensor_step;
-
-
-    //CURRENT VALUES (USED TO POPULATE THE DISPLAY when we change fragment)
-    private String currentValue_pulse;
-    private String currentValue_step;
-    private String currentValue_glucose;
-    private String currentValue_systol;
-    private String currentValue_diastol;
-    private String currentValue_weight;
-
 
 
     private Thread threadPulse;
@@ -122,20 +115,16 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
   //    BUTTON MENU EVENT
     public void click_voiceRecongnition(View view)
     {
-
-        //fragmentHome.setSeverity("sever",3);
          displaySpeechRecognizer();
     }
 
     public void click_home(View view )
     {
-
         displayFragmentHome();
     }
     public void click_settings(View view )
     {
         displayFragmentSettings();
-
     }
 
     //UPDATE VIEW IN FRAGMENT
@@ -156,7 +145,9 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
     @Override
     public void sendValue(String category, String ... value)
     {
-                //we send the values directly to magpie methode
+        //check the entry to see is valide. if not, we don't send value to magpie
+
+                //send to magpie if it's valide
                 processEvent(System.currentTimeMillis(),category,value);
     }
 
@@ -397,13 +388,25 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
         }
     }
 
-    private void addStep(long stepNumber) {
-        long stepsValue= PrefAccessor.getInstance().getLong(this, "steps_counter");
+    private void addStep(long newStep) {
+        //retrive the current step
+        long currentStep= PrefAccessor.getInstance().getLong(this, "steps_counter");
+        //check if it's a new day. If it is, we store the actual data in the data base
+        String today=DateFormater.getInstance().getDate(System.currentTimeMillis());
+        if (!today.equals(PrefAccessor.getInstance().getString(this,Const.KEY_DATE_STEP)))
+        {
+            //write the new date in shared pref
+            PrefAccessor.getInstance().save(this,Const.KEY_DATE_STEP,today);
+            //send event to magpie
+            processEvent(System.currentTimeMillis(),Const.CATEGORY_STEP,currentStep+"");
+            //reset the number of step
+            currentStep=0;
+        }
         //get the current step. 0 if null.
-        stepsValue+=stepNumber;
-        PrefAccessor.getInstance().save(this,Const.KEY_CURRENT_STEP,stepsValue);
+        currentStep+=newStep;
+        PrefAccessor.getInstance().save(this,Const.KEY_CURRENT_STEP,currentStep);
         //change the display of the step
-        fragmentHome.setStepValue((double)stepsValue);
+        fragmentHome.setStepValue((double)currentStep);
     }
 
     //***************************************HANDLE THE LIFE CIRCLE OF SENSORS***************************

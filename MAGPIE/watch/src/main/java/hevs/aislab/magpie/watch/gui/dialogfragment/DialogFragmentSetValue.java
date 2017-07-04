@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
+import hevs.aislab.magpie.watch.gui.IdialogToActivity;
+
 /**
  * this is the parent class to all Dialog Fragment to add values.
  */
@@ -17,10 +19,7 @@ public abstract class DialogFragmentSetValue extends DialogFragment {
      * This interface is designed to handle the communication between the fragment and the activity.
      * Each dialog Fragment can now call methode from activity  described in the Inteface
      */
-    public interface IdialogToActivity
-    {
-         void sendValue(String category, String ... value);
-    }
+
     protected View view;
     /**
      * This object will be able to call methode directly from activity, though the interface

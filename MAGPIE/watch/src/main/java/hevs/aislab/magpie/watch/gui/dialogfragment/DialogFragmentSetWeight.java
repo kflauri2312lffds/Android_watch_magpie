@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import hevs.aislab.magpie.watch.R;
 import hevs.aislab.magpie.watch.libs.Const;
+import hevs.aislab.magpie.watch.libs.Validator;
 import hevs.aislab.magpie.watch.notification.CustomToast;
 
 /**
@@ -57,6 +58,11 @@ public class DialogFragmentSetWeight extends DialogFragmentSetValue {
                 try
                 {
                     double value=Double.parseDouble(textValue.getText().toString());
+                    if (!Validator.isEntryValide(Const.CATEGORY_WEIGHT,value))
+                    {
+                        CustomToast.getInstance().errorTOast(getString(R.string.incorrect_value),getActivity());
+                        return;
+                    }
                     homeActivity.sendValue(Const.CATEGORY_WEIGHT,value+"");
                     dismiss();
                 }

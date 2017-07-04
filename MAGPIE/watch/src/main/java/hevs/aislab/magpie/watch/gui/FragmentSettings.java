@@ -303,6 +303,11 @@ public class FragmentSettings extends Fragment {
                            CustomToast.getInstance().errorTOast("incorrect value",getActivity());
                            return;
                        }
+
+                       //Check if the values of the user are not valide (out of a certain range)
+
+
+
                        currentRules.setVal_1_min(Double.parseDouble(value1_min));
                    }
 
@@ -362,6 +367,7 @@ public class FragmentSettings extends Fragment {
 
     private String replaceValueByNumber(String rules, String desingation, String value )
     {
+
         return rules.replace(desingation,value);
     }
     private boolean isRulesContainsDesignation(String rules, String designation)

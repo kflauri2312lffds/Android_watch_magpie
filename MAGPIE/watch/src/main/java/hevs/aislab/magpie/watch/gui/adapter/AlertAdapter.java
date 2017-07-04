@@ -6,7 +6,6 @@ import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
-import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,13 +14,11 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import java.util.List;
-import java.util.Locale;
 
 import hevs.aislab.magpie.watch.R;
 import hevs.aislab.magpie.watch.libs.Const;
+import hevs.aislab.magpie.watch.libs.DateFormater;
 import hevs.aislab.magpie.watch.libs.Lib;
 import hevs.aislab.magpie.watch.models.Alertes;
 
@@ -71,7 +68,7 @@ public class AlertAdapter extends ArrayAdapter<Alertes> {
         if (txtViewTimeStamp!=null)     //TODO PROCESS THE TIMESTAMP AND SHOW A DATE
         {
             //get the date of the time stamp
-           String date= Lib.getInstance().getDate(anAlert.getMeasure().getTimeStamp());
+           String date= DateFormater.getInstance().getDateTime(anAlert.getMeasure().getTimeStamp());
             txtViewTimeStamp.setText(date);
         }
         if (txtViewmessage!=null)

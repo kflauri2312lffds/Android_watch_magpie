@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import hevs.aislab.magpie.watch.R;
 import hevs.aislab.magpie.watch.libs.Const;
+import hevs.aislab.magpie.watch.libs.Validator;
 import hevs.aislab.magpie.watch.notification.CustomToast;
 
 /**
@@ -59,6 +60,12 @@ public class DialogFragmentSetGlucose extends DialogFragmentSetValue {
                 try
                 {
                     double value=Double.parseDouble(txtValue.getText().toString());
+                    //check if the entry is valide (range)
+                    if (!Validator.isEntryValide(Const.CATEGORY_GLUCOSE,value))
+                    {
+                        CustomToast.getInstance().errorTOast(getString(R.string.incorrect_value),getActivity());
+                        return;
+                    }
                     homeActivity.sendValue(Const.CATEGORY_GLUCOSE,value+"");
                     dismiss();
                 }
