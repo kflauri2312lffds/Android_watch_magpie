@@ -18,8 +18,6 @@ import android.widget.TextView;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import ch.hevs.aislab.magpie.support.Rule;
 import hevs.aislab.magpie.watch.R;
 import hevs.aislab.magpie.watch.libs.Const;
 import hevs.aislab.magpie.watch.libs.Lib;
@@ -60,7 +58,7 @@ public class FragmentHome extends Fragment {
     float maxPulse=220;
     float maxGlucose=20;
     //max weight is a variation (10 % higher, 10% lower)
-    float maxWeightVariation =5;
+    float maxWeightVariation =10;
     float maxStep=20000;
     float maxSystol=200;
     float maxDiastol=150;
@@ -77,6 +75,11 @@ public class FragmentHome extends Fragment {
         HashMap<String, Measure>measureList=MeasuresRepository.getInstance().getLastMeasure();
         displayLastMeasure(measureList);
         setBarLevelArea();
+
+        //set the max variation
+        CustomRules weightRule=RulesRepository.getInstance().getByCategory(Const.CATEGORY_WEIGHT);
+
+        //now we get the number based on the rules. The value are in % (ex 98 or 101)
 
 
         return view;
@@ -191,7 +194,7 @@ public class FragmentHome extends Fragment {
     public void setPulseValue(Double value)
     {
         if (txtViewPulse!=null)
-        txtViewPulse.setText(Lib.getInstance().formatWith1Digit(value));
+        txtViewPulse.setText(Lib.getInstance().formatWithNoDigit(value));
         if (barPulse!=null)
             setCursor(Const.CATEGORY_PULSE, value.floatValue());
     }
@@ -205,36 +208,6 @@ public class FragmentHome extends Fragment {
         if (barWeight!=null)
             setCursor(Const.CATEGORY_WEIGHT, value.floatValue(),variation.floatValue());
     }
-
-    public void setSeverity(String category, int severity)
-    {
-        //TODO IF ELSE FOR THE SEVERITY
-        Drawable img;
-        img = getDrawable(category,severity);
-        if (category.equals("pulse"))
-        {
-            if (imgSeverity_pulse==null)
-                return;
-            imgSeverity_pulse.setImageDrawable(img);
-            return ;
-        }
-
-        if (category.equals("glucose"))
-        {
-
-        }
-    }
-    private Drawable getDrawable(String category,int severity) {
-
-        Log.d("RessourceName",category+"_lv"+severity);
-        Context context = view.getContext();
-        //Get the image with the named based on category and based on name of the category
-        int id = context.getResources().getIdentifier(category+"_lv"+severity, "drawable", context.getPackageName());
-
-        return ContextCompat.getDrawable(getContext(), id);
-    }
-
-    //set the cursore to display the current level
 
 
     /**
@@ -287,9 +260,11 @@ public class FragmentHome extends Fragment {
     private double formatValueForWeightBar(float value) {
         //set the max value and the min value of the weight
 
+
+
         double variation= value;
         Log.d("vaal_debut",variation+"");
-        double variationWithMaxWeight=variation*maxWeightVariation;
+        double variationWithMaxWeight=variation*maxWeightVariation/2;
         double processedValue=1-(0.5+variationWithMaxWeight);
 
         //don't allow to exceed the range
@@ -375,6 +350,7 @@ public class FragmentHome extends Fragment {
         float weightArea2=0F;
         float weightArea3=0F;
 
+
         switch (category)
         {
             //get the value and the layout based on the category
@@ -386,14 +362,19 @@ public class FragmentHome extends Fragment {
 
                 //now we get the number based on the rules. The value are in % (ex 98 or 101)
                 float minVariationValue=100-rule.getVal__2_min().floatValue();
-                float maxValueVariationValue=rule.getVal_2_max().floatValue()-100;
+                float maxVariationValue=rule.getVal_2_max().floatValue()-100;
+                float goodValue=minVariationValue+maxVariationValue;
 
                 //the area 2 correspond to the "good" zone (green)
-                weightArea2=maxValueVariationValue+minVariationValue;
+                weightArea2=goodValue;
                 //are 1 correspond to a important weight loss
-                weightArea1=this.maxWeightVariation- minVariationValue;
+                weightArea3=this.maxWeightVariation-(goodValue+maxVariationValue);
                 //area 3 correspond to an important gain of weight
-                weightArea3=this.maxWeightVariation-maxValueVariationValue;
+                weightArea1=this.maxWeightVariation-(goodValue+minVariationValue);
+
+                Log.d("weight_area1_",weightArea1+"");
+                Log.d("weight_area2_",weightArea2+"");
+                Log.d("weight_area3_",weightArea3+"");
                 break;
 
             case Const.CATEGORY_GLUCOSE :
@@ -462,9 +443,6 @@ public class FragmentHome extends Fragment {
                 weightArea3=this.maxStep-maxValueStep;
 
                 break;
-
-
-
            // default:
               //  return;
         }
@@ -474,7 +452,6 @@ public class FragmentHome extends Fragment {
         ajustArea(area2, weightArea2);
         ajustArea(area3,weightArea3);
 
-
     }
     private void ajustArea(LinearLayout area, float weight)
     {
@@ -482,7 +459,5 @@ public class FragmentHome extends Fragment {
         param.weight=weight;
         area.setLayoutParams(param);
     }
-
-
 
 }

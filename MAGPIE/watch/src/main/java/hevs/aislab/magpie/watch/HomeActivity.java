@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,16 +25,14 @@ import hevs.aislab.magpie.watch.agents.PulseBehaviour;
 import hevs.aislab.magpie.watch.agents.StepBehaviour;
 import hevs.aislab.magpie.watch.agents.WeightBehaviour;
 import hevs.aislab.magpie.watch.gui.FragmentDisplayAlertes;
-import hevs.aislab.magpie.watch.gui.IdialogToActivity;
 import hevs.aislab.magpie.watch.gui.dialogfragment.DialogFragmentSetPressure;
-import hevs.aislab.magpie.watch.gui.dialogfragment.DialogFragmentSetValue;
 import hevs.aislab.magpie.watch.gui.dialogfragment.DialogFragmentSetGlucose;
 import hevs.aislab.magpie.watch.gui.FragmentHome;
 import hevs.aislab.magpie.watch.gui.FragmentSettings;
 import hevs.aislab.magpie.watch.gui.dialogfragment.DialogFragmentSetWeight;
 import hevs.aislab.magpie.watch.libs.Const;
 import hevs.aislab.magpie.watch.libs.DateFormater;
-import hevs.aislab.magpie.watch.libs.Validator;
+import hevs.aislab.magpie.watch.models.CustomRules;
 import hevs.aislab.magpie.watch.notification.CustomToast;
 import hevs.aislab.magpie.watch.shared_pref.PrefAccessor;
 import hevs.aislab.magpie.watch.threads.IhomeActivity;
@@ -149,6 +146,19 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
 
                 //send to magpie if it's valide
                 processEvent(System.currentTimeMillis(),category,value);
+    }
+
+    @Override
+    public void updateBarArea(CustomRules rules) {
+
+        //if the category is pressure, we will have to update the systol and the diastol progress bar
+        if (rules.getCategory().equals(Const.CATEGORY_PRESSURE))
+        {
+            fragmentHome.ajustBarLevel(rules,Const.CATEGORY_SYSTOL);
+            fragmentHome.ajustBarLevel(rules,Const.CATEGORY_DIASTOL);
+            return;
+        }
+        fragmentHome.ajustBarLevel(rules,rules.getCategory());
     }
 
 

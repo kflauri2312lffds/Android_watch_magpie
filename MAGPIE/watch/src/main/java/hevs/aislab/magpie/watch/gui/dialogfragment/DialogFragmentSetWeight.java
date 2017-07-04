@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import hevs.aislab.magpie.watch.R;
 import hevs.aislab.magpie.watch.libs.Const;
@@ -58,7 +57,7 @@ public class DialogFragmentSetWeight extends DialogFragmentSetValue {
                 try
                 {
                     double value=Double.parseDouble(textValue.getText().toString());
-                    if (!Validator.isEntryValide(Const.CATEGORY_WEIGHT,value))
+                    if (!Validator.isEntryValueValide(Const.CATEGORY_WEIGHT,value))
                     {
                         CustomToast.getInstance().errorTOast(getString(R.string.incorrect_value),getActivity());
                         return;

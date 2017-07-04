@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
-import hevs.aislab.magpie.watch.gui.IdialogToActivity;
+import hevs.aislab.magpie.watch.IdialogToActivity;
 
 /**
  * this is the parent class to all Dialog Fragment to add values.

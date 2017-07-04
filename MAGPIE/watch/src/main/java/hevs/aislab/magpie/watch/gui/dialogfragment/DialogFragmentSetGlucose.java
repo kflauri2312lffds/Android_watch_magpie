@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import hevs.aislab.magpie.watch.R;
 import hevs.aislab.magpie.watch.libs.Const;
@@ -61,7 +60,7 @@ public class DialogFragmentSetGlucose extends DialogFragmentSetValue {
                 {
                     double value=Double.parseDouble(txtValue.getText().toString());
                     //check if the entry is valide (range)
-                    if (!Validator.isEntryValide(Const.CATEGORY_GLUCOSE,value))
+                    if (!Validator.isEntryValueValide(Const.CATEGORY_GLUCOSE,value))
                     {
                         CustomToast.getInstance().errorTOast(getString(R.string.incorrect_value),getActivity());
                         return;

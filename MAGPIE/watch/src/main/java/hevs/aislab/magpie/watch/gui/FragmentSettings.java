@@ -1,5 +1,6 @@
 package hevs.aislab.magpie.watch.gui;
 
+import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -17,9 +18,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
+import hevs.aislab.magpie.watch.IdialogToActivity;
 import hevs.aislab.magpie.watch.R;
+import hevs.aislab.magpie.watch.libs.Lib;
+import hevs.aislab.magpie.watch.libs.Validator;
 import hevs.aislab.magpie.watch.notification.CustomToast;
 import hevs.aislab.magpie.watch.libs.Const;
 import hevs.aislab.magpie.watch.models.CustomRules;
@@ -53,7 +58,9 @@ public class FragmentSettings extends Fragment {
     EditText edit_value2Max;
 
 
+    //used to have communication with the activity
 
+    IdialogToActivity homeactivity;
 
     String currentCategory;
     //listener class
@@ -87,6 +94,23 @@ public class FragmentSettings extends Fragment {
             String value2_min=currentRules.getVal__2_min()!= null ?currentRules.getVal__2_min()+"" :"";
             String value_2max=currentRules.getVal_2_max()!= null ?currentRules.getVal_2_max()+"" :"";
 
+            //format the value based on the category
+
+            if (currentRules.getCategory().equals(Const.CATEGORY_GLUCOSE) || currentRules.getCategory().equals(Const.CATEGORY_WEIGHT))
+            {
+                value1_min=Lib.getInstance().formatWith1Digit(value1_min);
+                value1_max=Lib.getInstance().formatWith1Digit(value1_max);
+                value2_min=Lib.getInstance().formatWith1Digit(value2_min);
+                value_2max=Lib.getInstance().formatWith1Digit(value_2max);
+            }
+            else
+            {
+                value1_min=Lib.getInstance().formatWithNoDigit(value1_min);
+                value1_max=Lib.getInstance().formatWithNoDigit(value1_max);
+                value2_min=Lib.getInstance().formatWithNoDigit(value2_min);
+                value_2max=Lib.getInstance().formatWithNoDigit(value_2max);
+            }
+
             //replace the value in the constraints by the values of the rules
 
 
@@ -101,7 +125,7 @@ public class FragmentSettings extends Fragment {
             txtConstraint2.setText(constraint_2);
             txtConstraint3.setText(constraint_3);
 
-            //set the values
+            //set the values based on the category
             edit_value1min.setText(value1_min);
             edit_value1Max.setText(value1_max);
             edit_value2Min.setText(value2_min);
@@ -111,7 +135,7 @@ public class FragmentSettings extends Fragment {
 
             String mergedRules=currentRules.getConstraint_1()+currentRules.getConstraint_2()+currentRules.getConstraint_3();
 
-           //by default, we disable the value editing of all fields
+            //by default, we disable the value editing of all fields
             hideEditText(edit_value1min,edit_value1Max,edit_value2Min,edit_value2Max);
             hideButtonSave();
 
@@ -167,7 +191,7 @@ public class FragmentSettings extends Fragment {
 
     /**
      * This internal class will manage the interaction of the user with the edit text. It will upload the display of the rules after modification,
-     * allow the value (min and max) and save it in the database if the value is valide
+     * allow the value (min and max)
      */
     class ListenerEditText implements TextWatcher
     {
@@ -189,8 +213,8 @@ public class FragmentSettings extends Fragment {
 
         @Override
         public void afterTextChanged(Editable editable) {
-            //SET THE VALUE TO THE DISPLAY TEXT
-            Log.d("pppp_passage","after text changed");
+         //check the value enter by the user. IF the value is out of the range, we change it
+
             if (currentEditText==null)
                 return;
             //check if the value is correct
@@ -204,7 +228,7 @@ public class FragmentSettings extends Fragment {
             {
                 if (isRulesContainsDesignation(currentRules.getConstraint_1(),valueCode))
                 {
-                   String constraint_1=replaceValueByNumber(currentRules.getConstraint_1(),valueCode,currentEditText.getText().toString());
+                    String constraint_1=replaceValueByNumber(currentRules.getConstraint_1(),valueCode,currentEditText.getText().toString());
                     txtConstraint1.setText(constraint_1);
                 }
             }
@@ -251,7 +275,22 @@ public class FragmentSettings extends Fragment {
         edit_value2Min.addTextChangedListener(new ListenerEditText(Const.VALUE_Value_2Min,edit_value2Min));
         edit_value2Max.addTextChangedListener(new ListenerEditText(Const.VALUE_Value_2Max,edit_value2Max));
 
+        setListenerOnButtonSaveValue();
+        //hide the current edit text
+        hideEditText( edit_value1min, edit_value1Max,edit_value2Min,edit_value2Max);
+        hideButtonSave();
+
         return view;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try {
+            homeactivity = (IdialogToActivity) context;
+        } catch (ClassCastException castException) {
+            /** The activity does not implement the listener. */
+        }
     }
 
     private void initView() {
@@ -276,15 +315,25 @@ public class FragmentSettings extends Fragment {
         edit_value2Min =(EditText)view.findViewById(R.id.edittxt_value2min);
         edit_value2Max =(EditText)view.findViewById(R.id.edittxt_value2max);
 
-
         //init the imageButton
         //add the listener for the button save
-         buttonSaveValues =(ImageButton)view.findViewById(R.id.button_update_rules);
+        buttonSaveValues =(ImageButton)view.findViewById(R.id.button_update_rules);
+
+
+
+
+
+    }
+
+    /**
+     * this methode will assign the lister to the save button (save value in the db)
+     */
+    private void setListenerOnButtonSaveValue() {
         buttonSaveValues.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-              //TODO CHECK IF THE ENTRIES ARE VALIDE
+
 
                 //Get all the fields
                 String value1_min=edit_value1min.getText().toString();
@@ -292,29 +341,25 @@ public class FragmentSettings extends Fragment {
                 String value2_min=edit_value2Min.getText().toString();
                 String value2_max=edit_value2Max.getText().toString();
 
-            //try catch to handle number format exceptino
+
+
 
 
                 //we insert only the values from the editText that are visible and activated
                 if ( edit_value1min.getVisibility()==View.VISIBLE)
-                   {
-                       if (!is_aValideNumber(value1_min) || TextUtils.isEmpty(value1_min))
-                       {
-                           CustomToast.getInstance().errorTOast("incorrect value",getActivity());
-                           return;
-                       }
-
-                       //Check if the values of the user are not valide (out of a certain range)
-
-
-
-                       currentRules.setVal_1_min(Double.parseDouble(value1_min));
-                   }
-
+                {
+                    if (!is_aValideNumber(value1_min) || TextUtils.isEmpty(value1_min) || !Validator.isRuleValueValide(currentCategory,Double.parseDouble(value1_min)))
+                    {
+                        CustomToast.getInstance().errorTOast("incorrect value",getActivity());
+                        return;
+                    }
+                    //Check if the values of the user are not valide (out of a certain range)
+                    currentRules.setVal_1_min(Double.parseDouble(value1_min));
+                }
 
                 if ( edit_value1Max.getVisibility()==View.VISIBLE)
                 {
-                    if (!is_aValideNumber(value1_max) || TextUtils.isEmpty(value1_max) )
+                    if (!is_aValideNumber(value1_max) || TextUtils.isEmpty(value1_max) ||  !Validator.isRuleValueValide(currentCategory,Double.parseDouble(value1_max)))
                     {
                         CustomToast.getInstance().errorTOast("incorrect value",getActivity());
                         return;
@@ -322,20 +367,21 @@ public class FragmentSettings extends Fragment {
                     currentRules.setVal_1_max(Double.parseDouble(value1_max));
                 }
 
-
                 if (edit_value2Min.getVisibility()==View.VISIBLE)
                 {
-                    if (!is_aValideNumber(value2_min) || TextUtils.isEmpty(value2_min))
+                    if (!is_aValideNumber(value2_min) || TextUtils.isEmpty(value2_min) ||  !Validator.isRuleValueValide(currentCategory,Double.parseDouble(value2_min)))
                     {
-                        CustomToast.getInstance().errorTOast("incorrect value",getActivity());
-                        return;
+                        //check on the value
+
+                            CustomToast.getInstance().errorTOast("incorrect value",getActivity());
+                            return;
                     }
                     currentRules.setVal__2_min(Double.parseDouble(value2_min));
                 }
 
                 if (edit_value2Max.getVisibility()==View.VISIBLE)
                 {
-                    if (!is_aValideNumber(value2_max) || TextUtils.isEmpty(value2_max))
+                    if (!is_aValideNumber(value2_max) || TextUtils.isEmpty(value2_max) ||  !Validator.isRuleValueValide(currentCategory,Double.parseDouble(value2_max)))
                     {
                         CustomToast.getInstance().errorTOast("incorrect value",getActivity());
                         return;
@@ -343,31 +389,31 @@ public class FragmentSettings extends Fragment {
                     currentRules.setVal_2_max(Double.parseDouble(value2_max));
                 }
 
+
                 //now we update the rules in the database
                 RulesRepository.getInstance().update(currentRules);
-
                 CustomToast.getInstance().confirmToast(getContext().getString(R.string.change_saved),getActivity());
+                //change the display of the rule in the home fragment
+                homeactivity.updateBarArea(currentRules);
+
+
 
             }
         });
-
-        //hide the current edit text
-       hideEditText( edit_value1min, edit_value1Max,edit_value2Min,edit_value2Max);
-        hideButtonSave();
     }
+
     private String formatConstraints(String constraints, CustomRules rule)
     {
-        String bulletPoint="\u2022";
+
         constraints=replaceValueByNumber(constraints,Const.VALUE_Value_1Min,rule.getVal_1_min()+"");
         constraints=replaceValueByNumber(constraints,Const.VALUE_Value_1Max,rule.getVal_1_max()+"");
         constraints=replaceValueByNumber(constraints,Const.VALUE_Value_2Min,rule.getVal__2_min()+"");
         constraints=replaceValueByNumber(constraints,Const.VALUE_Value_2Max,rule.getVal_2_max()+"");
-        return bulletPoint+constraints;
+        return constraints;
     }
 
     private String replaceValueByNumber(String rules, String desingation, String value )
     {
-
         return rules.replace(desingation,value);
     }
     private boolean isRulesContainsDesignation(String rules, String designation)

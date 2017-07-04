@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import hevs.aislab.magpie.watch.R;
 import hevs.aislab.magpie.watch.libs.Const;
@@ -61,7 +60,7 @@ import hevs.aislab.magpie.watch.notification.CustomToast;
                 {
                     double valueSystol=Double.parseDouble(textSystol.getText().toString());
                     double valueDiastol=Double.parseDouble(textDiastol.getText().toString());
-                    if (!Validator.isEntryValide(Const.CATEGORY_PRESSURE,valueSystol,valueDiastol))
+                    if (!Validator.isEntryValueValide(Const.CATEGORY_PRESSURE,valueSystol,valueDiastol))
                     {
                         CustomToast.getInstance().errorTOast(getString(R.string.incorrect_value),getActivity());
                         return;
