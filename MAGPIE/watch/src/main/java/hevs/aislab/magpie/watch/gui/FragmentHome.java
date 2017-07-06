@@ -77,9 +77,13 @@ public class FragmentHome extends Fragment {
         setBarLevelArea();
 
         //set the max variation
-        CustomRules weightRule=RulesRepository.getInstance().getByCategory(Const.CATEGORY_WEIGHT);
 
+
+//        CustomRules
         //now we get the number based on the rules. The value are in % (ex 98 or 101)
+
+
+
 
 
         return view;

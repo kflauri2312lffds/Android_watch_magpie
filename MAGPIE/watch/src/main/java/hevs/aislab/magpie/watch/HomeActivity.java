@@ -400,7 +400,7 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
 
     private void addStep(long newStep) {
         //retrive the current step
-        long currentStep= PrefAccessor.getInstance().getLong(this, "steps_counter");
+        long currentStep= PrefAccessor.getInstance().getLong(this, Const.KEY_CURRENT_STEP);
         //check if it's a new day. If it is, we store the actual data in the data base
         String today=DateFormater.getInstance().getDate(System.currentTimeMillis());
         if (!today.equals(PrefAccessor.getInstance().getString(this,Const.KEY_DATE_STEP)))

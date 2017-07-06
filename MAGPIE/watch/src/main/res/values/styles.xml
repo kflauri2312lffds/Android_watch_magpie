@@ -16,48 +16,53 @@
         <item name="android:background">#C7E0FC</item>
     </style>
 
+    <!-- USED TO SPECIFY THE COLOR OF ALL TEXT INSIDE THE APPS !-->
+<style name="main_textColor">
+    <item name="android:textColorHint">#000</item>
+    <item name="android:textColor">#000</item>
+</style>
 
-    <style name="button_larg">
+
+    <style name="button_larg" parent="main_textColor">
     <item name="android:textSize">18sp</item>
 </style>
 
     <!-- TEXT VIEW  !-->
-    <style name="txtView">
+    <style name="txtView" parent="main_textColor">
     </style>
+
     <style name="txtView_title" parent="txtView">
         <item name="android:textStyle">bold</item>
-        <item name="android:textColor">#000</item>
         <item name="android:textSize">20sp</item>
     </style>
 
     <style name="txtView_toast" parent="txtView">
         <item name="android:textStyle">bold</item>
-        <item name="android:textColor">#000</item>
         <item name="android:textSize">16sp</item>
     </style>
 
-    <style name="txtView_displayConstraint">
-        <item name="android:textColor">#000</item>
+    <style name="txtView_displayConstraint" parent="main_textColor">
         <item name="android:textSize">16sp</item>
-
-
     </style>
+
+    <!-- BECAISE THE MAIN WIDHT OF THE MAIN LAYOUT IS BIGGER TO HANDLE THE COLOR, WE WILL ADD A PADDING !-->
+    <style name="padding_container">
+        <item name="android:paddingRight">10dp</item>
+        <item name="android:paddingLeft">10dp</item>
+    </style>
+
 
 
 <!-- EDIT TEXT STYLE !-->
     <style name="edittxt" parent="txtView">
         <item name="android:textStyle"></item>
         <item name="android:textSize">18sp</item>
-        <item name="android:textColor">#000</item>
-        <item name="android:textColorHint">#000</item>
     </style>
 
 
     <!--    SMALL EDIT TEXT IN THE FRAGMENT SETTINGS. WILL CONTAINS THE VALUES OF THE RULES !-->
-    <style name="edittxt_values">
+    <style name="edittxt_values" parent="main_textColor">
         <item name="android:textSize">15sp</item>
-        <item name="android:textColor">#000</item>
-        <item name="android:textColorHint">#000</item>
         <item name="android:layout_width">60dp</item>
         <item name="android:layout_height">40dp</item>
         <item name="android:textAlignment">viewEnd</item>
@@ -85,17 +90,17 @@
     </style>
 
 
-<style name="adapter_cells">
+<style name="adapter_cells" parent="main_textColor">
     <item name="android:layout_marginLeft">2dp</item>
     <item name="android:layout_marginRight">2dp</item>
     <item name="android:textSize">17sp</item>
 
 </style>
     <style name="adapter_cells_value" parent="adapter_cells">
-        <item name="android:textColor">@color/red</item>
+        <item name="android:textColor">#2b76ef</item>
     </style>
     <!--  SCROLL VIEW !-->
-    <style name="scroll_view_display_rules">
+    <style name="scroll_view_display_rules" parent="padding_container">
         <item name="android:layout_height">60dp</item>
     </style>
 
@@ -112,21 +117,16 @@
 
     <style name="layout_container_status">
         <item name="android:layout_height">50dp</item>
-        <item name="android:layout_width">50dp</item>
+        <item name="android:layout_width">130dp</item>
     </style>
 
-    <style name="layout_container_status_pressure" parent="layout_container_status">
-        <item name="android:layout_width">90dp</item>
-    </style>
-
-    <style name="layout_container_status_step" parent="layout_container_status">
-        <item name="android:layout_height">70dp</item>
-    </style>
 
     <style name="scroll_home_fragment">
-        <item name="android:layout_height">150dp</item>
+        <item name="android:layout_height">130dp</item>
         <item name="android:layout_width">150dp</item>
     </style>
+
+
 
 
 </resources>

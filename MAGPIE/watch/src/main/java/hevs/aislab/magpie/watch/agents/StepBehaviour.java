@@ -1,6 +1,7 @@
 package hevs.aislab.magpie.watch.agents;
 
 import android.content.Context;
+import android.util.Log;
 
 import ch.hevs.aislab.magpie.agent.MagpieAgent;
 import ch.hevs.aislab.magpie.behavior.Behavior;
@@ -45,6 +46,8 @@ public class StepBehaviour extends Behavior {
         measure.setTimeStamp(event.getTimestamp());
         MeasuresRepository.getInstance().insert(measure);
 
+        Log.d("passage_dans_step",measure.getValue1()+"");
+
         //We do not need to set the value in GUI her
 
 
@@ -60,7 +63,7 @@ public class StepBehaviour extends Behavior {
         //now we apply the rules
 
         //no alert trigered if the steps are in the range
-        if (steps>minValue ||steps<maxValue)
+        if (steps>minValue && steps<maxValue)
             return;
 
         //insert the alere in the db, but we don't display
