@@ -66,6 +66,8 @@ public class StepBehaviour extends Behavior {
         if (steps>minValue && steps<maxValue)
             return;
 
+        Log.d("passage_dans_step_alert",measure.getValue1()+"");
+
         //insert the alere in the db, but we don't display
         Alertes alertes=new Alertes();
         alertes.setRule(stepRules);

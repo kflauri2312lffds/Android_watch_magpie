@@ -403,8 +403,13 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
         long currentStep= PrefAccessor.getInstance().getLong(this, Const.KEY_CURRENT_STEP);
         //check if it's a new day. If it is, we store the actual data in the data base
         String today=DateFormater.getInstance().getDate(System.currentTimeMillis());
+
+        Log.d("todayDate",today);
+        Log.d("previousDate",PrefAccessor.getInstance().getString(this,Const.KEY_DATE_STEP));
+
         if (!today.equals(PrefAccessor.getInstance().getString(this,Const.KEY_DATE_STEP)))
         {
+            Log.d("passage_dans_step_newDa","newdate");
             //write the new date in shared pref
             PrefAccessor.getInstance().save(this,Const.KEY_DATE_STEP,today);
             //send event to magpie
