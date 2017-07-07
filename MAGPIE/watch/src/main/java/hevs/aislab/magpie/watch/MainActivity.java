@@ -10,6 +10,8 @@ import android.media.AudioDeviceInfo;
 import android.media.AudioManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
@@ -36,6 +38,10 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.app.NotificationCompat.WearableExtender;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.wearable.Wearable;
+
 
 /**
  * This class will essentially be used to init the different component of our application.
@@ -44,7 +50,15 @@ import android.support.v4.app.NotificationCompat.WearableExtender;
  * insert the first rules in the databse, if it's the first time the user launch app
  * detect if the device has can create song (for notification)
  */
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements
+        // USED TO COMMUNICATE WITH THE PHONE
+        GoogleApiClient.ConnectionCallbacks,
+        GoogleApiClient.OnConnectionFailedListener
+{
+
+
+    // Used to communicate with the phone
+    GoogleApiClient googleClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,16 +66,17 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //Used to display the logs in GreeenDao, FOR DEBUG ONLY, REMOVE THIS IN PRODUCTION.
         QueryBuilder.LOG_SQL = true;
         QueryBuilder.LOG_VALUES = true;
 
         //initialize the data base
         initDB();
+        //Ask all permission for the functionalites
         askAllPermission();
 
         //test if it's the first time we open the apps
         boolean hasBeenInit=PrefAccessor.getInstance().getBoolean(this,"first");
-
 
        if (!hasBeenInit)
        {
@@ -69,9 +84,14 @@ public class MainActivity extends Activity {
            PrefAccessor.getInstance().save(this,"hasSpeacker",hasSpeacker());
            insertFirstRules();
        }
-        Log.d("speackerInformation",this.hasSpeacker()+"");
 
-        testDisplayAllMeasure();
+        // Build a new GoogleApiClient for the the Wearable API, used for the communication with the phone
+        googleClient = new GoogleApiClient.Builder(this)
+                .addApi(Wearable.API)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .build();
+
 
 
     }
@@ -118,7 +138,6 @@ public class MainActivity extends Activity {
     public void startHomeActivity(View view)
     {
 
-
         //disallow the access if the user has not given the autorisation
         //ask for all the permission
 
@@ -132,6 +151,17 @@ public class MainActivity extends Activity {
             askAllPermission();
         }
     }
+
+    /**
+     * This method will be called when the user click on the button "push and delete data"
+     * it will delete the data from the watch and sent it directly to the phone
+     */
+    public void click_pushDeleteData()
+    {
+        //create the object we will send to the phone
+
+    }
+
     private void insertFirstRules()
     {
         //GLUCOSE RULES
@@ -250,5 +280,41 @@ public class MainActivity extends Activity {
         }
     }
 
+
+    /**
+     * Phone communication methode
+     * @param bundle
+     */
+
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        googleClient.connect();
+    }
+
+
+    // Disconnect from the data layer when the Activity stops
+    @Override
+    protected void onStop() {
+        if (null != googleClient && googleClient.isConnected()) {
+            googleClient.disconnect();
+        }
+        super.onStop();
+    }
 
 }

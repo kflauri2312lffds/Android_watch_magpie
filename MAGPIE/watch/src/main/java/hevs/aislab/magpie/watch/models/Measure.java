@@ -6,6 +6,8 @@ import org.greenrobot.greendao.annotation.Index;
 import org.greenrobot.greendao.annotation.NotNull;
 import org.greenrobot.greendao.annotation.Generated;
 
+import java.io.Serializable;
+
 /**
  * Created by teuft on 31.05.2017.
  */
@@ -17,7 +19,7 @@ import org.greenrobot.greendao.annotation.Generated;
 @Entity(
         nameInDb = "Measures"
 )
-public class Measure {
+public class Measure  {
 
     @Id(autoincrement = true)
     private Long id;

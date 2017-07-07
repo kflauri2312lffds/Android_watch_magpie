@@ -8,6 +8,8 @@ import org.greenrobot.greendao.annotation.ToOne;
 import org.greenrobot.greendao.DaoException;
 import org.greenrobot.greendao.annotation.NotNull;
 
+import java.io.Serializable;
+
 /**
  * Created by teuft on 13.06.2017.
  */
@@ -18,7 +20,7 @@ import org.greenrobot.greendao.annotation.NotNull;
         @Index(value = "measure_id, rule_id", unique = true)
 }
 )
-public class Alertes {
+public class Alertes  {
 
     @Id(autoincrement = true)
     private Long id;

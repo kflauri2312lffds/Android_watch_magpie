@@ -7,6 +7,7 @@ import org.greenrobot.greendao.annotation.NotNull;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.ToMany;
 
+import java.io.Serializable;
 import java.util.List;
 import org.greenrobot.greendao.DaoException;
 
@@ -20,7 +21,7 @@ import org.greenrobot.greendao.DaoException;
                 @Index(value = "category", unique = true)
         }
 )
-public class CustomRules {
+public class CustomRules  {
     @Id(autoincrement = true)
     private Long id;
     @NotNull
