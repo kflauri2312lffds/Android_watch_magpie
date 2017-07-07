@@ -8,4 +8,16 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <!--<style name="cells_img_table_category">-->
+
+        <!--<item name="android:height">-->
+
+        <!--</item>-->
+
+        <!--<item name="android:layout_width">-->
+
+        <!--</item>-->
+
+    <!--</style>-->
+
 </resources>

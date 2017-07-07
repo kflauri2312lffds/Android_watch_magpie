@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name" translatable="false">Phone</string>
     <string name="start">start</string>
+    <string name="measures" translatable="false">Measures</string>
+    <string name="settings" translatable="false">settings</string>
+    <string name="alertes">Alertes</string>
 </resources>

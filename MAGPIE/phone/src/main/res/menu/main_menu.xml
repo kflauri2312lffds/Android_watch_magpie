@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_settings"
+        android:icon="@drawable/settings"
+        android:title="action favorite"
+        app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/action_alert"
+        android:icon="@drawable/alert"
+        android:title="action alert"
+        app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/action_measure"
+        android:icon="@drawable/measure_icon"
+        android:title="action measure"
+        app:showAsAction="always"/>
+
+
+    <!--<item android:id="@+id/action_settingfdsas"-->
+        <!--android:title="settings"-->
+        <!--app:showAsAction="never"/>-->
+
+</menu>
