@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import hevs.aislab.magpie.watch.db.Core;
+import hevs.aislab.magpie.watch.lib.Const;
 import hevs.aislab.magpie.watch.models.DaoMaster;
 //import hevs.aislab.magpie.smartphone.models.DaoMaster;
 
@@ -54,8 +55,8 @@ public class MainActivity extends AppCompatActivity {
     public class MessageReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-           // Bundle data = intent.getBundleExtra("datamap");
-            Toast.makeText(context, "MessageReceive", Toast.LENGTH_SHORT).show();
+            Bundle data = intent.getBundleExtra(Const.KEY_MEASURE_CATEGORY);
+            Toast.makeText(context, "MessageReceive: ", Toast.LENGTH_SHORT).show();
         }
     }
 

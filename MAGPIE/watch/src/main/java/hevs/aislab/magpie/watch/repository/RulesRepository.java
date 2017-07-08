@@ -64,6 +64,12 @@ public class RulesRepository {
         return mapRules;
     }
 
+    public List<CustomRules>getAll()
+    {
+       return rulesDao.queryBuilder()
+                .list();
+    }
+
     public CustomRules getByCategory(String category)
     {
 

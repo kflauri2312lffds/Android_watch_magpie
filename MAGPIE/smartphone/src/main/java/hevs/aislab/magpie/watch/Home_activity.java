@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import hevs.aislab.magpie.watch.gui.Fragment_display_alertes;
 import hevs.aislab.magpie.watch.gui.Fragment_display_measures;
 import hevs.aislab.magpie.watch.gui.Fragment_display_settings;
+import hevs.aislab.magpie.watch.models.Alertes;
 
 public class Home_activity extends AppCompatActivity {
 

@@ -2,7 +2,6 @@ package hevs.aislab.magpie.watch;
 
 import android.Manifest;
 import android.app.Activity;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -19,33 +18,21 @@ import android.view.View;
 
 import org.greenrobot.greendao.query.QueryBuilder;
 
-import java.util.HashMap;
 import java.util.List;
 
-import ch.hevs.aislab.magpie.support.Rule;
 import hevs.aislab.magpie.watch.db.Core;
 import hevs.aislab.magpie.watch.libs.Const;
-import hevs.aislab.magpie.watch.models.Alertes;
 import hevs.aislab.magpie.watch.models.CustomRules;
 import hevs.aislab.magpie.watch.models.DaoMaster;
 import hevs.aislab.magpie.watch.models.Measure;
-import hevs.aislab.magpie.watch.phone_communication.SendToDataLayerThread;
-import hevs.aislab.magpie.watch.repository.AlertRepository;
+import hevs.aislab.magpie.watch.phone_communication.PushMeasureThread;
 import hevs.aislab.magpie.watch.repository.MeasuresRepository;
 import hevs.aislab.magpie.watch.repository.RulesRepository;
 import hevs.aislab.magpie.watch.shared_pref.PrefAccessor;
 
 
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.NotificationManagerCompat;
-import android.support.v4.app.NotificationCompat.WearableExtender;
-
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.wearable.DataApi;
-import com.google.android.gms.wearable.DataMap;
-import com.google.android.gms.wearable.PutDataMapRequest;
-import com.google.android.gms.wearable.PutDataRequest;
 import com.google.android.gms.wearable.Wearable;
 
 
@@ -170,19 +157,9 @@ public class MainActivity extends Activity implements
 
     private void sendDataToPhone()
     {
-//        //sent the rules
-//        HashMap<String, HashMap>data=new HashMap<>();
-
-
-        DataMap data=new DataMap();
-        String hello=System.currentTimeMillis()+"";
-
-        data.putString(Const.KEY_MEASURE_ID,hello);
-        //new SendToDataLayerThread(googleClient,Const.PATH_PUSH_DELETE_DATA, data).start();
-
-        new SendToDataLayerThread(Const.PATH_PUSH_DELETE_DATA, data).start();
-
+        new PushMeasureThread(googleClient).start();
     }
+
 
 
 
@@ -341,29 +318,7 @@ public class MainActivity extends Activity implements
         super.onStop();
     }
 
-    class SendToDataLayerThread extends Thread {
-    String path;
-    DataMap dataMap;
 
-    // Constructor for sending data objects to the data layer
-    SendToDataLayerThread(String p, DataMap data) {
-        path = p;
-        dataMap = data;
-    }
 
-    public void run() {
-        // Construct a DataRequest and send over the data layer
-        PutDataMapRequest putDMR = PutDataMapRequest.create(path);
-        putDMR.getDataMap().putAll(dataMap);
-        PutDataRequest request = putDMR.asPutDataRequest();
-        DataApi.DataItemResult result = Wearable.DataApi.putDataItem(googleClient, request).await();
-        if (result.getStatus().isSuccess()) {
-            Log.v("myTag", "DataMap: " + dataMap + " sent successfully to data layer ");
-        } else {
-            // Log an error
-            Log.v("myTag", "ERROR: failed to send DataMap to data layer");
-        }
-    }
-}
 
 }

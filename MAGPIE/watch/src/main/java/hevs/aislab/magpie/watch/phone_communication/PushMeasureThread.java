@@ -1,0 +1,169 @@
+package hevs.aislab.magpie.watch.phone_communication;
+
+import android.util.Log;
+
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.wearable.DataMap;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import hevs.aislab.magpie.watch.libs.Const;
+import hevs.aislab.magpie.watch.models.CustomRules;
+import hevs.aislab.magpie.watch.models.Measure;
+import hevs.aislab.magpie.watch.repository.MeasuresRepository;
+import hevs.aislab.magpie.watch.repository.RulesRepository;
+
+/**
+ * Created by teuft on 08.07.2017.
+ */
+
+public class PushMeasureThread extends Thread {
+    private int counter = 0;
+    //max size of data is 200 entry so the target device will have time to proceed.
+    private int maxSize = 200;
+    private int index = 0;
+    private int sleepTime=3000;
+
+    GoogleApiClient googleClient;
+    public PushMeasureThread(GoogleApiClient googleClient)
+    {
+        this.googleClient=googleClient;
+    }
+
+    @Override
+    public void run() {
+        pushMeasure();
+        pushRules();
+
+    }
+
+    private void pushMeasure() {
+
+          counter = 0;
+        //max size of data is 200 entry so the target device will have time to proceed.
+          maxSize = 200;
+          int index = 0;
+        //get all the measure
+        List<Measure> allMeasure = MeasuresRepository.getInstance().getAll();
+        //prepare the data container
+        int datasize=allMeasure.size();
+
+        while (index < datasize) {
+            try {
+                Thread.sleep(sleepTime);
+            } catch (InterruptedException ex) {
+
+            }
+
+            DataMap data_container = new DataMap();
+            //create the arrayList that will contains all data
+            ArrayList<DataMap> containerList = new ArrayList<>();
+
+            for (int i = index; i < datasize; i++) {
+                index++;
+                counter++;
+                Measure aMeasure = allMeasure.get(i);
+                DataMap data = generateDataMap(aMeasure);
+                containerList.add(data);
+                if (counter >= maxSize) {
+                    counter = 0;
+                    break;
+                }
+            }
+            Log.d("size_of_data_send", containerList.size() + "");
+            //add the list to the data_container
+            data_container.putDataMapArrayList(Const.KEY_MEASURE_DATA, containerList);
+            //send the data container to the data layer
+            new SendToDataLayerThread(googleClient, Const.PATH_PUSH_MEASURE, data_container).start();
+        }
+    }
+
+    /**
+     * Pushes the rules to the smartphon
+     */
+    private void pushRules()
+    {
+        counter = 0;
+        maxSize = 200;
+        int index = 0;
+
+        Log.d("appel_methode_pushRules","fadfasdf");
+        //get all the measure
+        List<CustomRules> rulesList = RulesRepository.getInstance().getAll();
+        //prepare the data container
+        int datasize=rulesList.size();
+
+        while (index < datasize) {
+            try {
+                Thread.sleep(sleepTime);
+            } catch (InterruptedException ex) {
+
+            }
+
+            DataMap data_container = new DataMap();
+            //create the arrayList that will contains all data
+            ArrayList<DataMap> containerList = new ArrayList<>();
+
+            for (int i = index; i < datasize; i++) {
+                index++;
+                counter++;
+                CustomRules aRule = rulesList.get(i);
+                DataMap data = generateDataMap(aRule);
+                containerList.add(data);
+                if (counter >= maxSize) {
+                    counter = 0;
+                    break;
+                }
+            }
+            Log.d("size_of_data_send", containerList.size() + "");
+            //add the list to the data_container
+            data_container.putDataMapArrayList(Const.KEY_MEASURE_DATA, containerList);
+            //send the data container to the data layer
+            new SendToDataLayerThread(googleClient, Const.PATH_PUSH_RULE, data_container).start();
+        }
+    }
+
+    private DataMap generateDataMap(Measure aMeasure) {
+        //create a set of data with information of the measure
+        DataMap data=new DataMap();
+        data.putLong(Const.KEY_CURRENTTIMESTAMP,System.currentTimeMillis());
+        data.putLong(Const.KEY_MEASURE_ID,aMeasure.getId());
+        data.putString(Const.KEY_MEASURE_CATEGORY,aMeasure.getCategory());
+        data.putLong(Const.KEY_MEASURE_TIMESTAMP,aMeasure.getTimeStamp());
+        data.putDouble(Const.KEY_MEASURE_VALUE1,aMeasure.getValue1());
+        //handle possible null value
+        Double measure2=-10000.0;
+        if (aMeasure.getValue2()!=null)
+            measure2=aMeasure.getValue2();
+        data.putDouble(Const.KEY_MEASURE_VALUE2,measure2);
+        //insert the data into the list
+        return data;
+    }
+
+    private DataMap generateDataMap(CustomRules aRule)
+    {
+        DataMap dataMap=new DataMap();
+        dataMap.putLong(Const.KEY_CURRENTTIMESTAMP,System.currentTimeMillis());
+        dataMap.putLong(Const.KEY_RULE_ID,aRule.getId());
+        dataMap.putString(Const.KEY_RULE_CATEGORY,aRule.getCategory());
+        dataMap.putString(Const.KEY_RULE_CONSTRAINT1,aRule.getConstraint_1());
+        dataMap.putString(Const.KEY_RULE_CONSTRAINT2,aRule.getConstraint_2());
+        dataMap.putString(Const.KEY_RULE_CONSTRAINT3,aRule.getConstraint_3());
+
+        dataMap.putDouble(Const.KEY_RULE_VAL1_MIN, formatValue(aRule.getVal_1_min()));
+        dataMap.putDouble(Const.KEY_RULE_VAL1_MAX,formatValue(aRule.getVal_1_max()));
+        dataMap.putDouble(Const.KEY_RULE_VAL2_MIN,formatValue(aRule.getVal__2_min()));
+        dataMap.putDouble(Const.KEY_RULE_VAL2_MAX, formatValue(aRule.getVal_2_max()));
+
+        return dataMap;
+
+    }
+
+    //used to format the value and send a number if it's null
+    private double formatValue(Double value)
+    {
+        return value==null ? -10000 : value;
+    }
+
+}
