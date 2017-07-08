@@ -9,8 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import hevs.aislab.magpie.watch.libs.Const;
+import hevs.aislab.magpie.watch.models.Alertes;
 import hevs.aislab.magpie.watch.models.CustomRules;
 import hevs.aislab.magpie.watch.models.Measure;
+import hevs.aislab.magpie.watch.repository.AlertRepository;
 import hevs.aislab.magpie.watch.repository.MeasuresRepository;
 import hevs.aislab.magpie.watch.repository.RulesRepository;
 
@@ -35,6 +37,7 @@ public class PushMeasureThread extends Thread {
     public void run() {
         pushMeasure();
         pushRules();
+        pushAlert();
 
     }
 
@@ -87,6 +90,7 @@ public class PushMeasureThread extends Thread {
         counter = 0;
         maxSize = 200;
         int index = 0;
+        sleepTime=1000;
 
         Log.d("appel_methode_pushRules","fadfasdf");
         //get all the measure
@@ -124,6 +128,52 @@ public class PushMeasureThread extends Thread {
         }
     }
 
+    private void pushAlert()
+    {
+        counter = 0;
+        maxSize = 200;
+        int index = 0;
+        sleepTime=3000;
+
+
+        //get all the measure
+        List<Alertes> alertList = AlertRepository.getINSTANCE().getAll();
+        //prepare the data container
+        int datasize=alertList.size();
+
+        Log.d("alertesSizeArray",datasize+"");
+
+        while (index < datasize) {
+            try {
+                Thread.sleep(sleepTime);
+            } catch (InterruptedException ex) {
+
+            }
+
+            DataMap data_container = new DataMap();
+            //create the arrayList that will contains all data
+            ArrayList<DataMap> containerList = new ArrayList<>();
+
+            for (int i = index; i < datasize; i++) {
+                index++;
+                counter++;
+                Alertes anAlert= alertList.get(i);
+                DataMap data = generateDataMap(anAlert);
+                containerList.add(data);
+                if (counter >= maxSize) {
+                    counter = 0;
+                    break;
+                }
+            }
+            Log.d("size_of_data_send", containerList.size() + "");
+            //add the list to the data_container
+            data_container.putDataMapArrayList(Const.KEY_MEASURE_DATA, containerList);
+            //send the data container to the data layer
+            new SendToDataLayerThread(googleClient, Const.PATH_PUSH_ALERT, data_container).start();
+        }
+    }
+
+
     private DataMap generateDataMap(Measure aMeasure) {
         //create a set of data with information of the measure
         DataMap data=new DataMap();
@@ -133,10 +183,7 @@ public class PushMeasureThread extends Thread {
         data.putLong(Const.KEY_MEASURE_TIMESTAMP,aMeasure.getTimeStamp());
         data.putDouble(Const.KEY_MEASURE_VALUE1,aMeasure.getValue1());
         //handle possible null value
-        Double measure2=-10000.0;
-        if (aMeasure.getValue2()!=null)
-            measure2=aMeasure.getValue2();
-        data.putDouble(Const.KEY_MEASURE_VALUE2,measure2);
+        data.putDouble(Const.KEY_MEASURE_VALUE2,formatValue(aMeasure.getValue2()));
         //insert the data into the list
         return data;
     }
@@ -151,6 +198,7 @@ public class PushMeasureThread extends Thread {
         dataMap.putString(Const.KEY_RULE_CONSTRAINT2,aRule.getConstraint_2());
         dataMap.putString(Const.KEY_RULE_CONSTRAINT3,aRule.getConstraint_3());
 
+        //if null, we send the number -100000. We will have to check on the other side
         dataMap.putDouble(Const.KEY_RULE_VAL1_MIN, formatValue(aRule.getVal_1_min()));
         dataMap.putDouble(Const.KEY_RULE_VAL1_MAX,formatValue(aRule.getVal_1_max()));
         dataMap.putDouble(Const.KEY_RULE_VAL2_MIN,formatValue(aRule.getVal__2_min()));
@@ -159,7 +207,17 @@ public class PushMeasureThread extends Thread {
         return dataMap;
 
     }
+    private DataMap generateDataMap(Alertes anAlert)
+    {
+        DataMap dataMap=new DataMap();
+        dataMap.putLong(Const.KEY_CURRENTTIMESTAMP,System.currentTimeMillis());
+        dataMap.putLong(Const.KEY_ALERT_ID,anAlert.getId());
+        dataMap.putLong(Const.KEY_MEASURE_ID,anAlert.getMeasure_id());
+        dataMap.putLong(Const.KEY_RULE_ID,anAlert.getRule_id());
 
+        return dataMap;
+
+    }
     //used to format the value and send a number if it's null
     private double formatValue(Double value)
     {

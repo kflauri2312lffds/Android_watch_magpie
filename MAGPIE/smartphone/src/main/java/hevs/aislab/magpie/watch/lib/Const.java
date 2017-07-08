@@ -9,6 +9,7 @@ public class Const {
     //ALSO IN THE MANIFEST
     public static final String PATH_PUSH_MEASURE ="/push_data_measure";
     public static final String PATH_PUSH_RULE ="/push_data_rule";
+    public static final String PATH_PUSH_ALERT="/push_data_alert";
 
 
     //KEY TO IDENTIFY THE DATA SEND
@@ -30,6 +31,10 @@ public class Const {
     public static final String KEY_RULE_VAL1_MAX="rule_val1_max";
     public static final String KEY_RULE_VAL2_MIN="rule_val2_min";
     public static final String KEY_RULE_VAL2_MAX="rule_val2_max";
+
+
+    //ALERTES KEY
+    public static final String KEY_ALERT_ID="alert_id";
 
 
 }
