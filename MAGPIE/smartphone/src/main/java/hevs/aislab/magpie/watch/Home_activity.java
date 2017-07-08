@@ -1,4 +1,4 @@
-package hevs.aislab.magpie.smartphone;
+package hevs.aislab.magpie.watch;
 
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -8,10 +8,10 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
-import hevs.aislab.magpie.smartphone.gui.Fragment_display_alertes;
-import hevs.aislab.magpie.smartphone.gui.Fragment_display_measures;
-import hevs.aislab.magpie.smartphone.gui.Fragment_display_settings;
-import hevs.aislab.magpie.smartphone.R;
+import hevs.aislab.magpie.watch.gui.Fragment_display_alertes;
+import hevs.aislab.magpie.watch.gui.Fragment_display_measures;
+import hevs.aislab.magpie.watch.gui.Fragment_display_settings;
+
 public class Home_activity extends AppCompatActivity {
 
     //store all the fragment

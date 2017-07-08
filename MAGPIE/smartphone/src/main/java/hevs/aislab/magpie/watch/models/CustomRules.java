@@ -1,4 +1,4 @@
-package hevs.aislab.magpie.smartphone.models;
+package hevs.aislab.magpie.watch.models;
 
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;

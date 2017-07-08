@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="hevs.aislab.magpie.smartphone.Home_activity">
+    tools:context="hevs.aislab.magpie.watch.Home_activity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar_menu"

@@ -1,10 +1,10 @@
-package hevs.aislab.magpie.smartphone.listener;
+package hevs.aislab.magpie.watch.listener;
 
 import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
-import hevs.aislab.magpie.smartphone.lib.Const;
+import hevs.aislab.magpie.watch.lib.Const;
 import com.google.android.gms.wearable.DataEvent;
 import com.google.android.gms.wearable.DataEventBuffer;
 import com.google.android.gms.wearable.DataMap;
@@ -37,10 +37,10 @@ public class Listener_data extends WearableListenerService {
 
                 Intent messageIntent = new Intent();
                 messageIntent.setAction(Intent.ACTION_SEND);
-                messageIntent.putExtra("datamap", dataMap.toBundle());
+                messageIntent.putExtra(Const.KEY_MEASURE_ID, dataMap.toBundle());
 
 
-                Log.d("dataMapReceiveItem",dataMap.getString(Const.PATH_PUSH_DELETE_DATA));
+                Log.d("dataMapReceiveItem",dataMap.getString(Const.KEY_MEASURE_ID));
 
 
                 LocalBroadcastManager.getInstance(this).sendBroadcast(messageIntent);

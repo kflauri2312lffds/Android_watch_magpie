@@ -1,4 +1,4 @@
-package hevs.aislab.magpie.smartphone;
+package hevs.aislab.magpie.watch;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

@@ -1,4 +1,4 @@
-package hevs.aislab.magpie.smartphone.gui;
+package hevs.aislab.magpie.watch.gui;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -6,7 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import hevs.aislab.magpie.smartphone.R;
+import hevs.aislab.magpie.watch.R;
 
 /**
  * Created by teuft on 07.07.2017.

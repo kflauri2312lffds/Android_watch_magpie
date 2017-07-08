@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="hevs.aislab.magpie.smartphone">
+    package="hevs.aislab.magpie.watch">
     <application
 
 
@@ -9,18 +9,18 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name="hevs.aislab.magpie.smartphone.MainActivity">
+        <activity android:name="hevs.aislab.magpie.watch.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="hevs.aislab.magpie.smartphone.Home_activity">
+        <activity android:name="hevs.aislab.magpie.watch.Home_activity">
 
         </activity>
 
-        <service android:name=".listener.Listener_data">
+        <service android:name="hevs.aislab.magpie.watch.listener.Listener_data">
             <intent-filter>
                 <action android:name="com.google.android.gms.wearable.BIND_LISTENER" />
             </intent-filter>

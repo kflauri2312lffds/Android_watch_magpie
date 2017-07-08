@@ -1,4 +1,4 @@
-package com.example.phone.models;
+package hevs.aislab.magpie.watch.models;
 
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
@@ -31,6 +31,7 @@ public class Measure {
     public Measure() {
     }
 
+
     @Generated(hash = 694358598)
     public Measure(Long id, @NotNull String category, Double value1, Double value2,
             long timeStamp) {
@@ -40,6 +41,7 @@ public class Measure {
         this.value2 = value2;
         this.timeStamp = timeStamp;
     }
+
 
     public Long getId() {
         return id;

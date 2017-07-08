@@ -1,4 +1,4 @@
-package hevs.aislab.magpie.smartphone;
+package hevs.aislab.magpie.watch;
 
 import org.junit.Test;
 
