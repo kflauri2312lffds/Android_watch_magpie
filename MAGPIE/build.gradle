@@ -13,6 +13,8 @@ buildscript {
 
 allprojects {
     repositories {
+        // MPANdroid chart depedencie
+        maven { url "https://jitpack.io" }
         jcenter()
         mavenCentral()
     }
