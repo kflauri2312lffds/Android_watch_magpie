@@ -28,10 +28,11 @@ public class SendToDataLayerThread extends Thread {
      * @param path: the identifiant used to send information
      * @param dataMap : the data we will send to the phone
      */
-    public SendToDataLayerThread (String path, DataMap dataMap,GoogleApiClient googleClient)
+    public SendToDataLayerThread (GoogleApiClient googleClient,String path, DataMap dataMap)
     {
         this.path=path;
         this.dataMap=dataMap;
+        this.googleClient=googleClient;
     }
 
 

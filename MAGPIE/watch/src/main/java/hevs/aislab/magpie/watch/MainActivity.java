@@ -19,6 +19,7 @@ import android.view.View;
 
 import org.greenrobot.greendao.query.QueryBuilder;
 
+import java.util.HashMap;
 import java.util.List;
 
 import ch.hevs.aislab.magpie.support.Rule;
@@ -28,6 +29,7 @@ import hevs.aislab.magpie.watch.models.Alertes;
 import hevs.aislab.magpie.watch.models.CustomRules;
 import hevs.aislab.magpie.watch.models.DaoMaster;
 import hevs.aislab.magpie.watch.models.Measure;
+import hevs.aislab.magpie.watch.phone_communication.SendToDataLayerThread;
 import hevs.aislab.magpie.watch.repository.AlertRepository;
 import hevs.aislab.magpie.watch.repository.MeasuresRepository;
 import hevs.aislab.magpie.watch.repository.RulesRepository;
@@ -40,6 +42,7 @@ import android.support.v4.app.NotificationCompat.WearableExtender;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.wearable.DataMap;
 import com.google.android.gms.wearable.Wearable;
 
 
@@ -156,11 +159,27 @@ public class MainActivity extends Activity implements
      * This method will be called when the user click on the button "push and delete data"
      * it will delete the data from the watch and sent it directly to the phone
      */
-    public void click_pushDeleteData()
+    public void click_pushDeleteData(View view)
     {
         //create the object we will send to the phone
+        sendDataToPhone();
+    }
+
+    private void sendDataToPhone()
+    {
+//        //sent the rules
+//        HashMap<String, HashMap>data=new HashMap<>();
+
+
+
+        String hello="hello hello";
+        DataMap data=new DataMap();
+        data.putString("myString",hello);
+        new SendToDataLayerThread(googleClient,Const.PATH_PUSH_DELETE_DATA, data).start();
 
     }
+
+
 
     private void insertFirstRules()
     {

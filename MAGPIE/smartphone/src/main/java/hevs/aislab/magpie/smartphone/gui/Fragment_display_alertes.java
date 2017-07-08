@@ -1,13 +1,11 @@
-package com.example.phone.gui;
+package hevs.aislab.magpie.smartphone.gui;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.example.phone.R;
-
+import hevs.aislab.magpie.smartphone.R;
 /**
  * Created by teuft on 07.07.2017.
  */
