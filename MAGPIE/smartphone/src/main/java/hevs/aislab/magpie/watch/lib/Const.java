@@ -5,7 +5,8 @@ package hevs.aislab.magpie.watch.lib;
  */
 
 public class Const {
-    //store the path used to communicate with the watch
+    //store the path used to communicate with the watch. WARNING: DO NOT CHANGE THIS VALUE. OR IF YOU CHANGE IT, CHANGE IT
+    //ALSO IN THE MANIFEST
     public static final String PATH_PUSH_DELETE_DATA="/push_data";
 
 
