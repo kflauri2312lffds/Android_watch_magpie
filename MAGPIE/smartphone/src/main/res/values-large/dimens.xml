@@ -3,4 +3,5 @@
     <dimen name="button_start_height">10dp</dimen>
     <dimen name="toolbar_height">60dp</dimen>
     <dimen name="text_size_title">30sp</dimen>
+    <dimen name="chart_height">400dp</dimen>
 </resources>

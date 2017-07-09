@@ -1,4 +1,4 @@
-package hevs.aislab.magpie.watch.gui;
+package hevs.aislab.magpie.watch.gui.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

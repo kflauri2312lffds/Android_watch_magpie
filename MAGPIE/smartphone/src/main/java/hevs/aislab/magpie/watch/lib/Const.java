@@ -7,6 +7,13 @@ package hevs.aislab.magpie.watch.lib;
 public class Const {
     //store the path used to communicate with the watch. WARNING: DO NOT CHANGE THIS VALUE. OR IF YOU CHANGE IT, CHANGE IT
     //ALSO IN THE MANIFEST
+
+    public static final String CATEGORY_GLUCOSE="glucose";
+    public static final String CATEGORY_PULSE="pulse";
+    public static final String CATEGORY_WEIGHT="weight";
+    public static final String CATEGORY_PRESSURE="pressure";
+    public static final String CATEGORY_STEP="step";
+
     public static final String PATH_PUSH_MEASURE ="/push_data_measure";
     public static final String PATH_PUSH_RULE ="/push_data_rule";
     public static final String PATH_PUSH_ALERT="/push_data_alert";

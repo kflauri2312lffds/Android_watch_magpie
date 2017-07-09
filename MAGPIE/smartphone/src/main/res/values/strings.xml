@@ -1,7 +1,10 @@
 <resources>
-    <string name="app_name" translatable="false">Phone</string>
-    <string name="start">start</string>
-    <string name="measures" translatable="false">Measures</string>
+    <string name="app_name" translatable="false">MAGPIE</string>
+    <string name="measures">Measures</string>
     <string name="settings" translatable="false">settings</string>
-    <string name="alertes">Alertes</string>
+    <string name="alertes" translatable="false">Alertes</string>
+    <string name="start">start</string>
+    <string name="weight" translatable="false">weight in kilo</string>
+    <string name="systol" translatable="false">Systol</string>
+    <string name="diastol" translatable="false">Diastol</string>
 </resources>
