@@ -1,9 +1,11 @@
 package hevs.aislab.magpie.watch;
 
+import android.Manifest;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,7 +15,7 @@ import android.widget.Toast;
 import hevs.aislab.magpie.watch.db.Core;
 import hevs.aislab.magpie.watch.lib.Const;
 import hevs.aislab.magpie.watch.models.DaoMaster;
-//import hevs.aislab.magpie.smartphone.models.DaoMaster;
+
 
 
 public class MainActivity extends AppCompatActivity {
@@ -28,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
         MessageReceiver messageReceiver = new MessageReceiver();
         LocalBroadcastManager.getInstance(this).registerReceiver(messageReceiver, messageFilter);
 
+
+        askAllPermission();
     }
 
     /**
@@ -38,6 +42,16 @@ public class MainActivity extends AppCompatActivity {
     {
         Intent intent = new Intent(this, Home_activity.class);
         startActivity(intent);
+    }
+
+    private void askAllPermission()
+    {
+        //ask for all the permission
+        ActivityCompat.requestPermissions(this,
+                new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                3);
+
+
     }
 
     /**

@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
+import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.XAxis;
@@ -122,7 +123,6 @@ public class Fragment_display_measures extends Fragment {
         //for this fragment, we will work with a line chart
         chart =(LineChart) view.findViewById(R.id.chart_measure);
         buttonsManager.addButtonByCategory(Const.CATEGORY_GLUCOSE,(ImageButton)view.findViewById(R.id.button_glucose));
-
         buttonsManager.addButtonByCategory(Const.CATEGORY_PULSE,(ImageButton)view.findViewById(R.id.button_pulse));
         buttonsManager.addButtonByCategory(Const.CATEGORY_PRESSURE,(ImageButton)view.findViewById(R.id.button_pressure));
         buttonsManager.addButtonByCategory(Const.CATEGORY_WEIGHT,(ImageButton)view.findViewById(R.id.button_weight));
@@ -166,6 +166,8 @@ public class Fragment_display_measures extends Fragment {
                 setChart1Value(stepMeasure,getString(R.string.weight),"dd-MM-yy");
                 break;
         }
+        chart.fitScreen();
+        chart.animateXY(3000,3000);
     }
 
     /**
@@ -174,6 +176,9 @@ public class Fragment_display_measures extends Fragment {
      * @param labelName
      */
     private void setChart1Value(List<Measure> measures, String labelName,String dateFormat) {
+
+        if (measures.size()==0)
+            return;
 
         List<Entry> entries=new ArrayList<>();
 
@@ -213,6 +218,8 @@ public class Fragment_display_measures extends Fragment {
      * @param labelValue2 the label of the second data set
      */
     private void setChart2Value(List<Measure> measures, String labelValue1, String labelValue2,String dateformat) {
+        if (measures.size()==0)
+            return;
 
         //set the entry for the
         List<Entry> entries_measure1=new ArrayList<>();
