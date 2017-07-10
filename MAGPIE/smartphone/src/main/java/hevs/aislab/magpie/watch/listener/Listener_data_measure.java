@@ -1,12 +1,12 @@
 package hevs.aislab.magpie.watch.listener;
 
 import android.content.Intent;
-import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
-import hevs.aislab.magpie.watch.lib.Const;
+
 import hevs.aislab.magpie.watch.models.Measure;
 import hevs.aislab.magpie.watch.repository.MeasuresRepository;
+import hevs.aislab.magpie.watch_library.lib.Const;
 
 import com.google.android.gms.wearable.DataEvent;
 import com.google.android.gms.wearable.DataEventBuffer;
@@ -15,6 +15,8 @@ import com.google.android.gms.wearable.DataMapItem;
 import com.google.android.gms.wearable.WearableListenerService;
 
 import java.util.ArrayList;
+
+import static hevs.aislab.magpie.watch_library.lib.Const.NULL_IDENTIFIER;
 
 /**
  * Created by teuft on 07.07.2017.
@@ -34,7 +36,6 @@ public class Listener_data_measure extends WearableListenerService {
                 String path = event.getDataItem().getUri().getPath();
 //                if (path.equals(Const.PATH_PUSH_MEASURE)) {}
                 dataMap = DataMapItem.fromDataItem(event.getDataItem()).getDataMap();
-
                 //get the data array list
                 ArrayList<DataMap>containerList=dataMap.getDataMapArrayList(Const.KEY_MEASURE_DATA);
                 Log.d("size_of_data_recive",containerList.size()+"");
@@ -72,7 +73,8 @@ public class Listener_data_measure extends WearableListenerService {
         measure.setTimeStamp(dataMap.getLong(Const.KEY_MEASURE_TIMESTAMP));
         measure.setValue1(dataMap.getDouble(Const.KEY_MEASURE_VALUE1));
         Double measure2=null;
-        if (dataMap.getDouble(Const.KEY_MEASURE_VALUE2)!=10000.0)
+        //the 10000 is identifed as a null value
+        if (dataMap.getDouble(Const.KEY_MEASURE_VALUE2)!=Const.NULL_IDENTIFIER)
             measure2=dataMap.getDouble(Const.KEY_MEASURE_VALUE2);
         measure.setValue2(measure2);
         return measure;

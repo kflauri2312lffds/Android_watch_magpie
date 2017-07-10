@@ -13,9 +13,8 @@ import android.view.View;
 import android.widget.Toast;
 
 import hevs.aislab.magpie.watch.db.Core;
-import hevs.aislab.magpie.watch.lib.Const;
 import hevs.aislab.magpie.watch.models.DaoMaster;
-
+import hevs.aislab.magpie.watch_library.lib.Const;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -73,5 +72,4 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(context, "MessageReceive: ", Toast.LENGTH_SHORT).show();
         }
     }
-
 }

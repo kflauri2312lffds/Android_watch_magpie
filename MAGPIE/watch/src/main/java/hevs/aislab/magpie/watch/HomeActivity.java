@@ -30,15 +30,14 @@ import hevs.aislab.magpie.watch.gui.dialogfragment.DialogFragmentSetGlucose;
 import hevs.aislab.magpie.watch.gui.FragmentHome;
 import hevs.aislab.magpie.watch.gui.FragmentSettings;
 import hevs.aislab.magpie.watch.gui.dialogfragment.DialogFragmentSetWeight;
-import hevs.aislab.magpie.watch.libs.Const;
-import hevs.aislab.magpie.watch.libs.DateFormater;
+
 import hevs.aislab.magpie.watch.models.CustomRules;
 import hevs.aislab.magpie.watch.notification.CustomToast;
 import hevs.aislab.magpie.watch.shared_pref.PrefAccessor;
 import hevs.aislab.magpie.watch.threads.IhomeActivity;
 import hevs.aislab.magpie.watch.threads.SensorsThreadLifecircle;
-
-
+import hevs.aislab.magpie.watch_library.lib.Const;
+import hevs.aislab.magpie.watch_library.lib.DateFormater;
 
 
 /**
@@ -402,7 +401,7 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
         //retrive the current step
         long currentStep= PrefAccessor.getInstance().getLong(this, Const.KEY_CURRENT_STEP);
         //check if it's a new day. If it is, we store the actual data in the data base
-        String today=DateFormater.getInstance().getDate(System.currentTimeMillis());
+        String today= DateFormater.getInstance().getDate(System.currentTimeMillis());
 
         Log.d("todayDate",today);
         Log.d("previousDate",PrefAccessor.getInstance().getString(this,Const.KEY_DATE_STEP));
@@ -466,7 +465,7 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
     }
 
     /**
-     * used to destroy the current thread running (thread that manage pulse
+     * used to destroy the current thread running (thread that manage pulse)
      */
     @Override
     protected void onDestroy() {

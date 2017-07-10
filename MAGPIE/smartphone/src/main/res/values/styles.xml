@@ -1,12 +1,31 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+
+
+
+
+    <style name="adapter_cells">
+        <item name="android:paddingRight">@dimen/adapter_cell_padding</item>
+        <item name="android:paddingLeft">@dimen/adapter_cell_padding</item>
+        <item name="android:textSize">@dimen/adapter_cell_textSize</item>
+
+    </style>
+
+    <style name="adapter_cells_value" parent="adapter_cells">
+        <item name="android:textColor">@color/red</item>
+
+    </style>
+
+    <style name="img_smallimg" parent="adapter_cells">
+    </style>
+
 
     <!--<style name="cells_img_table_category">-->
 

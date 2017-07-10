@@ -17,10 +17,12 @@ import android.widget.TextView;
 import java.util.List;
 
 import hevs.aislab.magpie.watch.R;
-import hevs.aislab.magpie.watch.libs.Const;
-import hevs.aislab.magpie.watch.libs.DateFormater;
+
 import hevs.aislab.magpie.watch.libs.Lib;
 import hevs.aislab.magpie.watch.models.Alertes;
+import hevs.aislab.magpie.watch_library.lib.Const;
+import hevs.aislab.magpie.watch_library.lib.DateFormater;
+import hevs.aislab.magpie.watch_library.lib.NumberFormater;
 
 /**
  * Created by teuft on 23.06.2017.
@@ -80,9 +82,9 @@ public class AlertAdapter extends ArrayAdapter<Alertes> {
         {
             String value;
             if (anAlert.getMeasure().getCategory().equals(Const.CATEGORY_GLUCOSE) ||anAlert.getMeasure().getCategory().equals(Const.CATEGORY_WEIGHT))
-                value=Lib.getInstance().formatWith1Digit( anAlert.getMeasure().getValue1());
+                value= NumberFormater.getInstance().formatWith1Digit( anAlert.getMeasure().getValue1());
             else
-                value=Lib.getInstance().formatWithNoDigit( anAlert.getMeasure().getValue1());
+                value=NumberFormater.getInstance().formatWithNoDigit( anAlert.getMeasure().getValue1());
             txtViewValue.setText(value);
         }
 
@@ -96,7 +98,7 @@ public class AlertAdapter extends ArrayAdapter<Alertes> {
                 if (anAlert.getMeasure().getCategory().equals(Const.CATEGORY_WEIGHT))
                 {
                     Double variation=(anAlert.getMeasure().getValue2()*100);
-                    value =Lib.getInstance().formatWithNoDigit(variation)+"%";
+                    value =NumberFormater.getInstance().formatWithNoDigit(variation)+"%";
                     value=value.replace("(","");
                     value=value.replace(")","");
 
@@ -107,7 +109,7 @@ public class AlertAdapter extends ArrayAdapter<Alertes> {
                 }
 
                 else
-                    value=Lib.getInstance().formatWithNoDigit(anAlert.getMeasure().getValue2());
+                    value=NumberFormater.getInstance().formatWithNoDigit(anAlert.getMeasure().getValue2());
 
             }
 

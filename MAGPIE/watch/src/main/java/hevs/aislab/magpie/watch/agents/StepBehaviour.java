@@ -9,7 +9,6 @@ import ch.hevs.aislab.magpie.event.LogicTupleEvent;
 import ch.hevs.aislab.magpie.event.MagpieEvent;
 import ch.hevs.aislab.magpie.support.Rule;
 import hevs.aislab.magpie.watch.HomeActivity;
-import hevs.aislab.magpie.watch.libs.Const;
 import hevs.aislab.magpie.watch.models.Alertes;
 import hevs.aislab.magpie.watch.models.CustomRules;
 import hevs.aislab.magpie.watch.models.Measure;
@@ -17,6 +16,7 @@ import hevs.aislab.magpie.watch.repository.AlertRepository;
 import hevs.aislab.magpie.watch.repository.MeasuresRepository;
 import hevs.aislab.magpie.watch.repository.RulesRepository;
 import hevs.aislab.magpie.watch.threads.DisplayGUI;
+import hevs.aislab.magpie.watch_library.lib.Const;
 
 /**
  * Created by teuft on 17.06.2017.

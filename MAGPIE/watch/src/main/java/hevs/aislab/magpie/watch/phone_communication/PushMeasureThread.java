@@ -8,13 +8,14 @@ import com.google.android.gms.wearable.DataMap;
 import java.util.ArrayList;
 import java.util.List;
 
-import hevs.aislab.magpie.watch.libs.Const;
+
 import hevs.aislab.magpie.watch.models.Alertes;
 import hevs.aislab.magpie.watch.models.CustomRules;
 import hevs.aislab.magpie.watch.models.Measure;
 import hevs.aislab.magpie.watch.repository.AlertRepository;
 import hevs.aislab.magpie.watch.repository.MeasuresRepository;
 import hevs.aislab.magpie.watch.repository.RulesRepository;
+import hevs.aislab.magpie.watch_library.lib.Const;
 
 /**
  * Created by teuft on 08.07.2017.
@@ -221,7 +222,7 @@ public class PushMeasureThread extends Thread {
     //used to format the value and send a number if it's null
     private double formatValue(Double value)
     {
-        return value==null ? -10000 : value;
+        return value==null ? Const.NULL_IDENTIFIER : value;
     }
 
 }

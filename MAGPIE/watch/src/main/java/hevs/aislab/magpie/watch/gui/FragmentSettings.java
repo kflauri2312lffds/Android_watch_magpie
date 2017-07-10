@@ -24,11 +24,13 @@ import java.util.Map;
 import hevs.aislab.magpie.watch.IdialogToActivity;
 import hevs.aislab.magpie.watch.R;
 import hevs.aislab.magpie.watch.libs.Lib;
-import hevs.aislab.magpie.watch.libs.Validator;
+
 import hevs.aislab.magpie.watch.notification.CustomToast;
-import hevs.aislab.magpie.watch.libs.Const;
 import hevs.aislab.magpie.watch.models.CustomRules;
 import hevs.aislab.magpie.watch.repository.RulesRepository;
+import hevs.aislab.magpie.watch_library.lib.Const;
+import hevs.aislab.magpie.watch_library.lib.NumberFormater;
+import hevs.aislab.magpie.watch_library.lib.Validator;
 
 /**
  * Created by teuft on 04.06.2017.
@@ -98,17 +100,17 @@ public class FragmentSettings extends Fragment {
 
             if (currentRules.getCategory().equals(Const.CATEGORY_GLUCOSE) || currentRules.getCategory().equals(Const.CATEGORY_WEIGHT))
             {
-                value1_min=Lib.getInstance().formatWith1Digit(value1_min);
-                value1_max=Lib.getInstance().formatWith1Digit(value1_max);
-                value2_min=Lib.getInstance().formatWith1Digit(value2_min);
-                value_2max=Lib.getInstance().formatWith1Digit(value_2max);
+                value1_min= NumberFormater.getInstance().formatWith1Digit(value1_min);
+                value1_max=NumberFormater.getInstance().formatWith1Digit(value1_max);
+                value2_min=NumberFormater.getInstance().formatWith1Digit(value2_min);
+                value_2max=NumberFormater.getInstance().formatWith1Digit(value_2max);
             }
             else
             {
-                value1_min=Lib.getInstance().formatWithNoDigit(value1_min);
-                value1_max=Lib.getInstance().formatWithNoDigit(value1_max);
-                value2_min=Lib.getInstance().formatWithNoDigit(value2_min);
-                value_2max=Lib.getInstance().formatWithNoDigit(value_2max);
+                value1_min=NumberFormater.getInstance().formatWithNoDigit(value1_min);
+                value1_max=NumberFormater.getInstance().formatWithNoDigit(value1_max);
+                value2_min=NumberFormater.getInstance().formatWithNoDigit(value2_min);
+                value_2max=NumberFormater.getInstance().formatWithNoDigit(value_2max);
             }
 
             //replace the value in the constraints by the values of the rules

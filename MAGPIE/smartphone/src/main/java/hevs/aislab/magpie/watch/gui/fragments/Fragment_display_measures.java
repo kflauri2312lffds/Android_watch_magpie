@@ -9,12 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
-import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.LimitLine;
 import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
@@ -27,12 +25,12 @@ import java.util.List;
 
 import hevs.aislab.magpie.watch.R;
 import hevs.aislab.magpie.watch.gui.ButtonsManager;
-import hevs.aislab.magpie.watch.lib.Const;
 import hevs.aislab.magpie.watch.lib.DateFormater;
 import hevs.aislab.magpie.watch.models.CustomRules;
 import hevs.aislab.magpie.watch.models.Measure;
 import hevs.aislab.magpie.watch.repository.MeasuresRepository;
 import hevs.aislab.magpie.watch.repository.RulesRepository;
+import hevs.aislab.magpie.watch_library.lib.Const;
 
 /**
  * Created by teuft on 07.07.2017.
@@ -154,23 +152,23 @@ public class Fragment_display_measures extends Fragment {
             case Const.CATEGORY_GLUCOSE :
 
                 final List<Measure>glucoseMeasure= MeasuresRepository.getInstance().getByCategory(Const.CATEGORY_GLUCOSE);
-                setChart1Value(glucoseMeasure,getString(R.string.weight),"dd-MM-yy HH:mm", rule);
+                setChart1Value(glucoseMeasure,getString(R.string.unit_measure_glucose),"dd-MM-yy HH:mm", rule);
                 break;
             case Const.CATEGORY_PULSE :
                 final List<Measure>pulseMeasure= MeasuresRepository.getInstance().getByCategory(Const.CATEGORY_PULSE);
-                setChart1Value(pulseMeasure,getString(R.string.weight),"dd-MM-yy HH:mm",rule);
+                setChart1Value(pulseMeasure,getString(R.string.unit_measure_pulse),"dd-MM-yy HH:mm",rule);
                 break;
             case Const.CATEGORY_PRESSURE :
                 final List<Measure>pressureMeasure= MeasuresRepository.getInstance().getByCategory(Const.CATEGORY_PRESSURE);
-                setChart2Value(pressureMeasure,getString(R.string.systol),getString(R.string.diastol),"dd-MM-yy HH:mm",rule);
+                setChart2Value(pressureMeasure,getString(R.string.unit_measure_systol),getString(R.string.unit_measure_diastol),"dd-MM-yy HH:mm",rule);
                 break;
             case Const.CATEGORY_WEIGHT :
                 final List<Measure>weightMeasure= MeasuresRepository.getInstance().getByCategory(Const.CATEGORY_WEIGHT);
-                setChart1Value(weightMeasure,getString(R.string.weight),"dd-MM-yy",rule);
+                setChart1Value(weightMeasure,getString(R.string.unit_measure_weight),"dd-MM-yy",rule);
                 break;
             case Const.CATEGORY_STEP :
                 final List<Measure>stepMeasure= MeasuresRepository.getInstance().getByCategory(Const.CATEGORY_STEP);
-                setChart1Value(stepMeasure,getString(R.string.weight),"dd-MM-yy",rule);
+                setChart1Value(stepMeasure,getString(R.string.unit_measure_step),"dd-MM-yy",rule);
                 break;
         }
         chart.fitScreen();
@@ -191,7 +189,6 @@ public class Fragment_display_measures extends Fragment {
             return;
         //data for the entry
         List<Entry> dataEntries=new ArrayList<>();
-
 
 
 

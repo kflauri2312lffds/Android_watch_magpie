@@ -21,7 +21,6 @@ import org.greenrobot.greendao.query.QueryBuilder;
 import java.util.List;
 
 import hevs.aislab.magpie.watch.db.Core;
-import hevs.aislab.magpie.watch.libs.Const;
 import hevs.aislab.magpie.watch.models.CustomRules;
 import hevs.aislab.magpie.watch.models.DaoMaster;
 import hevs.aislab.magpie.watch.models.Measure;
@@ -29,6 +28,7 @@ import hevs.aislab.magpie.watch.phone_communication.PushMeasureThread;
 import hevs.aislab.magpie.watch.repository.MeasuresRepository;
 import hevs.aislab.magpie.watch.repository.RulesRepository;
 import hevs.aislab.magpie.watch.shared_pref.PrefAccessor;
+import hevs.aislab.magpie.watch_library.lib.Const;
 
 
 import com.google.android.gms.common.ConnectionResult;

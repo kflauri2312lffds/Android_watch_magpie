@@ -9,7 +9,7 @@ import android.widget.ImageButton;
 
 import hevs.aislab.magpie.watch.R;
 import hevs.aislab.magpie.watch.gui.ButtonsManager;
-import hevs.aislab.magpie.watch.lib.Const;
+import hevs.aislab.magpie.watch_library.lib.Const;
 
 /**
  * Created by teuft on 07.07.2017.

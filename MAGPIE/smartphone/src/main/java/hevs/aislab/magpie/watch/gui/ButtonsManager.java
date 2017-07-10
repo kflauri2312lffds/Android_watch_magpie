@@ -11,7 +11,6 @@ import java.security.Key;
 import java.util.HashMap;
 import java.util.Map;
 
-import hevs.aislab.magpie.watch.lib.Const;
 
 /**
  * Created by teuft on 09.07.2017.

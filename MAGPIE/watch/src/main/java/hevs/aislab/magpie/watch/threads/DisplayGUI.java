@@ -7,9 +7,9 @@ import java.util.List;
 import java.util.Locale;
 
 import hevs.aislab.magpie.watch.HomeActivity;
-import hevs.aislab.magpie.watch.libs.Const;
 import hevs.aislab.magpie.watch.models.Measure;
 import hevs.aislab.magpie.watch.repository.MeasuresRepository;
+import hevs.aislab.magpie.watch_library.lib.Const;
 
 /**
  * this class will change value inside the GUI. Used in the agent.

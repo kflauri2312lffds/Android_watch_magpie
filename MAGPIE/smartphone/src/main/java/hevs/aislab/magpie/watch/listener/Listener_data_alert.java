@@ -11,11 +11,9 @@ import com.google.android.gms.wearable.WearableListenerService;
 
 import java.util.ArrayList;
 
-import hevs.aislab.magpie.watch.lib.Const;
 import hevs.aislab.magpie.watch.models.Alertes;
-import hevs.aislab.magpie.watch.models.Measure;
 import hevs.aislab.magpie.watch.repository.AlertesRepository;
-import hevs.aislab.magpie.watch.repository.MeasuresRepository;
+import hevs.aislab.magpie.watch_library.lib.Const;
 
 /**
  * Created by teuft on 08.07.2017.

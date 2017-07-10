@@ -1,14 +1,19 @@
 <resources>
     <string name="app_name" translatable="false">MAGPIE</string>
     <string name="measures">Measures</string>
-    <string name="settings" translatable="false">settings</string>
+    <string name="settings" translatable="false">beats per minute</string>
     <string name="alertes" translatable="false">Alertes</string>
     <string name="start">start</string>
-    <string name="weight" translatable="false">weight in kilo</string>
     <string name="systol" translatable="false">Systol</string>
     <string name="diastol" translatable="false">Diastol</string>
     <string name="min_range" translatable="false">min range</string>
     <string name="max_range" translatable="false">max range</string>
     <string name="max_systo" translatable="false">max systol</string>
-    <string name="max_diasto">max diastol</string>
+    <string name="max_diasto" translatable="false">max diastol</string>
+    <string name="unit_measure_weight" translatable="false">Weight in kilo</string>
+    <string name="unit_measure_glucose" translatable="false">Glucose mmol/l</string>
+    <string name="unit_measure_pulse" translatable="false">Beats per minute</string>
+    <string name="unit_measure_step" translatable="false">Number of step</string>
+    <string name="unit_measure_systol" translatable="false">Systol</string>
+    <string name="unit_measure_diastol" translatable="false">Diastol</string>
 </resources>

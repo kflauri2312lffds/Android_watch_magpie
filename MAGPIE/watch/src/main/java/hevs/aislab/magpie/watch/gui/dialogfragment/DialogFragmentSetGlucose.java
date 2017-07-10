@@ -10,9 +10,11 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import hevs.aislab.magpie.watch.R;
-import hevs.aislab.magpie.watch.libs.Const;
-import hevs.aislab.magpie.watch.libs.Validator;
+
+
 import hevs.aislab.magpie.watch.notification.CustomToast;
+import hevs.aislab.magpie.watch_library.lib.Const;
+import hevs.aislab.magpie.watch_library.lib.Validator;
 
 /**
  * Created by teuft on 08.06.2017.

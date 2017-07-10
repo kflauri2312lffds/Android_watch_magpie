@@ -2,6 +2,7 @@ package hevs.aislab.magpie.watch.gui.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,8 +13,10 @@ import java.util.List;
 
 import hevs.aislab.magpie.watch.R;
 import hevs.aislab.magpie.watch.gui.ButtonsManager;
-import hevs.aislab.magpie.watch.lib.Const;
+import hevs.aislab.magpie.watch.gui.adapter.AlertAdapter;
 import hevs.aislab.magpie.watch.models.Alertes;
+import hevs.aislab.magpie.watch.repository.AlertesRepository;
+import hevs.aislab.magpie.watch_library.lib.Const;
 
 /**
  * Created by teuft on 07.07.2017.
@@ -22,9 +25,9 @@ import hevs.aislab.magpie.watch.models.Alertes;
 public class Fragment_display_alertes extends Fragment {
 
 
-//    AlertAdapter alertAdapter;
-//    ListView listViewAlert;
-//    List<Alertes> alertesList;
+    AlertAdapter alertAdapter;
+    ListView listViewAlert;
+    List<Alertes> alertesList;
 
     /**
      * This class is used to display other category
@@ -40,6 +43,10 @@ public class Fragment_display_alertes extends Fragment {
 
         @Override
         public void onClick(View view) {
+            alertesList.clear();
+            alertesList.addAll(AlertesRepository.getINSTANCE().getAllByCategory(currentCategory));
+            updateViewList();
+
             buttonsManager.setAllButtonToGreen();
             buttonsManager.setButtonToRed(currentCategory);
         }
@@ -59,13 +66,20 @@ public class Fragment_display_alertes extends Fragment {
         buttonsManager=new ButtonsManager(getContext());
         initView();
         addListenerToButton();
+        //listview part
 
-//
+        listViewAlert=(ListView)view.findViewById(R.id.list_alert) ;
+        alertesList= AlertesRepository.getINSTANCE().getAll();
+        Log.d("Adapter_Creation",alertesList.size()+"");
+        alertAdapter=new AlertAdapter(view.getContext(),R.layout.adapter_alert,alertesList);
+        listViewAlert.setAdapter(alertAdapter);
+        updateViewList();
         return view;
     }
 
     public void initView()
     {
+
         buttonsManager.addButtonByCategory(Const.CATEGORY_GLUCOSE,(ImageButton)view.findViewById(R.id.button_glucose));
         buttonsManager.addButtonByCategory(Const.CATEGORY_PULSE,(ImageButton)view.findViewById(R.id.button_pulse));
         buttonsManager.addButtonByCategory(Const.CATEGORY_PRESSURE,(ImageButton)view.findViewById(R.id.button_pressure));
@@ -79,5 +93,10 @@ public class Fragment_display_alertes extends Fragment {
         buttonsManager.getButtonByCategory(Const.CATEGORY_PRESSURE).setOnClickListener(new ListenerButtonCategory(Const.CATEGORY_PRESSURE));
         buttonsManager.getButtonByCategory(Const.CATEGORY_WEIGHT).setOnClickListener(new ListenerButtonCategory(Const.CATEGORY_WEIGHT));
         buttonsManager.getButtonByCategory(Const.CATEGORY_STEP).setOnClickListener(new ListenerButtonCategory(Const.CATEGORY_STEP));
+    }
+
+    private void updateViewList() {
+        alertAdapter.notifyDataSetChanged();
+
     }
 }

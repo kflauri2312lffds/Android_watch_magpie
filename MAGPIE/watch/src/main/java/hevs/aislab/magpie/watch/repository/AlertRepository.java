@@ -5,7 +5,6 @@ import org.greenrobot.greendao.query.QueryBuilder;
 import java.util.List;
 
 import hevs.aislab.magpie.watch.db.Core;
-import hevs.aislab.magpie.watch.libs.Const;
 import hevs.aislab.magpie.watch.models.Alertes;
 import hevs.aislab.magpie.watch.models.AlertesDao;
 import hevs.aislab.magpie.watch.models.CustomRules;

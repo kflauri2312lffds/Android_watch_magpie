@@ -12,7 +12,6 @@ import ch.hevs.aislab.magpie.event.MagpieEvent;
 
 import hevs.aislab.magpie.watch.HomeActivity;
 import hevs.aislab.magpie.watch.R;
-import hevs.aislab.magpie.watch.libs.Const;
 import hevs.aislab.magpie.watch.models.Alertes;
 import hevs.aislab.magpie.watch.models.CustomRules;
 import hevs.aislab.magpie.watch.models.Measure;
@@ -21,6 +20,7 @@ import hevs.aislab.magpie.watch.repository.MeasuresRepository;
 import hevs.aislab.magpie.watch.repository.RulesRepository;
 import hevs.aislab.magpie.watch.notification.NotificationGenerator;
 import hevs.aislab.magpie.watch.threads.DisplayGUI;
+import hevs.aislab.magpie.watch_library.lib.Const;
 
 /**
  * Created by teuft on 12.06.2017.
@@ -42,7 +42,7 @@ public class GlucoseBehaviour extends Behavior {
 
         //add the values in the GUI
         HomeActivity context=(HomeActivity)getContext();
-        Runnable threadGui= new DisplayGUI(context,Const.CATEGORY_GLUCOSE,value);
+        Runnable threadGui= new DisplayGUI(context, Const.CATEGORY_GLUCOSE,value);
         context.runOnUiThread(threadGui);
 
         //ENTER THE GLUCOSE INTO THE DB

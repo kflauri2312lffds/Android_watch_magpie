@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:paddingLeft="0dp"
+            android:id="@+id/alert_column_category"
+            style="@style/img_smallimg"
+            android:background="@null"
+            android:scaleType="fitCenter"
+            android:src="@drawable/small_glucose" />
+
+        <TextView
+            style="@style/adapter_cells"
+            android:id="@+id/alert_column_timeStamp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="centerInside"
+            android:textAlignment="viewStart"
+            android:textColor="@color/black" />
+
+
+        <TextView
+            android:id="@+id/alert_column_values"
+            style="@style/adapter_cells_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            android:textAlignment="viewStart" />
+
+        <TextView
+            android:id="@+id/alert_column_message"
+            style="@style/adapter_cells_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            android:textAlignment="viewStart" />
+
+        <TextView
+            style="@style/adapter_cells_value"
+            android:id="@+id/alert_column_values2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </TableRow>
+
+</TableLayout>

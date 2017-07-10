@@ -27,11 +27,12 @@ import hevs.aislab.magpie.watch.gui.adapter.AlertAdapter;
 import hevs.aislab.magpie.watch.gui.dialogfragment.DialogFragmentListAlert;
 import hevs.aislab.magpie.watch.gui.dialogfragment.DialogFragmentSetGlucose;
 import hevs.aislab.magpie.watch.gui.dialogfragment.DialogFragmentSetValue;
-import hevs.aislab.magpie.watch.libs.Const;
+
 import hevs.aislab.magpie.watch.models.Alertes;
 import hevs.aislab.magpie.watch.models.CustomRules;
 import hevs.aislab.magpie.watch.notification.CustomToast;
 import hevs.aislab.magpie.watch.repository.AlertRepository;
+import hevs.aislab.magpie.watch_library.lib.Const;
 
 /**
  * Created by teuft on 23.06.2017.
@@ -60,17 +61,9 @@ public class FragmentDisplayAlertes extends Fragment {
         @Override
         public void onClick(View view) {
             //change the value in the
-            ((HomeActivity) getContext()).runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
                     alertesList.clear();
                     alertesList.addAll(AlertRepository.getINSTANCE().getAllByCategory(category));
-
-               //     listViewAlert.setAdapter(alertAdapter);
                     updateViewList();
-                    //    listViewAlert.refreshDrawableState();
-                }
-            });
 
             //change the button selected
             setButtonsToGreen(mapButton);
@@ -129,15 +122,9 @@ public class FragmentDisplayAlertes extends Fragment {
 
         instanciateView();
         addListenerToButton();
+        listViewAlert.setAdapter(alertAdapter);
+        updateViewList();
 
-        ((HomeActivity) getContext()).runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                listViewAlert.setAdapter(alertAdapter);
-                updateViewList();
-                //  listViewAlert.refreshDrawableState();
-            }
-        });
 
         return view;
     }

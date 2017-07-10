@@ -14,7 +14,6 @@ import java.util.List;
 
 import hevs.aislab.magpie.watch.R;
 import hevs.aislab.magpie.watch.gui.adapter.AlertAdapter;
-import hevs.aislab.magpie.watch.libs.Const;
 import hevs.aislab.magpie.watch.models.Alertes;
 import hevs.aislab.magpie.watch.repository.AlertRepository;
 
