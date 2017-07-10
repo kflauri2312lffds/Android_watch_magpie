@@ -21,9 +21,11 @@ import org.greenrobot.greendao.query.QueryBuilder;
 import java.util.List;
 
 import hevs.aislab.magpie.watch.db.Core;
+import hevs.aislab.magpie.watch.dummy.DummyValue;
 import hevs.aislab.magpie.watch.models.CustomRules;
 import hevs.aislab.magpie.watch.models.DaoMaster;
 import hevs.aislab.magpie.watch.models.Measure;
+import hevs.aislab.magpie.watch.notification.CustomToast;
 import hevs.aislab.magpie.watch.phone_communication.PushMeasureThread;
 import hevs.aislab.magpie.watch.repository.MeasuresRepository;
 import hevs.aislab.magpie.watch.repository.RulesRepository;
@@ -155,6 +157,13 @@ public class MainActivity extends Activity implements
         sendDataToPhone();
     }
 
+    public void click_insertDummyData(View view )
+    {
+        DummyValue dummy=new DummyValue();
+        dummy.insertDummyMeasure();
+        CustomToast.getInstance().confirmToast("dummy data added",this);
+    }
+
     private void sendDataToPhone()
     {
         new PushMeasureThread(googleClient).start();
@@ -267,19 +276,7 @@ public class MainActivity extends Activity implements
         return false;
     }
 
-    private void testDisplayAllMeasure()
-    {
-        List<Measure>measureList=MeasuresRepository.getInstance().getAll();
 
-        for (Measure aMeasure : measureList)
-        {
-            Log.d("ShowingMeasure_BEGIN","*********************************************");
-            Log.d("ShowingMeasure_TIME",aMeasure.getTimeStamp()+"");
-            Log.d("ShowingMeasure_VALUE",aMeasure.getValue1()+"");
-            Log.d("ShowingMeasure_CATEGORY",aMeasure.getCategory()+"");
-            Log.d("ShowingMeasure_END","*********************************************");
-        }
-    }
 
 
     /**
