@@ -49,6 +49,14 @@ public class RulesRepository {
                 .list();
     }
 
+    public CustomRules getByCategory(String category)
+    {
+
+        return rulesDao.queryBuilder()
+                .where(CustomRulesDao.Properties.Category.eq(category))
+                .unique();
+    }
+
 
     }
 

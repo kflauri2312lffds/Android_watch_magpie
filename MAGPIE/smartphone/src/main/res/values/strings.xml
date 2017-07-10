@@ -7,4 +7,8 @@
     <string name="weight" translatable="false">weight in kilo</string>
     <string name="systol" translatable="false">Systol</string>
     <string name="diastol" translatable="false">Diastol</string>
+    <string name="min_range" translatable="false">min range</string>
+    <string name="max_range" translatable="false">max range</string>
+    <string name="max_systo" translatable="false">max systol</string>
+    <string name="max_diasto">max diastol</string>
 </resources>

@@ -6,10 +6,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ListView;
+
+import java.util.List;
 
 import hevs.aislab.magpie.watch.R;
 import hevs.aislab.magpie.watch.gui.ButtonsManager;
 import hevs.aislab.magpie.watch.lib.Const;
+import hevs.aislab.magpie.watch.models.Alertes;
 
 /**
  * Created by teuft on 07.07.2017.
@@ -17,6 +21,10 @@ import hevs.aislab.magpie.watch.lib.Const;
 
 public class Fragment_display_alertes extends Fragment {
 
+
+//    AlertAdapter alertAdapter;
+//    ListView listViewAlert;
+//    List<Alertes> alertesList;
 
     /**
      * This class is used to display other category
@@ -52,7 +60,7 @@ public class Fragment_display_alertes extends Fragment {
         initView();
         addListenerToButton();
 
-
+//
         return view;
     }
 

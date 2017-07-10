@@ -3,6 +3,7 @@ package hevs.aislab.magpie.watch.gui.fragments;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +12,9 @@ import android.widget.ImageButton;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.components.LimitLine;
 import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
@@ -26,8 +29,10 @@ import hevs.aislab.magpie.watch.R;
 import hevs.aislab.magpie.watch.gui.ButtonsManager;
 import hevs.aislab.magpie.watch.lib.Const;
 import hevs.aislab.magpie.watch.lib.DateFormater;
+import hevs.aislab.magpie.watch.models.CustomRules;
 import hevs.aislab.magpie.watch.models.Measure;
 import hevs.aislab.magpie.watch.repository.MeasuresRepository;
+import hevs.aislab.magpie.watch.repository.RulesRepository;
 
 /**
  * Created by teuft on 07.07.2017.
@@ -39,9 +44,6 @@ public class Fragment_display_measures extends Fragment {
 
     View view;
     LineChart chart;
-
-
-
 
     /**
      * Will handle change the color of the button based on the category we selec
@@ -64,6 +66,7 @@ public class Fragment_display_measures extends Fragment {
 
         @Override
         public void onClick(View view) {
+
 
             displayValue(currentCategory);
 
@@ -143,31 +146,36 @@ public class Fragment_display_measures extends Fragment {
     {
         cleanValueFromChart();
 
+
+        //get the rules based on the category. it will be used to draw the allowed value
+        CustomRules rule= RulesRepository.getInstance().getByCategory(category);
         switch (category)
         {
             case Const.CATEGORY_GLUCOSE :
+
                 final List<Measure>glucoseMeasure= MeasuresRepository.getInstance().getByCategory(Const.CATEGORY_GLUCOSE);
-                setChart1Value(glucoseMeasure,getString(R.string.weight),"dd-MM-yy HH:mm");
+                setChart1Value(glucoseMeasure,getString(R.string.weight),"dd-MM-yy HH:mm", rule);
                 break;
             case Const.CATEGORY_PULSE :
                 final List<Measure>pulseMeasure= MeasuresRepository.getInstance().getByCategory(Const.CATEGORY_PULSE);
-                setChart1Value(pulseMeasure,getString(R.string.weight),"dd-MM-yy HH:mm");
+                setChart1Value(pulseMeasure,getString(R.string.weight),"dd-MM-yy HH:mm",rule);
                 break;
             case Const.CATEGORY_PRESSURE :
                 final List<Measure>pressureMeasure= MeasuresRepository.getInstance().getByCategory(Const.CATEGORY_PRESSURE);
-                setChart2Value(pressureMeasure,getString(R.string.systol),getString(R.string.diastol),"dd-MM-yy HH:mm");
+                setChart2Value(pressureMeasure,getString(R.string.systol),getString(R.string.diastol),"dd-MM-yy HH:mm",rule);
                 break;
             case Const.CATEGORY_WEIGHT :
                 final List<Measure>weightMeasure= MeasuresRepository.getInstance().getByCategory(Const.CATEGORY_WEIGHT);
-                setChart1Value(weightMeasure,getString(R.string.weight),"dd-MM-yy");
+                setChart1Value(weightMeasure,getString(R.string.weight),"dd-MM-yy",rule);
                 break;
             case Const.CATEGORY_STEP :
                 final List<Measure>stepMeasure= MeasuresRepository.getInstance().getByCategory(Const.CATEGORY_STEP);
-                setChart1Value(stepMeasure,getString(R.string.weight),"dd-MM-yy");
+                setChart1Value(stepMeasure,getString(R.string.weight),"dd-MM-yy",rule);
                 break;
         }
         chart.fitScreen();
-        chart.animateXY(3000,3000);
+        //display an animation in the graph
+        chart.animateX(3000);
     }
 
     /**
@@ -175,28 +183,43 @@ public class Fragment_display_measures extends Fragment {
      * @param measures
      * @param labelName
      */
-    private void setChart1Value(List<Measure> measures, String labelName,String dateFormat) {
+    private void setChart1Value(List<Measure> measures, String labelName,String dateFormat, CustomRules rule) {
 
+
+        chart=(LineChart) view.findViewById(R.id.chart_measure);
         if (measures.size()==0)
             return;
+        //data for the entry
+        List<Entry> dataEntries=new ArrayList<>();
 
-        List<Entry> entries=new ArrayList<>();
 
+
+
+
+
+
+        //get the data based on measure
         for (int k=0;k<measures.size();k++)
         {   //add the entry
-            entries.add(new Entry(k,measures.get(k).getValue1().floatValue()));
-
+            dataEntries.add(new Entry(k,measures.get(k).getValue1().floatValue()));
+            //enter the fix value related to the rule
         }
+
+
+
+
+
         //add label instead of number in the axis
         chart.notifyDataSetChanged();
 
         //sort otherwise we will trigger an error
-        Collections.sort(entries, new EntryXComparator());
+        Collections.sort(dataEntries, new EntryXComparator());
         //add the entry to a data set (data that belong together), it's a line
-        LineDataSet dataSet=new LineDataSet(entries,labelName);
+        LineDataSet dataSet=new LineDataSet(dataEntries,labelName);
         dataSet.setColor(Color.BLUE);
         dataSet.setValueTextColor(Color.BLACK);
-        //ad the data set to the line data. Linedata contains all data set
+        //create a data set for each line
+
         LineData lineData=new LineData(dataSet);
         chart.setData(lineData);
         //refresh view
@@ -207,6 +230,13 @@ public class Fragment_display_measures extends Fragment {
         //set the label instead of numner
         xAxis.setValueFormatter(formatter);
         dataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+
+
+        dataSet.setDrawFilled(true);
+        dataSet.setFillColor(Color.BLUE);
+        //draw the limite of the allowed value
+        setLimites(rule);
+        chart.getDescription().setEnabled(false);
         chart.invalidate();
 
     }
@@ -217,7 +247,7 @@ public class Fragment_display_measures extends Fragment {
      * @param labelValue1 the label of the first data set
      * @param labelValue2 the label of the second data set
      */
-    private void setChart2Value(List<Measure> measures, String labelValue1, String labelValue2,String dateformat) {
+    private void setChart2Value(List<Measure> measures, String labelValue1, String labelValue2,String dateformat, CustomRules rule) {
         if (measures.size()==0)
             return;
 
@@ -261,9 +291,64 @@ public class Fragment_display_measures extends Fragment {
         //set the label instead of numner
         xAxis.setValueFormatter(formatter);
         dataSet1.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+
+        //draw the limite of the allowed value
+        setLimites(rule);
+        dataSet1.setDrawFilled(true);
+        dataSet1.setFillColor(Color.BLUE);
+
+        dataSet2.setDrawFilled(true);
+        dataSet2.setFillColor(Color.GREEN);
+
+        chart.notifyDataSetChanged();
         chart.invalidate();
 
     }
+
+
+    private void setLimites(CustomRules rule)
+    {
+        chart.getAxisLeft().removeAllLimitLines();
+
+
+        Log.d("affichageRule_category",rule.getCategory());
+        Log.d("affichageRule_value1Min",rule.getVal_1_min()+"");
+        Log.d("affichageRule_value1Max",rule.getVal_1_max()+"");
+        Log.d("affichageRule_value2Min",rule.getVal__2_min()+"");
+        Log.d("affichageRule_value2Max",rule.getVal_2_max()+"");
+
+        if (rule.getCategory().equals(Const.CATEGORY_WEIGHT))
+            return;
+
+        if (rule.getCategory().equals(Const.CATEGORY_PRESSURE))
+        {
+            setLimite(rule.getVal_1_max().floatValue(),getString(R.string.max_systo));
+            setLimite(rule.getVal_2_max().floatValue(),getString(R.string.max_diasto));
+
+            return;
+        }
+
+
+        if (rule.getVal_1_min()!=null)
+            setLimite(rule.getVal_1_min().floatValue(),getString(R.string.min_range));
+        if (rule.getVal_1_max()!=null)
+            setLimite(rule.getVal_1_max().floatValue(),getString(R.string.max_range));
+        if (rule.getVal__2_min()!=null)
+            setLimite(rule.getVal__2_min().floatValue(),getString(R.string.min_range));
+        if (rule.getVal_2_max()!=null)
+            setLimite(rule.getVal_2_max().floatValue(),getString(R.string.max_range));
+
+    }
+
+    private void setLimite(float limite, String label )
+    {
+
+       LimitLine  limitLine = new LimitLine(limite, label);
+
+
+        chart.getAxisLeft().addLimitLine(limitLine);
+    }
+
     private void cleanValueFromChart()
     {
         try {
@@ -280,5 +365,9 @@ public class Fragment_display_measures extends Fragment {
     }
 
 
+    private void rebuildLayout()
+    {
+
+    }
 
 }
