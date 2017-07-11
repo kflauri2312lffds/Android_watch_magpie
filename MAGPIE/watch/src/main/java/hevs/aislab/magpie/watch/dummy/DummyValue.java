@@ -95,16 +95,16 @@ public class DummyValue {
     {
         List<Measure> measureList=new ArrayList<>();
         measureList.add(new Measure(null, Const.CATEGORY_WEIGHT,100.00,null,getTimeStamp("16-09-2011 12:44")));
-        measureList.add(new Measure(null, Const.CATEGORY_WEIGHT,100.80,0.2,getTimeStamp("17-09-2011 12:56")));
-        measureList.add(new Measure(null, Const.CATEGORY_WEIGHT,99.00,-1.00,getTimeStamp("18-09-2011 13:21")));
-        measureList.add(new Measure(null, Const.CATEGORY_WEIGHT,98.00,1.00,getTimeStamp("19-09-2011 13:44")));
-        measureList.add(new Measure(null, Const.CATEGORY_WEIGHT,101.00,4.00,getTimeStamp("20-09-2011 13:56")));
-        measureList.add(new Measure(null, Const.CATEGORY_WEIGHT,100.8,-0.2,getTimeStamp("21-09-2011 14:02")));
-        measureList.add(new Measure(null, Const.CATEGORY_WEIGHT,100.2,-0.6,getTimeStamp("22-09-2011 18:32")));
-        measureList.add(new Measure(null, Const.CATEGORY_WEIGHT,100.1,-1.0,getTimeStamp("23-09-2011 12:21")));
-        measureList.add(new Measure(null, Const.CATEGORY_WEIGHT,103.00,2.0,getTimeStamp("24-09-2011 22:32")));
-        measureList.add(new Measure(null, Const.CATEGORY_WEIGHT,101.5,-1.8,getTimeStamp("25-09-2011 23:44")));
-        measureList.add(new Measure(null, Const.CATEGORY_WEIGHT,103.00,3.0,getTimeStamp("26-09-2011 18:21")));
+        measureList.add(new Measure(null, Const.CATEGORY_WEIGHT,100.80,0.02,getTimeStamp("17-09-2011 12:56")));
+        measureList.add(new Measure(null, Const.CATEGORY_WEIGHT,99.00,-0.01,getTimeStamp("18-09-2011 13:21")));
+        measureList.add(new Measure(null, Const.CATEGORY_WEIGHT,98.00,0.01,getTimeStamp("19-09-2011 13:44")));
+        measureList.add(new Measure(null, Const.CATEGORY_WEIGHT,101.00,0.04,getTimeStamp("20-09-2011 13:56")));
+        measureList.add(new Measure(null, Const.CATEGORY_WEIGHT,100.8,-0.02,getTimeStamp("21-09-2011 14:02")));
+        measureList.add(new Measure(null, Const.CATEGORY_WEIGHT,100.2,-0.06,getTimeStamp("22-09-2011 18:32")));
+        measureList.add(new Measure(null, Const.CATEGORY_WEIGHT,100.1,-0.01,getTimeStamp("23-09-2011 12:21")));
+        measureList.add(new Measure(null, Const.CATEGORY_WEIGHT,103.00,0.02,getTimeStamp("24-09-2011 22:32")));
+        measureList.add(new Measure(null, Const.CATEGORY_WEIGHT,101.5,-0.01,getTimeStamp("25-09-2011 23:44")));
+        measureList.add(new Measure(null, Const.CATEGORY_WEIGHT,103.00,0.03,getTimeStamp("26-09-2011 18:21")));
 
         for (Measure aMeasure : measureList)
             MeasuresRepository.getInstance().insert(aMeasure);

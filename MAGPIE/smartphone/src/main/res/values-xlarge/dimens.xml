@@ -7,4 +7,6 @@
     <dimen name="listview_height">400dp</dimen>
     <dimen name="adapter_cell_padding">6dp</dimen>
     <dimen name="adapter_cell_textSize">18sp</dimen>
+    <dimen name="scroll_view_display_rules_height">200dp</dimen>
+    <dimen name="display_constraint_height">20sp</dimen>
 </resources>

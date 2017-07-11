@@ -61,7 +61,6 @@ public class FragmentSettings extends Fragment {
 
 
     //used to have communication with the activity
-
     IdialogToActivity homeactivity;
 
     String currentCategory;
@@ -78,6 +77,8 @@ public class FragmentSettings extends Fragment {
 
         @Override
         public void onClick(View view) {
+
+
             currentCategory=category;
             //we retrieve the rules from the database
             currentRules= RulesRepository.getInstance().getByCategory(category);
@@ -87,9 +88,9 @@ public class FragmentSettings extends Fragment {
             String constraint_2=currentRules.getConstraint_2();
             String constraint_3=currentRules.getConstraint_3();
 
-            constraint_1=constraint_1!=null ? constraint_1 : "-";
-            constraint_2=constraint_2!=null ? constraint_2 : "-";
-            constraint_3=constraint_3!=null ? constraint_3 : "-";
+            constraint_1=constraint_1!=null ? constraint_1 : "";
+            constraint_2=constraint_2!=null ? constraint_2 : "";
+            constraint_3=constraint_3!=null ? constraint_3 : "";
 
             String value1_min=currentRules.getVal_1_min()!= null ?currentRules.getVal_1_min()+"" :"";
             String value1_max=currentRules.getVal_1_max()!= null ?currentRules.getVal_1_max()+"" :"";
@@ -157,10 +158,6 @@ public class FragmentSettings extends Fragment {
             setButtonToRed(buttonMap.get(category));
 
         }
-
-
-
-
 
 
         /**
@@ -471,6 +468,7 @@ public class FragmentSettings extends Fragment {
     {
         buttonSaveValues.setVisibility(View.VISIBLE);
     }
+
     private boolean is_aValideNumber(String ... number)
     {
         try

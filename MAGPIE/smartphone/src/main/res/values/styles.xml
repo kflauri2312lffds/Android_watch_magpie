@@ -27,6 +27,29 @@
     </style>
 
 
+
+
+    <!-- DISPLAY SETTINGS STYLE !-->
+
+
+    <style name="scroll_view_display_rules">
+    <item name="android:layout_height">@dimen/scroll_view_display_rules_height</item>
+    </style>
+
+    <!-- USED TO DISPLAY THE TEXT IN THE SETTINGS !-->
+    <style name="txtView_displayConstraint">
+        <item name="android:textSize">@dimen/display_constraint_height</item>
+
+    </style>
+
+    <style name="edittxt_values">
+        <item name="android:layout_width">100dp</item>
+    </style>
+
+    <style name="txtView_toast"
+        ></style>
+
+
     <!--<style name="cells_img_table_category">-->
 
         <!--<item name="android:height">-->

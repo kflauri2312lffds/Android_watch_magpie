@@ -31,7 +31,7 @@ public class RulesRepository {
             return INSTANCE;
         }
 
-    public void insert(CustomRules rule)
+    public void insertOrUpdate(CustomRules rule)
     {
         try
         {
@@ -56,6 +56,8 @@ public class RulesRepository {
                 .where(CustomRulesDao.Properties.Category.eq(category))
                 .unique();
     }
+
+
 
 
     }

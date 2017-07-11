@@ -96,6 +96,9 @@ public class Home_activity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().hide(fragmentSettings).commit();
         getSupportFragmentManager().beginTransaction().hide(fragmentAlert).commit();
         getSupportFragmentManager().beginTransaction().show(fragmentMeasures).commit();
+
+        //display all measure
+      
     }
 
     private void displayFragmentSettings()

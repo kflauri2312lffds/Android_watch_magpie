@@ -41,7 +41,7 @@ public class Listener_data_rule extends WearableListenerService {
                 for (DataMap aData : containerList)
                 {
                     CustomRules rule= extractRulesFromDataMap(aData);
-                    RulesRepository.getInstance().insert(rule);
+                    RulesRepository.getInstance().insertOrUpdate(rule);
                 }
 
                 // Broadcast DataMap contents to wearable activity for display

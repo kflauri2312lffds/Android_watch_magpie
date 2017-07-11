@@ -69,12 +69,17 @@ public class Fragment_display_alertes extends Fragment {
         //listview part
 
         listViewAlert=(ListView)view.findViewById(R.id.list_alert) ;
+
+        displayAll();
+        return view;
+    }
+
+    public void displayAll() {
         alertesList= AlertesRepository.getINSTANCE().getAll();
         Log.d("Adapter_Creation",alertesList.size()+"");
-        alertAdapter=new AlertAdapter(view.getContext(),R.layout.adapter_alert,alertesList);
+        alertAdapter=new AlertAdapter(view.getContext(), R.layout.adapter_alert,alertesList);
         listViewAlert.setAdapter(alertAdapter);
         updateViewList();
-        return view;
     }
 
     public void initView()

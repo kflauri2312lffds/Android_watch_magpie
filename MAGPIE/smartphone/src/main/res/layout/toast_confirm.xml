@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:id="@+id/toast_confirm"
+    android:layout_height="wrap_content"
+    android:background="@drawable/border_green"
+
+    >
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/custom_toast_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/txtView_toast"
+            android:text="" />
+
+        <ImageButton
+            android:id="@+id/img_button_toast"
+            style="@style/edittxt_values"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@null" />
+    </LinearLayout>
+
+
+</LinearLayout>
