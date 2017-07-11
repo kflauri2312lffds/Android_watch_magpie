@@ -254,8 +254,9 @@ public class FragmentHome extends Fragment {
                 break;
 
             case Const.CATEGORY_WEIGHT :
-                    //this value will be formated with the variation only
+                    //this value will be formated with the variation only. This is why, it will take the second value in the array (valuie[1])
                     double cursorPosition = formatValueForWeightBar(value[1]);
+                Log.d("WeightBug_cursorPositi",cursorPosition+"");
                 setLevel(barWeight,(float)cursorPosition);
                 break;
 

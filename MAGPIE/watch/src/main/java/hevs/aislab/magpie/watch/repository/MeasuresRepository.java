@@ -83,7 +83,7 @@ public class MeasuresRepository {
 
     /**
      * this methode will return the last measure stored in the database of each category, and then
-     * sorted them alphabetically
+     * sotre it by the name of the category in a hash map
      * @return lastMeasure
      */
     public HashMap<String,Measure>getLastMeasure()
@@ -126,6 +126,7 @@ public class MeasuresRepository {
                 + MeasureDao.Properties.Value2.columnName + ","
                 + MeasureDao.Properties.Category.columnName
                 + " FROM " + MeasureDao.TABLENAME
+                +" WHERE "+ MeasureDao.Properties.Category.columnName +" = "+ "'"+category+"'"
                 + " ORDER BY " + MeasureDao.Properties.TimeStamp.columnName;
 
         Cursor c = Core.getInstance().getDaoSession().getDatabase().rawQuery(querry, null);

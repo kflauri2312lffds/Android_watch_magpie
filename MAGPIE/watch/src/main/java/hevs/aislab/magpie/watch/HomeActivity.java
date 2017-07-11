@@ -143,6 +143,9 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
     {
         //check the entry to see is valide. if not, we don't send value to magpie
 
+
+
+
                 //send to magpie if it's valide
                 processEvent(System.currentTimeMillis(),category,value);
     }
@@ -353,6 +356,7 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
 
     public void processEvent(long timeStamp, String category, String ... value )
     {
+        Log.d("sendToPRocess","send to process");
         LogicTupleEvent lte = new LogicTupleEvent(category, value);
 
         lte.setTimestamp(timeStamp);
