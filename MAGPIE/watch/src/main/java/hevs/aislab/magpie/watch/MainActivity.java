@@ -210,8 +210,9 @@ public class MainActivity extends Activity implements
 
         CustomRules weightRules=new CustomRules();
         weightRules.setTimeWindow(weightTimeWindows);
-        weightRules.setConstraint_1("Actual_weight>=Value_2Max%*old_weight OR Actual_weight<==Value_2Min%*Value_1");
-        glucoseRules.setConstraint_2("Tev2>Tev1");
+        weightRules.setConstraint_1("Current_weight>="+Const.VALUE_Value_2Max+"*old_weight");
+        weightRules.setConstraint_2("OR Current_weight<="+Const.VALUE_Value_2Min+"%*old_weight");
+
         // max % of weight loss allowed
         weightRules.setVal__2_min(98.0);
         // max % of weight gain allowed

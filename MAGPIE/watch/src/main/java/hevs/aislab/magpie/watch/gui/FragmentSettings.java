@@ -60,6 +60,9 @@ public class FragmentSettings extends Fragment {
     EditText edit_value2Max;
 
 
+
+
+
     //used to have communication with the activity
     IdialogToActivity homeactivity;
 
@@ -84,7 +87,7 @@ public class FragmentSettings extends Fragment {
             currentRules= RulesRepository.getInstance().getByCategory(category);
             //assign the values to the txtview
 
-            String constraint_1=currentRules.getConstraint_1();
+            String  constraint_1=currentRules.getConstraint_1();
             String constraint_2=currentRules.getConstraint_2();
             String constraint_3=currentRules.getConstraint_3();
 
@@ -123,6 +126,8 @@ public class FragmentSettings extends Fragment {
             constraint_1=formatConstraints(constraint_1,currentRules);
             constraint_2=formatConstraints(constraint_2,currentRules);
             constraint_3=formatConstraints(constraint_3,currentRules);
+
+
 
             txtConstraint1.setText(constraint_1);
             txtConstraint2.setText(constraint_2);
@@ -404,10 +409,15 @@ public class FragmentSettings extends Fragment {
     private String formatConstraints(String constraints, CustomRules rule)
     {
 
+
         constraints=replaceValueByNumber(constraints,Const.VALUE_Value_1Min,rule.getVal_1_min()+"");
         constraints=replaceValueByNumber(constraints,Const.VALUE_Value_1Max,rule.getVal_1_max()+"");
         constraints=replaceValueByNumber(constraints,Const.VALUE_Value_2Min,rule.getVal__2_min()+"");
         constraints=replaceValueByNumber(constraints,Const.VALUE_Value_2Max,rule.getVal_2_max()+"");
+
+        Log.d("const_display_Metho",constraints);
+
+
         return constraints;
     }
 
