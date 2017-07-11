@@ -1,10 +1,12 @@
 package hevs.aislab.magpie.watch.gui.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,11 +14,16 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.wearable.DataMap;
+
+import hevs.aislab.magpie.watch.IactivityInterface;
 import hevs.aislab.magpie.watch.R;
 import hevs.aislab.magpie.watch.gui.ButtonsManager;
 import hevs.aislab.magpie.watch.models.CustomRules;
 import hevs.aislab.magpie.watch.notification.CustomToast;
 import hevs.aislab.magpie.watch.repository.RulesRepository;
+import hevs.aislab.magpie.watch_library.communication_thread.SendToDataLayerThread;
 import hevs.aislab.magpie.watch_library.lib.Const;
 import hevs.aislab.magpie.watch_library.lib.NumberFormater;
 import hevs.aislab.magpie.watch_library.lib.Validator;
@@ -28,6 +35,8 @@ import hevs.aislab.magpie.watch_library.lib.Validator;
 public class Fragment_display_settings extends Fragment {
 
 
+    //used to communicate with the activity
+    IactivityInterface activity;
 
     ImageButton buttonSaveValues;
 
@@ -45,6 +54,9 @@ public class Fragment_display_settings extends Fragment {
     String category_fragment;
     //listener class
     CustomRules currentRules;
+
+
+
 
     /**
      * This class is used to display other category
@@ -64,6 +76,14 @@ public class Fragment_display_settings extends Fragment {
 
             //we retrieve the rules from the database
             currentRules= RulesRepository.getInstance().getByCategory(currentCategory);
+
+            //Change the selected button
+            buttonsManager.setAllButtonToGreen();
+            buttonsManager.setButtonToRed(currentCategory);
+
+            //if no rule exist, we just return we don't do anythings
+            if (currentRules==null)
+                return;
 
             String constraint_1=currentRules.getConstraint_1();
             String constraint_2=currentRules.getConstraint_2();
@@ -130,8 +150,6 @@ public class Fragment_display_settings extends Fragment {
 
 
 
-            buttonsManager.setAllButtonToGreen();
-            buttonsManager.setButtonToRed(currentCategory);
         }
     }
 
@@ -295,9 +313,15 @@ public class Fragment_display_settings extends Fragment {
 
 
                 //TODO SEND THE RULES TO THE WATCH
+                //save the value on the phone
                 RulesRepository.getInstance().insertOrUpdate(currentRules);
+
                 CustomToast.getInstance().confirmToast(getContext().getString(R.string.unit_measure_diastol),getActivity());
-                //change the display of the rule in the home fragment
+
+                //send the value to the watch
+
+                //
+                new SendToDataLayerThread(activity.getGoogleclient(),Const.PATH_SYNC_RULE,prepareDataMap(currentRules)).start();
 
             }
         });
@@ -427,6 +451,55 @@ public class Fragment_display_settings extends Fragment {
         }
         return true;
     }
+
+    private DataMap prepareDataMap(CustomRules rule)
+    {
+        //create the value container
+        DataMap dataContainer=new DataMap();
+
+        //insert the rule value
+        dataContainer.putLong(Const.KEY_RULE_ID,rule.getId());
+        dataContainer.putString(Const.KEY_RULE_CATEGORY,rule.getCategory());
+        dataContainer.putString(Const.KEY_RULE_CONSTRAINT1,rule.getConstraint_1());
+        dataContainer.putString(Const.KEY_RULE_CONSTRAINT2,rule.getConstraint_2());
+        dataContainer.putString(Const.KEY_RULE_CONSTRAINT3,rule.getConstraint_3());
+
+        dataContainer.putDouble(Const.KEY_RULE_VAL1_MIN,formatDataMapValue( rule.getVal_1_min()));
+        dataContainer.putDouble(Const.KEY_RULE_VAL1_MAX,formatDataMapValue(rule.getVal_1_max()));
+        dataContainer.putDouble(Const.KEY_RULE_VAL2_MIN,formatDataMapValue(rule.getVal__2_min()));
+        dataContainer.putDouble(Const.KEY_RULE_VAL2_MAX,formatDataMapValue(rule.getVal_2_max()));
+        dataContainer.putLong(Const.KEY_CURRENTTIMESTAMP,System.currentTimeMillis());
+
+        Log.d("received_RUle_category",rule.getCategory());
+        Log.d("received_RUle_const1",rule.getConstraint_1());
+        Log.d("received_RUle_const2",rule.getConstraint_2());
+        Log.d("received_RUle_Val1_min", rule.getVal_1_min()+"");
+        Log.d("received_RUle_Val1_max",rule.getVal_1_max()+"");
+        Log.d("received_RUle_Val2_min",rule.getVal__2_min()+"");
+        Log.d("received_RUle_Val2_max",rule.getVal_2_max()+"");
+
+        //send the map
+
+        return dataContainer;
+    }
+
+    //*************USED TO MAKE THE LINK BETWEEN THE FRAGMENT AND THE ACTIVITY*********
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try {
+            activity = (IactivityInterface) context;
+        } catch (ClassCastException castException) {
+            /** The activity does not implement the listener. */
+        }
+    }
+
+    private Double formatDataMapValue(Double value)
+    {
+        return value==null ? Const.NULL_IDENTIFIER: value;
+    }
+
+
 
 }
 

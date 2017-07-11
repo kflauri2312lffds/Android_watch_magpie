@@ -15,10 +15,11 @@ import hevs.aislab.magpie.watch.models.Measure;
 import hevs.aislab.magpie.watch.repository.AlertRepository;
 import hevs.aislab.magpie.watch.repository.MeasuresRepository;
 import hevs.aislab.magpie.watch.repository.RulesRepository;
+import hevs.aislab.magpie.watch_library.communication_thread.SendToDataLayerThread;
 import hevs.aislab.magpie.watch_library.lib.Const;
 
 /**
- * Created by teuft on 08.07.2017.
+ * this thread will process and prepare data for the phone (data base)
  */
 
 public class PushMeasureThread extends Thread {

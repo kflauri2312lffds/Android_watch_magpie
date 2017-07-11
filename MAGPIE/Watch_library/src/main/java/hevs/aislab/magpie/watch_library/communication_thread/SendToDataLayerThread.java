@@ -1,4 +1,4 @@
-package hevs.aislab.magpie.watch.phone_communication;
+package hevs.aislab.magpie.watch_library.communication_thread;
 
 import android.util.Log;
 
@@ -15,8 +15,10 @@ import com.google.android.gms.wearable.Wearable;
 
 
 /**
- * This class will take care of the commnication with the watch. We will be able
- * to send information using this thread
+ * This class will take care of the commnication between the watch on the phone. We will be able
+ * to send information using this thread. First create a Datamap (containter to send object though the
+ * data layer) send, create the the thread including the datatamap. This will be send directly to the other
+ * device (phone if it's send from the watch, and watch if it's send from the phone
  */
 public class SendToDataLayerThread extends Thread {
     String path;
@@ -28,7 +30,7 @@ public class SendToDataLayerThread extends Thread {
      * @param path: the identifiant used to send information
      * @param dataMap : the data we will send to the phone
      */
-    public SendToDataLayerThread (GoogleApiClient googleClient,String path, DataMap dataMap)
+    public SendToDataLayerThread(GoogleApiClient googleClient, String path, DataMap dataMap)
     {
         this.path=path;
         this.dataMap=dataMap;
@@ -38,7 +40,7 @@ public class SendToDataLayerThread extends Thread {
 
     @Override
     public void run() {
-
+        Log.d("RuleSync_Data","data send to the watch from the phone");
         // Construct a DataRequest and send over the data layer
         PutDataMapRequest putDMR = PutDataMapRequest.create(path);
         putDMR.getDataMap().putAll(dataMap);

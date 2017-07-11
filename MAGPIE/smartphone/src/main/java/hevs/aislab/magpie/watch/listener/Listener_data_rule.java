@@ -80,7 +80,7 @@ public class Listener_data_rule extends WearableListenerService {
     }
     private Double formatNumber(Double value)
     {
-        return value== -10000 ? null : value;
+        return value== Const.NULL_IDENTIFIER ? null : value;
     }
 
 }

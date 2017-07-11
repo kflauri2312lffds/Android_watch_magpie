@@ -33,6 +33,8 @@ public class Const {
     public static final String PATH_PUSH_RULE ="/push_data_rule";
     public static final String PATH_PUSH_ALERT="/push_data_alert";
 
+    public static final String PATH_SYNC_RULE="/sync_rules";
+
     //KEY TO IDENTIFY THE DATA SEND
     public static final String KEY_MEASURE_DATA="measure_data";
     public static final String KEY_CURRENTTIMESTAMP="current_timestamp";
@@ -56,6 +58,11 @@ public class Const {
 
     //ALERTES KEY
     public static final String KEY_ALERT_ID="alert_id";
+
+    //broadcast manager key
+    public static final String KEY_BROADCAST_TYPE="RULE_BROADCAST_TYPE";
+    public static final String KEY_BROADCASTdATA ="RULE_BROADCAST_DATA";
+    public static final String TYPE_RULE="type_rule";
 
 
     //FLOAT THAT WILL BE IDENTFIED AS A NULL VALUE. Used when we send information from the watch to the phone

@@ -1,5 +1,7 @@
 package hevs.aislab.magpie.watch;
 
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,17 +10,30 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.wearable.Wearable;
+
 import hevs.aislab.magpie.watch.gui.fragments.Fragment_display_alertes;
 import hevs.aislab.magpie.watch.gui.fragments.Fragment_display_measures;
 import hevs.aislab.magpie.watch.gui.fragments.Fragment_display_settings;
 
-public class Home_activity extends AppCompatActivity {
+public class Home_activity extends AppCompatActivity
+        implements
+        // implement methods
+        GoogleApiClient.ConnectionCallbacks,
+        GoogleApiClient.OnConnectionFailedListener,
+        IactivityInterface{
 
     //store all the fragment
 
-    Fragment fragmentAlert;
-    Fragment fragmentMeasures;
-    Fragment fragmentSettings;
+    private Fragment fragmentAlert;
+    private Fragment fragmentMeasures;
+    private Fragment fragmentSettings;
+
+    //object we use to go through the data layer
+    private GoogleApiClient googleClient;
+
 
 
     @Override
@@ -45,6 +60,31 @@ public class Home_activity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().add(R.id.main_container,fragmentAlert,"alertFrag").commit();
         getSupportFragmentManager().beginTransaction().add(R.id.main_container,fragmentMeasures,"measureFrag").commit();
         getSupportFragmentManager().beginTransaction().add(R.id.main_container,fragmentSettings,"settingsFrag").commit();
+
+
+        //INIT the googe client
+        googleClient = new GoogleApiClient.Builder(this)
+                .addApi(Wearable.API)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .build();
+
+    }
+
+    // Connect to the data layer when the Activity starts
+    @Override
+    protected void onStart() {
+        super.onStart();
+        googleClient.connect();
+    }
+
+    // Disconnect from the data layer when the Activity stops
+    @Override
+    protected void onStop() {
+        if (null != googleClient && googleClient.isConnected()) {
+            googleClient.disconnect();
+        }
+        super.onStop();
     }
 
 
@@ -98,7 +138,7 @@ public class Home_activity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().show(fragmentMeasures).commit();
 
         //display all measure
-      
+
     }
 
     private void displayFragmentSettings()
@@ -109,6 +149,25 @@ public class Home_activity extends AppCompatActivity {
     }
 
 
+    //**********************USED TO SEND MESSAGE TO THE WATCH**************************
 
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
 
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+    }
+
+    @Override
+    public GoogleApiClient getGoogleclient() {
+        return googleClient;
+    }
 }

@@ -79,7 +79,10 @@ public class RulesRepository {
     }
 
 
-
+    public void insertOrUpdate(CustomRules rule)
+    {
+        rulesDao.insertOrReplace(rule);
+    }
 
     public void insert(CustomRules rule)
     {

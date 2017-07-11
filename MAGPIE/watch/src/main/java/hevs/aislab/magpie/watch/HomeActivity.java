@@ -1,5 +1,8 @@
 package hevs.aislab.magpie.watch;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.IntentFilter;
 import android.hardware.SensorManager;
 import android.support.v4.app.FragmentManager;
 import android.content.Intent;
@@ -8,8 +11,11 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.View;
+
+import com.google.android.gms.wearable.DataMap;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -92,9 +98,13 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
             threadPulse=new SensorsThreadLifecircle(this,sensor_pulse,30000,30000);
             threadPulse.start();
 
-
-
         displayFragmentHome();
+
+        // Register the local broadcast receiver. make the ling between the Service and the view
+        IntentFilter messageFilter = new IntentFilter(Intent.ACTION_SEND);
+        MessageReceiver messageReceiver = new MessageReceiver();
+        LocalBroadcastManager.getInstance(this).registerReceiver(messageReceiver, messageFilter);
+
     }
 
     private void initFragment()
@@ -487,6 +497,58 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
 //        //No call for super(). Bug on API Level > 11.
 //    }
 
+
+//handle data receive from the service
+
+    //receive data from the listener service
+    public class MessageReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Bundle data = intent.getBundleExtra(Const.KEY_BROADCASTdATA);
+            CustomRules rule=getRuleFromMap(data);
+
+            //make change in the progress bar
+
+            updateBarArea(rule);
+
+        }
+    }
+
+    private CustomRules getRuleFromMap(Bundle dataMap)
+    {
+        CustomRules rule =new CustomRules();
+
+        rule.setId(dataMap.getLong(Const.KEY_RULE_ID));
+        rule.setCategory(dataMap.getString(Const.KEY_RULE_CATEGORY));
+
+        rule.setConstraint_1(dataMap.getString(Const.KEY_RULE_CONSTRAINT1));
+        rule.setConstraint_2(dataMap.getString(Const.KEY_RULE_CONSTRAINT2));
+        rule.setConstraint_3(dataMap.getString(Const.KEY_RULE_CONSTRAINT3));
+
+
+
+        rule.setVal_1_min(formatValue( dataMap.getDouble(Const.KEY_RULE_VAL1_MIN)));
+        rule.setVal_1_max(formatValue(dataMap.getDouble(Const.KEY_RULE_VAL1_MAX)));
+        rule.setVal__2_min(formatValue(dataMap.getDouble(Const.KEY_RULE_VAL2_MIN)));
+        rule.setVal_2_max(formatValue(dataMap.getDouble(Const.KEY_RULE_VAL2_MAX)));
+
+        Log.d("received_RUle_category",rule.getCategory());
+        Log.d("received_RUle_const1",rule.getConstraint_1());
+        Log.d("received_RUle_const2",rule.getConstraint_2());
+        Log.d("received_RUle_Val1_min",rule.getVal_1_min()+"");
+        Log.d("received_RUle_Val1_max",rule.getVal_1_max()+"");
+        Log.d("received_RUle_Val2_min",rule.getVal__2_min()+"");
+        Log.d("received_RUle_Val2_max",rule.getVal_2_max()+"");
+
+
+        return rule;
+
+    }
+
+    public Double formatValue(Double value)
+    {
+        return value==Const.NULL_IDENTIFIER ? null : value;
+    }
 
 
 }
