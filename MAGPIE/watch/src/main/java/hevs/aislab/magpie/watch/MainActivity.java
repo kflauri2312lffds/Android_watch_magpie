@@ -2,6 +2,7 @@ package hevs.aislab.magpie.watch;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.DialogFragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -12,6 +13,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
@@ -22,11 +25,13 @@ import java.util.List;
 
 import hevs.aislab.magpie.watch.db.Core;
 import hevs.aislab.magpie.watch.dummy.DummyValue;
+import hevs.aislab.magpie.watch.gui.dialogfragment.DialogFragmentConfirmDelete;
 import hevs.aislab.magpie.watch.models.CustomRules;
 import hevs.aislab.magpie.watch.models.DaoMaster;
 import hevs.aislab.magpie.watch.models.Measure;
 import hevs.aislab.magpie.watch.notification.CustomToast;
 import hevs.aislab.magpie.watch.phone_communication.PushMeasureThread;
+import hevs.aislab.magpie.watch.repository.AlertRepository;
 import hevs.aislab.magpie.watch.repository.MeasuresRepository;
 import hevs.aislab.magpie.watch.repository.RulesRepository;
 import hevs.aislab.magpie.watch.shared_pref.PrefAccessor;
@@ -44,8 +49,9 @@ import com.google.android.gms.wearable.Wearable;
  * ask permission, and if the user don't allow, he won't be able to continue
  * insert the first rules in the databse, if it's the first time the user launch app
  * detect if the device has can create song (for notification)
+ * user 
  */
-public class MainActivity extends Activity implements
+public class MainActivity extends FragmentActivity implements
         // USED TO COMMUNICATE WITH THE PHONE
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener
@@ -151,10 +157,13 @@ public class MainActivity extends Activity implements
      * This method will be called when the user click on the button "push and delete data"
      * it will delete the data from the watch and sent it directly to the phone
      */
-    public void click_pushDeleteData(View view)
+    public void click_syncData(View view)
     {
         //create the object we will send to the phone
         sendDataToPhone();
+
+        //toast to inform the user
+        CustomToast.getInstance().confirmToast(getString(R.string.confirm_syncdata),this);
     }
 
     public void click_insertDummyData(View view )
@@ -162,6 +171,36 @@ public class MainActivity extends Activity implements
         DummyValue dummy=new DummyValue();
         dummy.insertDummyMeasure();
         CustomToast.getInstance().confirmToast("dummy data added",this);
+
+
+      List<Measure>measureList=  MeasuresRepository.getInstance().getAll();
+
+        for (Measure aMeasure : measureList)
+        {
+            Log.d("Display_ID",aMeasure.getId()+"");
+        }
+
+
+    }
+
+    public void click_deleteData(View view)
+    {
+       //open confirm dialog to confirm action
+        android.support.v4.app.DialogFragment fragmentConfirm=new DialogFragmentConfirmDelete();
+        FragmentTransaction fragmentTransaction=getSupportFragmentManager().beginTransaction();
+        fragmentConfirm.show(fragmentTransaction,"tag");
+
+
+
+
+        //check if the id are correct
+
+        List<Measure>measureList=MeasuresRepository.getInstance().getAll();
+
+        for (Measure aMeasure : measureList)
+        {
+            Log.d("measure_id_wesh",aMeasure.getId()+"");
+        }
     }
 
     private void sendDataToPhone()
@@ -315,6 +354,7 @@ public class MainActivity extends Activity implements
         }
         super.onStop();
     }
+
 
 
 

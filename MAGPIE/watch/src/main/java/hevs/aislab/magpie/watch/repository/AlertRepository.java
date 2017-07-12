@@ -71,6 +71,11 @@ public class AlertRepository {
 
     }
 
+    public void deleteAll()
+    {
+        alertesDao.deleteAll();
+    }
+
 
 
 

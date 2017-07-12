@@ -45,4 +45,7 @@
     <string name="notification_low_pulse" translatable="false">low pulse detected</string>
     <string name="change_saved" translatable="false">change has been saved</string>
     <string name="toast_noalert" translatable="false">no data</string>
+    <string name="confirm_delete" translatable="false">Delete all data ?</string>
+    <string name="value_deleted">value has been deleted DB</string>
+    <string name="confirm_syncdata">data has been send</string>
 </resources>

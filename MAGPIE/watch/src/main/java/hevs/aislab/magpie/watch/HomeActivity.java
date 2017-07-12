@@ -65,13 +65,14 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
     private FragmentSettings fragmentSettings;
     private FragmentDisplayAlertes fragmentDisplayAlertes;
 
+
     //sensors
     private SensorManager sensorManager;
     private Sensor sensor_pulse;
     private Sensor sensor_step;
-
-
     private Thread threadPulse;
+    //used to know the accuracy of the pulse sensors
+    private int accuracySensorPulse;
 
     //List where we will store value in the pulse to make the average
     private ArrayList<Double>listPulse=new ArrayList<Double>();
@@ -373,7 +374,7 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
         sendEvent(lte);
     }
 
-    //this methode will be called by the thread. we will send the pulse to magpie
+    //this methode will be called by the thread. we will send the pulse to magpie (average of pulse during a certain periode of time)
     @Override
     public void processPulse()
     {
@@ -399,15 +400,28 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
         switch (sensorEvent.sensor.getType())
         {   //handle heart event
             case Sensor.TYPE_HEART_RATE :
+                //add a value to the array, but only if the accuracy is at least at 1 (-1 == no contact, 3 == best contact)
+                if (accuracySensorPulse<1)
+                    return;
                 double value=sensorEvent.values[0];
                 listPulse.add(value);
                 break;
             case Sensor.TYPE_STEP_COUNTER :
                 //for this sensor, we juste update the value. the value is processed only once a week
-
                 addStep(1);
                 break;
 
+        }
+    }
+
+    //sensor method
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int i) {
+//        Toast.makeText(this, i+"", Toast.LENGTH_SHORT).show();
+        //set the accuracy of the pulse snsors
+        if (sensor.getType()==Sensor.TYPE_HEART_RATE)
+        {
+            accuracySensorPulse=i;
         }
     }
 
@@ -453,24 +467,7 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
     {
         return this.fragmentHome;
     }
-    @Override
-    public void onAccuracyChanged(Sensor sensor, int i) {
-//        Toast.makeText(this, i+"", Toast.LENGTH_SHORT).show();
 
-        if (sensor.getType()==Sensor.TYPE_HEART_RATE)
-        {
-           if (i== SensorManager.SENSOR_STATUS_NO_CONTACT)
-           {
-//               Toast.makeText(this, "No contact with wath", Toast.LENGTH_SHORT).show();
-               return;
-           }
-            if (i== SensorManager.SENSOR_STATUS_ACCURACY_HIGH)
-            {
-//                Toast.makeText(this, "good contact with watch", Toast.LENGTH_SHORT).show();
-                return;
-            }
-        }
-    }
 
     @Override
     public void onBackPressed() {

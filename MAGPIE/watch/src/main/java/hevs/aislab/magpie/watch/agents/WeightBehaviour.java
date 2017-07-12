@@ -119,15 +119,13 @@ public class WeightBehaviour extends Behavior {
 
 
         //check if an alert in the timewindows aldready exist. If yes, we leave
-//        if (AlertRepository.getINSTANCE().getAllByCategoryBetweenTimeStamp(Const.CATEGORY_WEIGHT,startTimeSTamp,endTimeStamp).size() >=1)
-//            return;
+        if (AlertRepository.getINSTANCE().getAllByCategoryBetweenTimeStamp(Const.CATEGORY_WEIGHT,startTimeSTamp,endTimeStamp).size() >=1)
+            return;
 
         //we launch the notification
         NotificationGenerator notificationGenerator=new NotificationGenerator(context,"Weight",message);
         context.runOnUiThread(notificationGenerator);
 
-        //we create the alert and insert it in the database
-        //TODO ADD THE VARIATION IN THE MEASURE
 
         Alertes weightAlert=new Alertes();
         weightAlert.setMeasure(measure);

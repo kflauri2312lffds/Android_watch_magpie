@@ -127,9 +127,17 @@ public class Home_activity extends AppCompatActivity
 
     private void displayFragmentAlertes()
     {
+
+        //recreate the framgnet for the alert
+
+
         getSupportFragmentManager().beginTransaction().hide(fragmentMeasures).commit();
         getSupportFragmentManager().beginTransaction().hide(fragmentSettings).commit();
+        getSupportFragmentManager().beginTransaction().remove(fragmentAlert).commit();
+        fragmentAlert=new Fragment_display_alertes();
+        getSupportFragmentManager().beginTransaction().add(R.id.main_container,fragmentAlert,"display_alertTag").commit();
         getSupportFragmentManager().beginTransaction().show(fragmentAlert).commit();
+
     }
     private void displayFragmentMeasures()
     {

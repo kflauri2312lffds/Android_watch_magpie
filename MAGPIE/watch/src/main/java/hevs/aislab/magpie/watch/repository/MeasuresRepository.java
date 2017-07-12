@@ -153,4 +153,9 @@ public class MeasuresRepository {
 
         return measure;
     }
+
+    public void deleteAll()
+    {
+        measuresDao.deleteAll();
+    }
 }

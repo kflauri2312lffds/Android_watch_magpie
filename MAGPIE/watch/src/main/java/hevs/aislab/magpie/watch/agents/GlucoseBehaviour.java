@@ -56,10 +56,10 @@ public class GlucoseBehaviour extends Behavior {
         Long endTimeSTamp=measure.getTimeStamp();
         Long startTimeStamp=endTimeSTamp-rules.getTimeWindow();
 
-        //check if an alert exist aldready in the timestamp
-//        List<Alertes>alertesList=AlertRepository.getINSTANCE().getAllByCategoryBetweenTimeStamp(Const.CATEGORY_GLUCOSE,startTimeStamp,endTimeSTamp);
-//        if (alertesList.size()!=0)
-//            return;
+//        check if an alert exist aldready in the timestamp
+        List<Alertes>alertesList=AlertRepository.getINSTANCE().getAllByCategoryBetweenTimeStamp(Const.CATEGORY_GLUCOSE,startTimeStamp,endTimeSTamp);
+        if (alertesList.size()!=0)
+            return;
 
         //now we query the db to find all event inside the timestamp
         List<Measure>measureList= MeasuresRepository.getInstance().getByCategoryWhereTimeStampBetween(Const.CATEGORY_GLUCOSE,startTimeStamp,endTimeSTamp);
