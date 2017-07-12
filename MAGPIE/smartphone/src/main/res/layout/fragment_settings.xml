@@ -96,9 +96,7 @@
                 style="@style/edittxt_values"
                 android:layout_height="match_parent"
                 android:background="@drawable/border_green"
-                android:clickable="false"
                 android:ems="10"
-                android:enabled="false"
                 android:visibility="gone"
                 android:inputType="numberDecimal"
                 android:textAlignment="viewStart" />
@@ -108,21 +106,16 @@
                 style="@style/edittxt_values"
                 android:layout_height="match_parent"
                 android:background="@drawable/border_green"
-                android:clickable="false"
                 android:ems="10"
-                android:enabled="false"
                 android:visibility="gone"
-                android:inputType="numberDecimal"
-                android:paddingBottom="12sp" />
+                android:inputType="numberDecimal" />
 
             <EditText
                 android:id="@+id/edittxt_value1max"
                 style="@style/edittxt_values"
                 android:layout_height="match_parent"
                 android:background="@drawable/border_green"
-                android:clickable="false"
                 android:ems="10"
-                android:enabled="false"
                 android:visibility="gone"
                 android:inputType="numberDecimal" />
 
@@ -131,9 +124,7 @@
                 style="@style/edittxt_values"
                 android:layout_height="match_parent"
                 android:background="@drawable/border_green"
-                android:clickable="false"
                 android:ems="10"
-                android:enabled="false"
                 android:inputType="numberDecimal"
                 android:visibility="gone" />
 

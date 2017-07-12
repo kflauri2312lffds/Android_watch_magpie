@@ -12,10 +12,10 @@ import android.widget.ListView;
 import java.util.List;
 
 import hevs.aislab.magpie.watch.R;
-import hevs.aislab.magpie.watch.gui.ButtonsManager;
 import hevs.aislab.magpie.watch.gui.adapter.AlertAdapter;
 import hevs.aislab.magpie.watch.models.Alertes;
 import hevs.aislab.magpie.watch.repository.AlertesRepository;
+import hevs.aislab.magpie.watch_library.gui.ButtonsManager;
 import hevs.aislab.magpie.watch_library.lib.Const;
 
 /**
@@ -51,7 +51,6 @@ public class Fragment_display_alertes extends Fragment {
             buttonsManager.setButtonToRed(currentCategory);
         }
     }
-
     ButtonsManager buttonsManager;
     View view;
 

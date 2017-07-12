@@ -19,11 +19,11 @@ import com.google.android.gms.wearable.DataMap;
 
 import hevs.aislab.magpie.watch.IactivityInterface;
 import hevs.aislab.magpie.watch.R;
-import hevs.aislab.magpie.watch.gui.ButtonsManager;
 import hevs.aislab.magpie.watch.models.CustomRules;
 import hevs.aislab.magpie.watch.notification.CustomToast;
 import hevs.aislab.magpie.watch.repository.RulesRepository;
 import hevs.aislab.magpie.watch_library.communication_thread.SendToDataLayerThread;
+import hevs.aislab.magpie.watch_library.gui.ButtonsManager;
 import hevs.aislab.magpie.watch_library.lib.Const;
 import hevs.aislab.magpie.watch_library.lib.NumberFormater;
 import hevs.aislab.magpie.watch_library.lib.Validator;
@@ -33,8 +33,8 @@ import hevs.aislab.magpie.watch_library.lib.Validator;
  */
 
 public class Fragment_display_settings extends Fragment {
-
-
+    //current view of the fragment
+    View view;
     //used to communicate with the activity
     IactivityInterface activity;
 
@@ -55,7 +55,8 @@ public class Fragment_display_settings extends Fragment {
     //listener class
     CustomRules currentRules;
 
-
+    // used to update the display of the current category (red or green button)
+    ButtonsManager buttonsManager;
 
 
     /**
@@ -224,8 +225,6 @@ public class Fragment_display_settings extends Fragment {
 
 
 
-    View view;
-    ButtonsManager buttonsManager;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -470,16 +469,6 @@ public class Fragment_display_settings extends Fragment {
         dataContainer.putDouble(Const.KEY_RULE_VAL2_MAX,formatDataMapValue(rule.getVal_2_max()));
         dataContainer.putLong(Const.KEY_CURRENTTIMESTAMP,System.currentTimeMillis());
 
-        Log.d("received_RUle_category",rule.getCategory());
-        Log.d("received_RUle_const1",rule.getConstraint_1());
-        Log.d("received_RUle_const2",rule.getConstraint_2());
-        Log.d("received_RUle_Val1_min", rule.getVal_1_min()+"");
-        Log.d("received_RUle_Val1_max",rule.getVal_1_max()+"");
-        Log.d("received_RUle_Val2_min",rule.getVal__2_min()+"");
-        Log.d("received_RUle_Val2_max",rule.getVal_2_max()+"");
-
-        //send the map
-
         return dataContainer;
     }
 
@@ -498,7 +487,6 @@ public class Fragment_display_settings extends Fragment {
     {
         return value==null ? Const.NULL_IDENTIFIER: value;
     }
-
 
 
 }

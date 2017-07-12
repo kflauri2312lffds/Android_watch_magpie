@@ -46,7 +46,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.94" />
+        app:layout_constraintVertical_bias="0.92" />
 
     <ImageButton
         android:id="@+id/button_display_rules_weight"
@@ -88,7 +88,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.89" />
+        app:layout_constraintVertical_bias="0.88" />
 
     <ImageButton
         android:id="@+id/button_display_rules_step"
@@ -185,7 +185,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.63" />
+        app:layout_constraintVertical_bias="0.62" />
 
     <TableLayout
         android:layout_width="wrap_content"
@@ -206,11 +206,11 @@
             <EditText
                 android:id="@+id/edittxt_value1min"
                 style="@style/edittxt_values"
-                android:background="@drawable/border_green"
+                android:background="@drawable/border_grey"
                 android:clickable="false"
                 android:ems="10"
                 android:enabled="false"
-                android:inputType="numberDecimal"
+                android:inputType="number"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintLeft_toLeftOf="parent"
@@ -221,11 +221,11 @@
             <EditText
                 android:id="@+id/edittxt_value1max"
                 style="@style/edittxt_values"
-                android:background="@drawable/border_green"
+                android:background="@drawable/border_grey"
                 android:clickable="false"
                 android:ems="10"
                 android:enabled="false"
-                android:inputType="numberDecimal"
+                android:inputType="number"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintHorizontal_bias="0.197"
                 app:layout_constraintLeft_toLeftOf="parent"
@@ -236,11 +236,11 @@
             <EditText
                 android:id="@+id/edittxt_value2min"
                 style="@style/edittxt_values"
-                android:background="@drawable/border_green"
+                android:background="@drawable/border_grey"
                 android:clickable="false"
                 android:ems="10"
                 android:enabled="false"
-                android:inputType="numberDecimal"
+                android:inputType="number"
                 android:paddingBottom="12sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintHorizontal_bias="0.703"
@@ -252,11 +252,11 @@
             <EditText
                 android:id="@+id/edittxt_value2max"
                 style="@style/edittxt_values"
-                android:background="@drawable/border_green"
+                android:background="@drawable/border_grey"
                 android:clickable="false"
                 android:ems="10"
                 android:enabled="false"
-                android:inputType="numberDecimal"
+                android:inputType="number"
                 android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"

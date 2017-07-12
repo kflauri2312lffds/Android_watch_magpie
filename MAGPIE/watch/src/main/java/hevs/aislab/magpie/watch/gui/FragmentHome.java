@@ -1,12 +1,10 @@
 package hevs.aislab.magpie.watch.gui;
 
-import android.content.Context;
-import android.graphics.drawable.Drawable;
+
+import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.ConstraintSet;
 import android.support.v4.app.Fragment;
-import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,8 +16,8 @@ import android.widget.TextView;
 
 import java.util.HashMap;
 import java.util.Map;
+
 import hevs.aislab.magpie.watch.R;
-import hevs.aislab.magpie.watch.libs.Lib;
 import hevs.aislab.magpie.watch.models.CustomRules;
 import hevs.aislab.magpie.watch.models.Measure;
 import hevs.aislab.magpie.watch.repository.MeasuresRepository;

@@ -24,12 +24,12 @@ import java.util.Collections;
 import java.util.List;
 
 import hevs.aislab.magpie.watch.R;
-import hevs.aislab.magpie.watch.gui.ButtonsManager;
 import hevs.aislab.magpie.watch.lib.DateFormater;
 import hevs.aislab.magpie.watch.models.CustomRules;
 import hevs.aislab.magpie.watch.models.Measure;
 import hevs.aislab.magpie.watch.repository.MeasuresRepository;
 import hevs.aislab.magpie.watch.repository.RulesRepository;
+import hevs.aislab.magpie.watch_library.gui.ButtonsManager;
 import hevs.aislab.magpie.watch_library.lib.Const;
 
 /**

@@ -1,13 +1,11 @@
-package hevs.aislab.magpie.watch.gui;
+package hevs.aislab.magpie.watch_library.gui;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
-import android.widget.Button;
 import android.widget.ImageButton;
 
-import java.security.Key;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,7 +25,7 @@ public class ButtonsManager {
     }
 
 
-    public ButtonsManager(Context context,HashMap<String, ImageButton> buttonHashMap) {
+    public ButtonsManager(Context context, HashMap<String, ImageButton> buttonHashMap) {
         this.context=context;
         this.buttonHashMap = buttonHashMap;
     }
@@ -45,7 +43,6 @@ public class ButtonsManager {
      */
     public void setButtonToRed(String category)
     {
-        Log.d("Button_manager_cate",category);
 
         int id = context.getResources().getIdentifier(category+"_red", "drawable", context.getPackageName());
         Drawable img= ContextCompat.getDrawable(context, id);

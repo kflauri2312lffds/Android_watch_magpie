@@ -60,13 +60,16 @@ public class Const {
     public static final String KEY_ALERT_ID="alert_id";
 
     //broadcast manager key
-    public static final String KEY_BROADCAST_TYPE="RULE_BROADCAST_TYPE";
     public static final String KEY_BROADCASTdATA ="RULE_BROADCAST_DATA";
     public static final String TYPE_RULE="type_rule";
 
 
     //FLOAT THAT WILL BE IDENTFIED AS A NULL VALUE. Used when we send information from the watch to the phone
     public static final double NULL_IDENTIFIER=-1000000;
+
+    //USED TO SEND INFORMATION THOUTH BUNDLE
+    public static final String KEY_MESSAGE_TYPE="message_type";
+    public static final String BUNDLE_DATA="data";
 
 
 }

@@ -1,6 +1,8 @@
 package hevs.aislab.magpie.watch.listener;
 
 import android.content.Intent;
+import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.google.android.gms.wearable.DataEvent;
@@ -11,6 +13,7 @@ import com.google.android.gms.wearable.WearableListenerService;
 
 import java.util.ArrayList;
 
+import hevs.aislab.magpie.watch.R;
 import hevs.aislab.magpie.watch.models.CustomRules;
 import hevs.aislab.magpie.watch.repository.RulesRepository;
 import hevs.aislab.magpie.watch_library.lib.Const;
@@ -48,12 +51,15 @@ public class Listener_data_rule extends WearableListenerService {
                 // The content has the golf hole number and distances to the front,
                 // middle and back pin placements.
 
+                //Prepare data to send to the activity
+                Bundle bundle=new Bundle();
+                bundle.putString(Const.KEY_MESSAGE_TYPE,getString(R.string.sync_rules));
                 Intent messageIntent = new Intent();
                 messageIntent.setAction(Intent.ACTION_SEND);
-                messageIntent.putExtra(Const.KEY_MEASURE_CATEGORY, dataMap.toBundle().getString(Const.KEY_MEASURE_CATEGORY));
+                messageIntent.putExtra(Const.BUNDLE_DATA, bundle);
 
-
-                //LocalBroadcastManager.getInstance(this).sendBroadcast(messageIntent);
+                //send info to activity
+                LocalBroadcastManager.getInstance(this).sendBroadcast(messageIntent);
 
             }
         }

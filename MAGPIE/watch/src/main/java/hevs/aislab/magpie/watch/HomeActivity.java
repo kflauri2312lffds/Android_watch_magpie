@@ -1,6 +1,5 @@
 package hevs.aislab.magpie.watch;
 
-import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.IntentFilter;
@@ -15,8 +14,6 @@ import android.speech.RecognizerIntent;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.View;
-
-import com.google.android.gms.wearable.DataMap;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -499,7 +496,7 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
 //handle data receive from the service
 
     //receive data from the listener service
-    public class MessageReceiver extends BroadcastReceiver {
+    private class MessageReceiver extends BroadcastReceiver {
 
         @Override
         public void onReceive(Context context, Intent intent) {

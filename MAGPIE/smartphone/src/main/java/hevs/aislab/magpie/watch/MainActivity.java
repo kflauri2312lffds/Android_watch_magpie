@@ -19,6 +19,8 @@ import com.google.android.gms.common.api.GoogleApiClient;
 
 import hevs.aislab.magpie.watch.db.Core;
 import hevs.aislab.magpie.watch.models.DaoMaster;
+import hevs.aislab.magpie.watch.notification.CustomToast;
+import hevs.aislab.magpie.watch.watch_communication.MessageReceiver;
 import hevs.aislab.magpie.watch_library.lib.Const;
 
 
@@ -32,10 +34,8 @@ public class MainActivity extends AppCompatActivity {
         initDB();
 
         IntentFilter messageFilter = new IntentFilter(Intent.ACTION_SEND);
-        MessageReceiver messageReceiver = new MessageReceiver();
+        MessageReceiver messageReceiver = new MessageReceiver(this);
         LocalBroadcastManager.getInstance(this).registerReceiver(messageReceiver, messageFilter);
-
-
         askAllPermission();
     }
 
@@ -70,19 +70,6 @@ public class MainActivity extends AppCompatActivity {
         Core.getInstance().setDaoSession( (Core.getInstance().getDaoMaster().newSession()));
     }
 
-
-    //*************************used to get message from service
-
-    //receive data from the listener service
-    public class MessageReceiver extends BroadcastReceiver {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            Bundle data = intent.getBundleExtra(Const.KEY_MEASURE_CATEGORY);
-            Toast.makeText(context, "MessageReceive: ", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-
-
-
 }
+
+

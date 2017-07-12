@@ -1,8 +1,11 @@
 package hevs.aislab.magpie.watch;
 
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -17,6 +20,7 @@ import com.google.android.gms.wearable.Wearable;
 import hevs.aislab.magpie.watch.gui.fragments.Fragment_display_alertes;
 import hevs.aislab.magpie.watch.gui.fragments.Fragment_display_measures;
 import hevs.aislab.magpie.watch.gui.fragments.Fragment_display_settings;
+import hevs.aislab.magpie.watch.watch_communication.MessageReceiver;
 
 public class Home_activity extends AppCompatActivity
         implements
@@ -46,6 +50,12 @@ public class Home_activity extends AppCompatActivity
 
         initView();
         displayFragmentMeasures();
+
+
+        //used to subscribe to the listener service
+        IntentFilter messageFilter = new IntentFilter(Intent.ACTION_SEND);
+        MessageReceiver messageReceiver = new MessageReceiver(this);
+        LocalBroadcastManager.getInstance(this).registerReceiver(messageReceiver, messageFilter);
     }
 
 
@@ -178,4 +188,9 @@ public class Home_activity extends AppCompatActivity
     public GoogleApiClient getGoogleclient() {
         return googleClient;
     }
+
+
+    //SUBSCRIBE TO THE LISTNER
+
+
 }

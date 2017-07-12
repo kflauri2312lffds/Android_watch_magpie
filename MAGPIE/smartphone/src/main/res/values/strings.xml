@@ -16,4 +16,7 @@
     <string name="unit_measure_step" translatable="false">Number of step</string>
     <string name="unit_measure_systol" translatable="false">Systol</string>
     <string name="unit_measure_diastol" translatable="false">Diastol</string>
+    <string name="sync_measures" translatable="false">measures has been synchronized</string>
+    <string name="sync_alertes" translatable="false">alertes has been synchronized</string>
+    <string name="sync_rules" translatable="false">Rules has been synchronized</string>
 </resources>

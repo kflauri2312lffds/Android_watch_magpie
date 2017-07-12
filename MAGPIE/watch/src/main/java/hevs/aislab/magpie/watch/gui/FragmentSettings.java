@@ -28,6 +28,7 @@ import hevs.aislab.magpie.watch.libs.Lib;
 import hevs.aislab.magpie.watch.notification.CustomToast;
 import hevs.aislab.magpie.watch.models.CustomRules;
 import hevs.aislab.magpie.watch.repository.RulesRepository;
+import hevs.aislab.magpie.watch_library.gui.ButtonsManager;
 import hevs.aislab.magpie.watch_library.lib.Const;
 import hevs.aislab.magpie.watch_library.lib.NumberFormater;
 import hevs.aislab.magpie.watch_library.lib.Validator;
@@ -39,15 +40,9 @@ import hevs.aislab.magpie.watch_library.lib.Validator;
 public class FragmentSettings extends Fragment {
 
     View view;
-
     //button
-
-
-    Map<String, ImageButton> buttonMap=new HashMap<>();
-
-
+    ButtonsManager buttonsManager;
     ImageButton buttonSaveValues;
-
     // textview of the constraints
     TextView txtConstraint1;
     TextView txtConstraint2;
@@ -58,10 +53,6 @@ public class FragmentSettings extends Fragment {
     EditText edit_value1Max;
     EditText edit_value2Min;
     EditText edit_value2Max;
-
-
-
-
 
     //used to have communication with the activity
     IdialogToActivity homeactivity;
@@ -117,17 +108,10 @@ public class FragmentSettings extends Fragment {
                 value_2max=NumberFormater.getInstance().formatWithNoDigit(value_2max);
             }
 
-            //replace the value in the constraints by the values of the rules
-
-
-            //set the values to the view element
-
             //set the constraints
             constraint_1=formatConstraints(constraint_1,currentRules);
             constraint_2=formatConstraints(constraint_2,currentRules);
             constraint_3=formatConstraints(constraint_3,currentRules);
-
-
 
             txtConstraint1.setText(constraint_1);
             txtConstraint2.setText(constraint_2);
@@ -153,46 +137,14 @@ public class FragmentSettings extends Fragment {
                 displayButtonSave();
             }
 
-
             //***********************USED TO CHANGE THE DISPLAY (RED AND GRREN BUTTON)
             //Create map with all the imageButton
-
-
-            setButtonsToGreen(buttonMap);
-
-            setButtonToRed(buttonMap.get(category));
-
-        }
-
-
-        /**
-         * Set the color of the category displayed to green. It's mean the category is not displayed
-         *
-         */
-        private void setButtonsToGreen(Map<String, ImageButton> imageButtonMap)
-        {
-            for (Map.Entry<String, ImageButton> entry : imageButtonMap.entrySet())
-            {
-                int id = getContext().getResources().getIdentifier(entry.getKey()+"_green", "drawable", getContext().getPackageName());
-                Drawable img= ContextCompat.getDrawable(getContext(), id);
-                entry.getValue().setImageDrawable(img);
-            }
-        }
-
-        /**
-         * Set the color of the category displayed to green. It's mean the category is displayed
-         *
-         */
-        private void setButtonToRed(ImageButton imagebutton)
-        {
-            int id = getContext().getResources().getIdentifier(category+"_red", "drawable", getContext().getPackageName());
-            Drawable img= ContextCompat.getDrawable(getContext(), id);
-            imagebutton.setImageDrawable(img);
+            buttonsManager.setAllButtonToGreen();
+            buttonsManager.setButtonToRed(category);
         }
     }
 
     //************************************LISTNER FOR EDITTEXT****************************
-
     /**
      * This internal class will manage the interaction of the user with the edit text. It will upload the display of the rules after modification,
      * allow the value (min and max)
@@ -208,7 +160,6 @@ public class FragmentSettings extends Fragment {
             this.currentEditText=currentEditText;
         }
 
-
         @Override
         public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
 
@@ -221,10 +172,7 @@ public class FragmentSettings extends Fragment {
 
             if (currentEditText==null)
                 return;
-            //check if the value is correct
-
             updateDisplayOfConstraints();
-
         }
 
         private void updateDisplayOfConstraints() {
@@ -263,22 +211,13 @@ public class FragmentSettings extends Fragment {
         // Inflate the layout for this fragment
         view = lf.inflate(R.layout.fragment_settings, container, false);
 
+        buttonsManager=new ButtonsManager(getContext());
         //init the view
         initView();
-
         //add the listener to the button
-        buttonMap.get(Const.CATEGORY_PULSE).setOnClickListener(new ListenerButton(Const.CATEGORY_PULSE));
-        buttonMap.get(Const.CATEGORY_GLUCOSE).setOnClickListener(new ListenerButton(Const.CATEGORY_GLUCOSE));
-        buttonMap.get(Const.CATEGORY_WEIGHT).setOnClickListener(new ListenerButton(Const.CATEGORY_WEIGHT));
-        buttonMap.get(Const.CATEGORY_STEP).setOnClickListener(new ListenerButton(Const.CATEGORY_STEP));
-        buttonMap.get(Const.CATEGORY_PRESSURE).setOnClickListener(new ListenerButton(Const.CATEGORY_PRESSURE));
-
+        addListenerToButtonCategory();
         //add listener to edit Text
-        edit_value1min.addTextChangedListener(new ListenerEditText(Const.VALUE_Value_1Min,edit_value1min));
-        edit_value1Max.addTextChangedListener(new ListenerEditText(Const.VALUE_Value_1Max,edit_value1Max));
-        edit_value2Min.addTextChangedListener(new ListenerEditText(Const.VALUE_Value_2Min,edit_value2Min));
-        edit_value2Max.addTextChangedListener(new ListenerEditText(Const.VALUE_Value_2Max,edit_value2Max));
-
+        addListenerToEditText();
         setListenerOnButtonSaveValue();
         //hide the current edit text
         hideEditText( edit_value1min, edit_value1Max,edit_value2Min,edit_value2Max);
@@ -287,13 +226,27 @@ public class FragmentSettings extends Fragment {
         return view;
     }
 
+    private void addListenerToEditText() {
+        edit_value1min.addTextChangedListener(new ListenerEditText(Const.VALUE_Value_1Min,edit_value1min));
+        edit_value1Max.addTextChangedListener(new ListenerEditText(Const.VALUE_Value_1Max,edit_value1Max));
+        edit_value2Min.addTextChangedListener(new ListenerEditText(Const.VALUE_Value_2Min,edit_value2Min));
+        edit_value2Max.addTextChangedListener(new ListenerEditText(Const.VALUE_Value_2Max,edit_value2Max));
+    }
+
+    private void addListenerToButtonCategory() {
+        buttonsManager.getButtonByCategory(Const.CATEGORY_PULSE).setOnClickListener(new ListenerButton(Const.CATEGORY_PULSE));
+        buttonsManager.getButtonByCategory(Const.CATEGORY_GLUCOSE).setOnClickListener(new ListenerButton(Const.CATEGORY_GLUCOSE));
+        buttonsManager.getButtonByCategory(Const.CATEGORY_WEIGHT).setOnClickListener(new ListenerButton(Const.CATEGORY_WEIGHT));
+        buttonsManager.getButtonByCategory(Const.CATEGORY_STEP).setOnClickListener(new ListenerButton(Const.CATEGORY_STEP));
+        buttonsManager.getButtonByCategory(Const.CATEGORY_PRESSURE).setOnClickListener(new ListenerButton(Const.CATEGORY_PRESSURE));
+    }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         try {
             homeactivity = (IdialogToActivity) context;
         } catch (ClassCastException castException) {
-            /** The activity does not implement the listener. */
         }
     }
 
@@ -304,11 +257,11 @@ public class FragmentSettings extends Fragment {
         ImageButton button_display_steps=(ImageButton)view.findViewById(R.id.button_display_rules_step);
         ImageButton   button_display_pressure=(ImageButton)view.findViewById(R.id.button_display_rules_pressure);
 
-        buttonMap.put(Const.CATEGORY_PULSE,button_displayPulse);
-        buttonMap.put(Const.CATEGORY_GLUCOSE,button_display_glucose);
-        buttonMap.put(Const.CATEGORY_WEIGHT,button_display_weight);
-        buttonMap.put(Const.CATEGORY_STEP,button_display_steps);
-        buttonMap.put(Const.CATEGORY_PRESSURE,button_display_pressure);
+        buttonsManager.addButtonByCategory(Const.CATEGORY_PULSE,button_displayPulse);
+        buttonsManager.addButtonByCategory(Const.CATEGORY_GLUCOSE,button_display_glucose);
+        buttonsManager.addButtonByCategory(Const.CATEGORY_WEIGHT,button_display_weight);
+        buttonsManager.addButtonByCategory(Const.CATEGORY_STEP,button_display_steps);
+        buttonsManager.addButtonByCategory(Const.CATEGORY_PRESSURE,button_display_pressure);
 
         txtConstraint1 =(TextView)view.findViewById(R.id.txtView_constraint1);
         txtConstraint2 =(TextView)view.findViewById(R.id.txtView_constraint2);
@@ -323,10 +276,6 @@ public class FragmentSettings extends Fragment {
         //add the listener for the button save
         buttonSaveValues =(ImageButton)view.findViewById(R.id.button_update_rules);
 
-
-
-
-
     }
 
     /**
@@ -337,17 +286,11 @@ public class FragmentSettings extends Fragment {
             @Override
             public void onClick(View view) {
 
-
-
                 //Get all the fields
                 String value1_min=edit_value1min.getText().toString();
                 String value1_max=edit_value1Max.getText().toString();
                 String value2_min=edit_value2Min.getText().toString();
                 String value2_max=edit_value2Max.getText().toString();
-
-
-
-
 
                 //we insert only the values from the editText that are visible and activated
                 if ( edit_value1min.getVisibility()==View.VISIBLE)
@@ -393,14 +336,11 @@ public class FragmentSettings extends Fragment {
                     currentRules.setVal_2_max(Double.parseDouble(value2_max));
                 }
 
-
                 //now we update the rules in the database
                 RulesRepository.getInstance().update(currentRules);
                 CustomToast.getInstance().confirmToast(getContext().getString(R.string.change_saved),getActivity());
                 //change the display of the rule in the home fragment
                 homeactivity.updateBarArea(currentRules);
-
-
 
             }
         });
@@ -408,16 +348,10 @@ public class FragmentSettings extends Fragment {
 
     private String formatConstraints(String constraints, CustomRules rule)
     {
-
-
         constraints=replaceValueByNumber(constraints,Const.VALUE_Value_1Min,rule.getVal_1_min()+"");
         constraints=replaceValueByNumber(constraints,Const.VALUE_Value_1Max,rule.getVal_1_max()+"");
         constraints=replaceValueByNumber(constraints,Const.VALUE_Value_2Min,rule.getVal__2_min()+"");
         constraints=replaceValueByNumber(constraints,Const.VALUE_Value_2Max,rule.getVal_2_max()+"");
-
-        Log.d("const_display_Metho",constraints);
-
-
         return constraints;
     }
 
