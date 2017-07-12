@@ -1,5 +1,6 @@
 package hevs.aislab.magpie.watch;
 
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.IntentFilter;
@@ -499,6 +500,7 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
 
     //receive data from the listener service
     public class MessageReceiver extends BroadcastReceiver {
+
         @Override
         public void onReceive(Context context, Intent intent) {
             Bundle data = intent.getBundleExtra(Const.KEY_BROADCASTdATA);
@@ -508,7 +510,17 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
 
             updateBarArea(rule);
 
+            //create a Toast to inform that we have new rule
+            toastConfirmDataReceive(rule);
+
+
+
         }
+    }
+
+    public void toastConfirmDataReceive(CustomRules rule)
+    {
+        CustomToast.getInstance().confirmToast("Rule "+rule.getCategory()+" updated",this);
     }
 
     private CustomRules getRuleFromMap(Bundle dataMap)
@@ -546,6 +558,8 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
     {
         return value==Const.NULL_IDENTIFIER ? null : value;
     }
+
+
 
 
 }

@@ -1,7 +1,6 @@
 package hevs.aislab.magpie.watch.gui.dialogfragment;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,7 +29,6 @@ public class DialogFragmentSetWeight extends DialogFragmentSetValue {
         View view = inflater.inflate(R.layout.dialogfragment_set1value, //nomn du layout frag dialogue
                 container, false);
         this.view=view;
-        Log.d("TOdiAlSetWeight","todialogfasdf");
         ImageButton cancelButton=(ImageButton) view.findViewById(R.id.button_cancel_value);
         ImageButton submitButton=(ImageButton)view.findViewById(R.id.button_submit_value);
         //add listener to the button
@@ -41,8 +39,6 @@ public class DialogFragmentSetWeight extends DialogFragmentSetValue {
         //get the 2 EditText and set the hint
         textValue=(EditText) view.findViewById(R.id.edit_txt_value);
         textValue.setHint(R.string.weight);
-
-
         return view;
     }
 
@@ -60,7 +56,6 @@ public class DialogFragmentSetWeight extends DialogFragmentSetValue {
                     double value=Double.parseDouble(textValue.getText().toString());
                     if (!Validator.isEntryValueValide(Const.CATEGORY_WEIGHT,value))
                     {
-
                         CustomToast.getInstance().errorTOast(getString(R.string.incorrect_value),getActivity());
                         return;
                     }
@@ -69,7 +64,6 @@ public class DialogFragmentSetWeight extends DialogFragmentSetValue {
                 }
                 catch (Exception ex)
                 {
-                    Log.d("----------------","-------------------------------------------");
                     ex.printStackTrace();
                     CustomToast.getInstance().errorTOast(getString(R.string.incorrect_value),getActivity());
                 }

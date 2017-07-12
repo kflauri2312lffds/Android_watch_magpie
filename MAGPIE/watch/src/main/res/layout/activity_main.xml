@@ -8,6 +8,7 @@
     android:layout_height="match_parent">
 
     <ImageButton
+        android:background="@drawable/border_grey"
         android:id="@+id/imageButton4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -18,13 +19,14 @@
         android:onClick="click_deleteData"
         android:src="@drawable/icon_delete_data"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.19"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.273" />
+        app:layout_constraintVertical_bias="0.371" />
 
     <ImageButton
+        android:background="@drawable/border_grey"
         android:src="@drawable/icon_start"
         android:id="@+id/button2"
         style="@style/button_main_menu"
@@ -40,9 +42,11 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.958"
+        android:layout_marginLeft="8dp" />
 
     <ImageButton
+        android:background="@drawable/border_grey"
         android:src="@drawable/sync_icon"
         android:id="@+id/button3"
         android:layout_width="wrap_content"
@@ -56,12 +60,12 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.547"
-        app:layout_constraintHorizontal_bias="0.18" />
+        app:layout_constraintVertical_bias="0.659"
+        app:layout_constraintHorizontal_bias="0.5" />
 
     <ImageButton
         android:src="@drawable/icon_dummy_data"
-
+        android:background="@drawable/border_grey"
         android:id="@+id/button4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -75,7 +79,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.019"
-        app:layout_constraintHorizontal_bias="0.2" />
+        app:layout_constraintVertical_bias="0.015"
+        app:layout_constraintHorizontal_bias="0.5" />
 
 </android.support.constraint.ConstraintLayout>

@@ -1,8 +1,6 @@
 package hevs.aislab.magpie.watch.agents;
 
 import android.content.Context;
-import android.util.Log;
-
 import java.util.List;
 import java.util.Objects;
 
@@ -39,28 +37,15 @@ public class WeightBehaviour extends Behavior {
         LogicTupleEvent lte = (LogicTupleEvent) event;
         final double value = Double.parseDouble(lte.getArguments().get(0));
 
-
-        //TODO : IMPLEMENT THE PROLOG: RULES:  >1% AND <2%
-
-
-        //get the last value
-
-
-
-
         //TODO : CHANGER LES DIAGRAM D'ACTIVITE ET INFORMER!
         //process variation of the weight
         double currentWeight1=value;
         Measure previousMeaure=MeasuresRepository.getInstance().getLastMeasureFromCategory(Const.CATEGORY_WEIGHT);
 
-
         //if no previous value, variation is 0
         double previousWeight1=previousMeaure.getValue1()!= null ? previousMeaure.getValue1(): 0;
         Double variation= currentWeight1-previousWeight1;
         variation=variation/previousWeight1;
-
-
-        Log.d("displaydisplayVar",variation+"");
 
         //write the measure in the database, inbcluding the variation
         Measure measure=new Measure();

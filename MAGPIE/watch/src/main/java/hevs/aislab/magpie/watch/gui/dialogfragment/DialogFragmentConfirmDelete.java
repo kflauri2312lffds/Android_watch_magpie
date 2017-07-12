@@ -22,7 +22,6 @@ import hevs.aislab.magpie.watch.repository.MeasuresRepository;
 
 public class DialogFragmentConfirmDelete extends DialogFragment {
 
-
     View view;
     TextView textTitle;
 
@@ -39,8 +38,6 @@ public class DialogFragmentConfirmDelete extends DialogFragment {
         textTitle=(TextView)view.findViewById(R.id.txtview_confirm_delete);
         buttonCancel=(ImageButton)view.findViewById(R.id.button_cancel);
         buttonConfirm=(ImageButton)view.findViewById(R.id.button_confirm);
-
-
 
         //add the listener to the button
 
@@ -63,9 +60,6 @@ public class DialogFragmentConfirmDelete extends DialogFragment {
             }
         });
 
-
-
         return view;
     }
-
 }

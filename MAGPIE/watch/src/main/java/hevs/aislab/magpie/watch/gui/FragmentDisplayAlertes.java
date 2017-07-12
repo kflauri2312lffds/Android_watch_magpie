@@ -1,22 +1,17 @@
 package hevs.aislab.magpie.watch.gui;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,12 +19,8 @@ import java.util.Map;
 import hevs.aislab.magpie.watch.HomeActivity;
 import hevs.aislab.magpie.watch.R;
 import hevs.aislab.magpie.watch.gui.adapter.AlertAdapter;
-import hevs.aislab.magpie.watch.gui.dialogfragment.DialogFragmentListAlert;
-import hevs.aislab.magpie.watch.gui.dialogfragment.DialogFragmentSetGlucose;
-import hevs.aislab.magpie.watch.gui.dialogfragment.DialogFragmentSetValue;
 
 import hevs.aislab.magpie.watch.models.Alertes;
-import hevs.aislab.magpie.watch.models.CustomRules;
 import hevs.aislab.magpie.watch.notification.CustomToast;
 import hevs.aislab.magpie.watch.repository.AlertRepository;
 import hevs.aislab.magpie.watch_library.lib.Const;
@@ -43,9 +34,6 @@ public class FragmentDisplayAlertes extends Fragment {
     AlertAdapter alertAdapter;
     ListView listViewAlert;
     List<Alertes>alertesList;
-
-    //BUtton
-
     Map<String, ImageButton> mapButton=new HashMap<>();
 
     private FragmentActivity contextActivity;
@@ -117,7 +105,6 @@ public class FragmentDisplayAlertes extends Fragment {
 
         listViewAlert=(ListView)view.findViewById(R.id.list_alert) ;
         alertesList= AlertRepository.getINSTANCE().getAll();
-        Log.d("Adapter_Creation",alertesList.size()+"");
         alertAdapter=new AlertAdapter(view.getContext(),R.layout.adapter_alert,alertesList);
 
         instanciateView();

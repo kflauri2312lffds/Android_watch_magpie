@@ -1,8 +1,6 @@
 package hevs.aislab.magpie.watch.agents;
 
 import android.content.Context;
-import android.util.Log;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -67,12 +65,8 @@ public class PressureBehaviour extends Behavior {
         if (alertesList.size()!=0)
             return;
 
-
         //get measure in db  between the timestamp
         List<Measure>measureList= MeasuresRepository.getInstance().getByCategoryWhereTimeStampBetween(Const.CATEGORY_PRESSURE,startTimeStamp,endTimeStamp);
-
-
-        Log.d("pressureAlertStatus","check measure size in the database");
         if (measureList.size()<=1)
             return;
 
@@ -86,7 +80,6 @@ public class PressureBehaviour extends Behavior {
                 severMeasure.add(aMeasure);
             }
         }
-        Log.d("pressureAlertStatus","check the sever measure size");
         if (severMeasure.size()<=1)
             return;
 
@@ -98,14 +91,6 @@ public class PressureBehaviour extends Behavior {
         alertes.setRule(pressureRules);
         alertes.setMeasure(measure);
         AlertRepository.getINSTANCE().insert(alertes);
-
-
-
-
-        Log.d("pressureAlertStatus","AlertHasBen trigered");
-
-
-
     }
 
     @Override

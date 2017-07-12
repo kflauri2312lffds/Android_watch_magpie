@@ -1,21 +1,19 @@
 package hevs.aislab.magpie.watch.agents;
 
 import android.content.Context;
-import android.util.Log;
+
 
 import ch.hevs.aislab.magpie.agent.MagpieAgent;
 import ch.hevs.aislab.magpie.behavior.Behavior;
 import ch.hevs.aislab.magpie.event.LogicTupleEvent;
 import ch.hevs.aislab.magpie.event.MagpieEvent;
-import ch.hevs.aislab.magpie.support.Rule;
-import hevs.aislab.magpie.watch.HomeActivity;
+
 import hevs.aislab.magpie.watch.models.Alertes;
 import hevs.aislab.magpie.watch.models.CustomRules;
 import hevs.aislab.magpie.watch.models.Measure;
 import hevs.aislab.magpie.watch.repository.AlertRepository;
 import hevs.aislab.magpie.watch.repository.MeasuresRepository;
 import hevs.aislab.magpie.watch.repository.RulesRepository;
-import hevs.aislab.magpie.watch.threads.DisplayGUI;
 import hevs.aislab.magpie.watch_library.lib.Const;
 
 /**
@@ -37,16 +35,12 @@ public class StepBehaviour extends Behavior {
 
         //write the measure in the database, only 1 time a day
 
-
-
-
         Measure measure=new Measure();
         measure.setValue1(steps);
         measure.setCategory(Const.CATEGORY_STEP);
         measure.setTimeStamp(event.getTimestamp());
         MeasuresRepository.getInstance().insert(measure);
 
-        Log.d("passage_dans_step",measure.getValue1()+"");
 
         //We do not need to set the value in GUI her
 
@@ -65,8 +59,6 @@ public class StepBehaviour extends Behavior {
         //no alert trigered if the steps are in the range
         if (steps>minValue && steps<maxValue)
             return;
-
-        Log.d("passage_dans_step_alert",measure.getValue1()+"");
 
         //insert the alere in the db, but we don't display
         Alertes alertes=new Alertes();

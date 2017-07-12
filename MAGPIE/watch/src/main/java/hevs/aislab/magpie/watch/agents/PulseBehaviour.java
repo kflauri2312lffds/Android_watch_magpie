@@ -35,8 +35,6 @@ public class PulseBehaviour extends Behavior {
         LogicTupleEvent lte = (LogicTupleEvent) event;
         final double value = Double.parseDouble(lte.getArguments().get(0));
 
-
-
         HomeActivity context=(HomeActivity)getContext();
         Thread threadGUI=new Thread(new DisplayGUI(context,Const.CATEGORY_PULSE,value));
         context.runOnUiThread(threadGUI);
@@ -69,8 +67,6 @@ public class PulseBehaviour extends Behavior {
         //no alert detected, we return
         if (messageAlert.equals(""))
             return;
-
-
 
         //launch the notification
         Thread notificationThread=new Thread(new NotificationGenerator(context,context.getString(R.string.category_pulse),messageAlert));

@@ -31,10 +31,6 @@ public class DialogFragmentSetGlucose extends DialogFragmentSetValue {
                 container, false);
         this.view=view;
 
-       // getDialog().getWindow().setLayout(300,300);
-        //set the backcolor to transparent
-        //getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
         //get the button an create the click listener for each button
         ImageButton submit=(ImageButton) view.findViewById(R.id.button_submit_value);
         ImageButton cancel=(ImageButton)view.findViewById(R.id.button_cancel_value);
@@ -55,9 +51,6 @@ public class DialogFragmentSetGlucose extends DialogFragmentSetValue {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //get the value from the editText
-               // EditText textValue=(EditText)view.findViewById(R.id.edit_txt_value);
-                //convert it to double
                 try
                 {
                     double value=Double.parseDouble(txtValue.getText().toString());

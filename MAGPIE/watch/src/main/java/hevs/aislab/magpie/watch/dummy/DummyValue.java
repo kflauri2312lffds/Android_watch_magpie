@@ -32,8 +32,6 @@ public class DummyValue {
 
     }
 
-
-
     /**
      *
      * @param str_date ex: "13-09-2011 12:44";
@@ -227,6 +225,4 @@ public class DummyValue {
             AlertRepository.getINSTANCE().insert(anAlert);
         }
     }
-
-
 }

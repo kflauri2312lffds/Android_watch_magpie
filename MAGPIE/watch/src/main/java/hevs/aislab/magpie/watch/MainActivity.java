@@ -190,9 +190,6 @@ public class MainActivity extends FragmentActivity implements
         FragmentTransaction fragmentTransaction=getSupportFragmentManager().beginTransaction();
         fragmentConfirm.show(fragmentTransaction,"tag");
 
-
-
-
         //check if the id are correct
 
         List<Measure>measureList=MeasuresRepository.getInstance().getAll();
@@ -207,8 +204,6 @@ public class MainActivity extends FragmentActivity implements
     {
         new PushMeasureThread(googleClient).start();
     }
-
-
 
 
     private void insertFirstRules()

@@ -1,7 +1,6 @@
 package hevs.aislab.magpie.watch.agents;
 
 import android.content.Context;
-import android.util.Log;
 
 import java.util.List;
 
@@ -37,7 +36,6 @@ public class GlucoseBehaviour extends Behavior {
     @Override
     public void action(MagpieEvent event) {
         LogicTupleEvent lte = (LogicTupleEvent) event;
-        Log.d("MessageVocal",lte.getArguments().get(0));
         final double value = Double.parseDouble(lte.getArguments().get(0));
 
         //add the values in the GUI
@@ -67,7 +65,6 @@ public class GlucoseBehaviour extends Behavior {
         if (measureList.size()<=1)
             return;
 
-        Log.d("InfoRulesAgent","Measure size greater than 1");
         //CHECK IF THERE IS A MEASURE THAT IS BELOW 3.8 AND TAKE IT. iT'S ORDER BY TIMESTAMP, SO WE START IN THE ARRAY
         int counter=0;
         Measure firstMeasure=null;
@@ -84,7 +81,6 @@ public class GlucoseBehaviour extends Behavior {
         if (firstMeasure==null)
             return;
 
-        Log.d("InfoRulesAgent","First loop");
         Measure secondeMeasure=null;
         //now we will compare measure that comme later in the time stamp is higher than the max (in our case, it's 8.0
         for (int k=counter;k<measureList.size();k++)
@@ -99,11 +95,7 @@ public class GlucoseBehaviour extends Behavior {
         //if no value >=8 come after the value <=3.8, there is no alert so we don't write it in the db.
         if (secondeMeasure==null)
             return;
-
         //now, we check if an alert exist in the time stamp.
-        //todo put it in the first position
-        Log.d("InfoRulesAgent","Seconde measure is not null");
-
         //launch the notification
         Thread notificationThread=new Thread(new NotificationGenerator(context,context.getString(R.string.category_glucose),context.getString(R.string.notification_high_glucose)));
         context.runOnUiThread(notificationThread);
@@ -113,13 +105,7 @@ public class GlucoseBehaviour extends Behavior {
         alertes.setMeasure(measure);
         alertes.setRule(rules);
         AlertRepository.getINSTANCE().insert(alertes);
-
-        Log.d("InfoRulesAgent","Alert has been trigered");
-        //TODO DISPLAY THE ALERT OF RULES
-
     }
-
-
 
     @Override
     public boolean isTriggered(MagpieEvent event) {

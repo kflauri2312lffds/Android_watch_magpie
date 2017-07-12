@@ -6,7 +6,6 @@ import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +17,6 @@ import java.util.List;
 
 import hevs.aislab.magpie.watch.R;
 
-import hevs.aislab.magpie.watch.libs.Lib;
 import hevs.aislab.magpie.watch.models.Alertes;
 import hevs.aislab.magpie.watch_library.lib.Const;
 import hevs.aislab.magpie.watch_library.lib.DateFormater;
@@ -42,8 +40,6 @@ public class AlertAdapter extends ArrayAdapter<Alertes> {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         View view = convertView;
-        Log.d("passage_adapter","appel first methode");
-
         if (view == null) {
             LayoutInflater layoutInflater;
             layoutInflater = LayoutInflater.from(getContext());
@@ -51,23 +47,18 @@ public class AlertAdapter extends ArrayAdapter<Alertes> {
         }
 
         Alertes anAlert=getItem(position);
-        Log.d("currentAlert_Category",anAlert.getMeasure().getCategory());
-        Log.d("currentAlert_Value1",anAlert.getMeasure().getValue1()+"");
-        Log.d("currentAlert_Value2",anAlert.getMeasure().getValue2()+"");
-
         if (anAlert==null)
         {
             return view;
         }
 
-        Log.d("passage_adapter","Alert is not null");
         TextView txtViewTimeStamp=(TextView)view.findViewById(R.id.alert_column_timeStamp);
         TextView txtViewmessage=(TextView)view.findViewById(R.id.alert_column_message);
         TextView txtViewValue=(TextView)view.findViewById(R.id.alert_column_values);
         TextView txtViewValue2=(TextView)view.findViewById(R.id.alert_column_values2);
         ImageView imageCategory=(ImageView)view.findViewById(R.id.alert_column_category);
 
-        if (txtViewTimeStamp!=null)     //TODO PROCESS THE TIMESTAMP AND SHOW A DATE
+        if (txtViewTimeStamp!=null)
         {
             //get the date of the time stamp
            String date= DateFormater.getInstance().getDateTime(anAlert.getMeasure().getTimeStamp());
@@ -75,8 +66,6 @@ public class AlertAdapter extends ArrayAdapter<Alertes> {
         }
         if (txtViewmessage!=null)
             txtViewmessage.setText(anAlert.getMessage());
-
-
 
         if (txtViewValue!=null)
         {
@@ -87,7 +76,6 @@ public class AlertAdapter extends ArrayAdapter<Alertes> {
                 value=NumberFormater.getInstance().formatWithNoDigit( anAlert.getMeasure().getValue1());
             txtViewValue.setText(value);
         }
-
 
         if (txtViewValue2!=null )
         {
@@ -110,9 +98,7 @@ public class AlertAdapter extends ArrayAdapter<Alertes> {
 
                 else
                     value=NumberFormater.getInstance().formatWithNoDigit(anAlert.getMeasure().getValue2());
-
             }
-
             else
                 value="";
             txtViewValue2.setText(value);
@@ -120,7 +106,7 @@ public class AlertAdapter extends ArrayAdapter<Alertes> {
 
         if (imageCategory!=null)
         {
-            //TODO IMPLEMENT THE DYNAMIC IMAGE
+            //set the image based on the category
            imageCategory.setImageDrawable(getDrawable(anAlert.getMeasure().getCategory()));
         }
 
