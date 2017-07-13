@@ -3,7 +3,6 @@ package hevs.aislab.magpie.watch.listener;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
 
 import com.google.android.gms.wearable.DataEvent;
 import com.google.android.gms.wearable.DataEventBuffer;
@@ -19,7 +18,7 @@ import hevs.aislab.magpie.watch.repository.RulesRepository;
 import hevs.aislab.magpie.watch_library.lib.Const;
 
 /**
- * Created by teuft on 08.07.2017.
+ * Used to subscribe to data send by the watch. In this cas, it's rules data
  */
 
 public class Listener_data_rule extends WearableListenerService {
@@ -33,13 +32,10 @@ public class Listener_data_rule extends WearableListenerService {
             if (event.getType() == DataEvent.TYPE_CHANGED) {
                 // Check the data path
                 String path = event.getDataItem().getUri().getPath();
-//                if (path.equals(Const.PATH_PUSH_MEASURE)) {}
                 dataMap = DataMapItem.fromDataItem(event.getDataItem()).getDataMap();
 
                 //get the data array list
                 ArrayList<DataMap> containerList=dataMap.getDataMapArrayList(Const.KEY_MEASURE_DATA);
-                Log.d("size_data_rules",containerList.size()+"");
-
                 //extract data and save each value
                 for (DataMap aData : containerList)
                 {
@@ -48,8 +44,6 @@ public class Listener_data_rule extends WearableListenerService {
                 }
 
                 // Broadcast DataMap contents to wearable activity for display
-                // The content has the golf hole number and distances to the front,
-                // middle and back pin placements.
 
                 //Prepare data to send to the activity
                 Bundle bundle=new Bundle();
@@ -65,13 +59,17 @@ public class Listener_data_rule extends WearableListenerService {
         }
     }
 
+    /**
+     *
+     * @param dataMap the data map that contains rules information
+     * @return the rules created though datamap
+     */
     private CustomRules extractRulesFromDataMap(DataMap dataMap)
     {
         CustomRules rule=new CustomRules();
 
         rule.setId(dataMap.getLong(Const.KEY_RULE_ID));
         rule.setCategory(dataMap.getString(Const.KEY_RULE_CATEGORY));
-
 
         rule.setVal_1_min(formatNumber(dataMap.getDouble(Const.KEY_RULE_VAL1_MIN)));
         rule.setVal_1_max(formatNumber(dataMap.getDouble(Const.KEY_RULE_VAL1_MAX)));
@@ -84,6 +82,12 @@ public class Listener_data_rule extends WearableListenerService {
 
         return rule;
     }
+
+    /**
+     *
+     * @param value value we want to format. if it contains the identifier, it will be set to null
+     * @return value formated
+     */
     private Double formatNumber(Double value)
     {
         return value== Const.NULL_IDENTIFIER ? null : value;

@@ -14,7 +14,7 @@ import android.widget.Toast;
 import hevs.aislab.magpie.watch.R;
 
 /**
- * Created by teuft on 11.07.2017.
+ * this singletone class is used to display a custom toast. It exit 3 different type: confirmToast, warningToast and ErrorToast
  */
 
  public class CustomToast {

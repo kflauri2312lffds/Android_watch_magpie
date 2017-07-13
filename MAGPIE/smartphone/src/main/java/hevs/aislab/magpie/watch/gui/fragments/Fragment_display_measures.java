@@ -3,7 +3,6 @@ package hevs.aislab.magpie.watch.gui.fragments;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,13 +23,13 @@ import java.util.Collections;
 import java.util.List;
 
 import hevs.aislab.magpie.watch.R;
-import hevs.aislab.magpie.watch.lib.DateFormater;
 import hevs.aislab.magpie.watch.models.CustomRules;
 import hevs.aislab.magpie.watch.models.Measure;
 import hevs.aislab.magpie.watch.repository.MeasuresRepository;
 import hevs.aislab.magpie.watch.repository.RulesRepository;
 import hevs.aislab.magpie.watch_library.gui.ButtonsManager;
 import hevs.aislab.magpie.watch_library.lib.Const;
+import hevs.aislab.magpie.watch_library.lib.DateFormater;
 
 /**
  * Created by teuft on 07.07.2017.

@@ -13,7 +13,7 @@ import hevs.aislab.magpie.watch.R;
 import hevs.aislab.magpie.watch.shared_pref.PrefAccessor;
 
 /**
- * Created by teuft on 18.06.2017.
+ * Used to create notification to the screen and play a song
  */
 
 public class NotificationGenerator implements Runnable {

@@ -12,7 +12,7 @@ import java.util.List;
 import org.greenrobot.greendao.DaoException;
 
 /**
- * Created by teuft on 05.06.2017.
+ * Rule object. It will be manage by GreenDAO orm
  */
 
 @Entity(

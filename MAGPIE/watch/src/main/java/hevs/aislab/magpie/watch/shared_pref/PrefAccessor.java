@@ -5,15 +5,12 @@ import android.content.SharedPreferences;
 import android.preference.Preference;
 import android.preference.PreferenceManager;
 
-/**
- * Created by teuft on 31.05.2017.
- */
 
 /**
  *
  *
  * This class is used to directly access to the shared pref.
- * You can save in the sahred pref via the methode "save" and get data via the "get" methode
+ * You can save in the shared pref via the methode "save" and get data via the "get" methode
  */
 public class PrefAccessor {
 

@@ -17,7 +17,7 @@ import hevs.aislab.magpie.watch.repository.RulesRepository;
 import hevs.aislab.magpie.watch_library.lib.Const;
 
 /**
- * Created by teuft on 17.06.2017.
+ * Steps agent that will take care of the glucose data and trigger an alert
  */
 
 public class StepBehaviour extends Behavior {

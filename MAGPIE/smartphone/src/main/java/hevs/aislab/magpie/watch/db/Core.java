@@ -5,8 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import hevs.aislab.magpie.watch.models.DaoMaster;
 import hevs.aislab.magpie.watch.models.DaoSession;
 
-//import hevs.aislab.magpie.smartphone.models.DaoMaster;
-//import hevs.aislab.magpie.smartphone.models.DaoSession;
+
 
 /**
  * This class is used to initiliaze the the DB & the ORM GreenDAO. Initialize it directly in the your first activity.

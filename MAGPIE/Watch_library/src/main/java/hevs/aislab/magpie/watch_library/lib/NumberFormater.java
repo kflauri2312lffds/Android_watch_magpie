@@ -1,7 +1,7 @@
 package hevs.aislab.magpie.watch_library.lib;
 
 /**
- * Created by teuft on 10.07.2017.
+ * Used to format number and display the correct digit number based on the category
  */
 
 public class NumberFormater  {

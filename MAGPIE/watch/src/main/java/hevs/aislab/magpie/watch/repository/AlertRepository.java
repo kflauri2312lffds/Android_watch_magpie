@@ -12,7 +12,7 @@ import hevs.aislab.magpie.watch.models.Measure;
 import hevs.aislab.magpie.watch.models.MeasureDao;
 
 /**
- * Created by teuft on 13.06.2017.
+ * this class will take car of the alert CRUD access. Querry are made by the ORM. It's a singletone class
  */
 
 public class AlertRepository {

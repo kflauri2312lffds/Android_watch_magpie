@@ -9,15 +9,13 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import hevs.aislab.magpie.watch.R;
 import hevs.aislab.magpie.watch.notification.CustomToast;
 import hevs.aislab.magpie.watch.repository.AlertRepository;
 import hevs.aislab.magpie.watch.repository.MeasuresRepository;
 
 /**
- * Created by teuft on 12.07.2017.
+ * Fragment that will ask the confirmation when we want to delete the DB data
  */
 
 public class DialogFragmentConfirmDelete extends DialogFragment {

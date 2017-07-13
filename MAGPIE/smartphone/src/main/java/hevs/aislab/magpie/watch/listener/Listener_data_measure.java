@@ -3,8 +3,6 @@ package hevs.aislab.magpie.watch.listener;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
-
 
 import hevs.aislab.magpie.watch.R;
 import hevs.aislab.magpie.watch.models.Measure;
@@ -19,20 +17,18 @@ import com.google.android.gms.wearable.WearableListenerService;
 
 import java.util.ArrayList;
 
-import static hevs.aislab.magpie.watch_library.lib.Const.NULL_IDENTIFIER;
 
 /**
- * Created by teuft on 07.07.2017.
+ * Used to subscribe to data send by the watch. In this cas, it's measure data
  */
 
 public class Listener_data_measure extends WearableListenerService {
 
     @Override
     public void onDataChanged(DataEventBuffer dataEvents) {
-        Log.d("dataReceiveMA","fsda");
+
         DataMap dataMap;
         for (DataEvent event : dataEvents) {
-            Log.v("myTag", "DataMap received on watch: " + DataMapItem.fromDataItem(event.getDataItem()).getDataMap());
             // Check the data type
             if (event.getType() == DataEvent.TYPE_CHANGED) {
                 // Check the data path
@@ -41,7 +37,6 @@ public class Listener_data_measure extends WearableListenerService {
                 dataMap = DataMapItem.fromDataItem(event.getDataItem()).getDataMap();
                 //get the data array list
                 ArrayList<DataMap>containerList=dataMap.getDataMapArrayList(Const.KEY_MEASURE_DATA);
-                Log.d("size_of_data_recive",containerList.size()+"");
 
                 //extract data and save each value
                 for (DataMap aData : containerList)
@@ -49,13 +44,8 @@ public class Listener_data_measure extends WearableListenerService {
                     Measure measure=extractMeasureFromDataMap(aData);
                     MeasuresRepository.getInstance().insertOrReplace(measure);
                 }
-                Log.d("sizeofDBMeasure=",MeasuresRepository.getInstance().getAll().size()+"");
-
-
 
                 // Broadcast DataMap contents to wearable activity for display
-                // The content has the golf hole number and distances to the front,
-                // middle and back pin placements.
 
                 //Prepare data to send to the activity
                 Bundle bundle=new Bundle();
@@ -71,6 +61,11 @@ public class Listener_data_measure extends WearableListenerService {
         }
     }
 
+    /**
+     *
+     * @param dataMap data map filled with measure information
+     * @return the measure object created via the datamap
+     */
     private Measure extractMeasureFromDataMap(DataMap dataMap)
     {
         Measure measure=new Measure();

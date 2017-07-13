@@ -9,7 +9,7 @@ import hevs.aislab.magpie.watch.models.CustomRules;
 import hevs.aislab.magpie.watch.models.CustomRulesDao;
 
 /**
- * SINGLE TON CLASS TO HANDLE ACCESS TO THE RULES MODEL
+ * this class will take car of the rule CRUD access. Querry are made by the ORM. It's a singletone class
  */
 
 public class RulesRepository {

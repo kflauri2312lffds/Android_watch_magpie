@@ -45,7 +45,7 @@ import hevs.aislab.magpie.watch_library.lib.DateFormater;
 
 
 /**
- * Created by teuft on 31.05.2017.
+ *
  * this class will handle all other fragment related the the apps
  */
 

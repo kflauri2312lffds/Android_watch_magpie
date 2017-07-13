@@ -2,7 +2,6 @@ package hevs.aislab.magpie.watch.gui.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -79,7 +78,6 @@ public class Fragment_display_alertes extends Fragment {
      */
     private void displayAll() {
         alertesList= AlertesRepository.getINSTANCE().getAll();
-        Log.d("Adapter_Creation",alertesList.size()+"");
         alertAdapter=new AlertAdapter(view.getContext(), R.layout.adapter_alert,alertesList);
         listViewAlert.setAdapter(alertAdapter);
         updateViewList();

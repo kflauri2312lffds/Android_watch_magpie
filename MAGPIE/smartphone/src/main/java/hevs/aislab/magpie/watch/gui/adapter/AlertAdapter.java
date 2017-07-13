@@ -6,7 +6,6 @@ import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,7 +53,6 @@ import hevs.aislab.magpie.watch_library.lib.NumberFormater;
         @Override
         public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
             View view = convertView;
-            Log.d("passage_adapter","appel first methode");
 
             if (view == null) {
                 LayoutInflater layoutInflater;
@@ -63,16 +61,11 @@ import hevs.aislab.magpie.watch_library.lib.NumberFormater;
             }
 
             Alertes anAlert=getItem(position);
-            Log.d("currentAlert_Category",anAlert.getMeasure().getCategory());
-            Log.d("currentAlert_Value1",anAlert.getMeasure().getValue1()+"");
-            Log.d("currentAlert_Value2",anAlert.getMeasure().getValue2()+"");
 
             if (anAlert==null)
             {
                 return view;
             }
-
-            Log.d("passage_adapter","Alert is not null");
             TextView txtViewTimeStamp=(TextView)view.findViewById(R.id.alert_column_timeStamp);
             TextView txtViewmessage=(TextView)view.findViewById(R.id.alert_column_message);
             TextView txtViewValue=(TextView)view.findViewById(R.id.alert_column_values);

@@ -17,7 +17,7 @@ import hevs.aislab.magpie.watch_library.lib.Const;
 import hevs.aislab.magpie.watch_library.lib.Validator;
 
 /**
- * Created by teuft on 08.06.2017.
+ * Fragment displayed when we want to set the glucose level
  */
 
 public class DialogFragmentSetGlucose extends DialogFragmentSetValue {

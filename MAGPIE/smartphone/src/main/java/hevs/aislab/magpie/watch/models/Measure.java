@@ -7,9 +7,8 @@ import org.greenrobot.greendao.annotation.NotNull;
 import org.greenrobot.greendao.annotation.Generated;
 
 /**
- * Created by teuft on 07.07.2017.
+ * Measure object. It will be manage by GreenDAO orm
  */
-
 
 @Entity(
         nameInDb = "Measures"

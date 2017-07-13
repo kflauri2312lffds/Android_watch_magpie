@@ -14,7 +14,7 @@ import hevs.aislab.magpie.watch_library.lib.Const;
 import hevs.aislab.magpie.watch_library.lib.Validator;
 
 /**
- * Created by teuft on 17.06.2017.
+ * Fragment displayed when we want to add weight value
  */
 
 public class DialogFragmentSetWeight extends DialogFragmentSetValue {

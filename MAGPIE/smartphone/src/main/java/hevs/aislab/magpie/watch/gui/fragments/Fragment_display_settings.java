@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +13,6 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.wearable.DataMap;
 
 import hevs.aislab.magpie.watch.IactivityInterface;
@@ -29,7 +27,7 @@ import hevs.aislab.magpie.watch_library.lib.NumberFormater;
 import hevs.aislab.magpie.watch_library.lib.Validator;
 
 /**
- * Created by teuft on 07.07.2017.
+ * this fragment will display the current settings (rules). User will be able to update and sync to the watch the rules
  */
 
 public class Fragment_display_settings extends Fragment {
@@ -60,7 +58,7 @@ public class Fragment_display_settings extends Fragment {
 
 
     /**
-     * This class is used to display other category
+     * This class is used to display other category (button to change category)
      */
     private class ListenerButtonCategory implements View.OnClickListener
     {
@@ -192,6 +190,7 @@ public class Fragment_display_settings extends Fragment {
 
         }
 
+        //when a user enter a new value, the constraint displayed will change the number
         private void updateDisplayOfConstraints() {
             //update the display of the constraints, only if the constraint exist (not null)
             if (currentRules.getConstraint_1()!=null)
@@ -301,7 +300,7 @@ public class Fragment_display_settings extends Fragment {
                 {
                     if (!is_aValideNumber(value2_max) || TextUtils.isEmpty(value2_max) ||  !Validator.isRuleValueValide(category_fragment,Double.parseDouble(value2_max)))
                     {
-                        CustomToast.getInstance().errorTOast("incorrect value",getActivity());
+                        CustomToast.getInstance().errorTOast(getString(R.string.incorrect_value),getActivity());
                         return;
                     }
                     currentRules.setVal_2_max(Double.parseDouble(value2_max));
@@ -315,7 +314,7 @@ public class Fragment_display_settings extends Fragment {
                 //save the value on the phone
                 RulesRepository.getInstance().insertOrUpdate(currentRules);
 
-                CustomToast.getInstance().confirmToast(getContext().getString(R.string.unit_measure_diastol),getActivity());
+                CustomToast.getInstance().confirmToast(getString(R.string.value_inserted),getActivity());
 
                 //send the value to the watch
 
@@ -327,6 +326,9 @@ public class Fragment_display_settings extends Fragment {
     }
 
 
+    /**
+     * Create the view object
+     */
     public void initView()
     {
         buttonsManager.addButtonByCategory(Const.CATEGORY_GLUCOSE,(ImageButton)view.findViewById(R.id.button_glucose));
@@ -348,6 +350,8 @@ public class Fragment_display_settings extends Fragment {
         //add the listener for the button save
         buttonSaveValues =(ImageButton)view.findViewById(R.id.button_update_rules);
     }
+
+
     private void addListenerToButton()
     {
         buttonsManager.getButtonByCategory(Const.CATEGORY_GLUCOSE).setOnClickListener(new ListenerButtonCategory(Const.CATEGORY_GLUCOSE));
@@ -366,6 +370,12 @@ public class Fragment_display_settings extends Fragment {
         edit_value2Max.addTextChangedListener(new ListenerEditText(Const.VALUE_Value_2Max,edit_value2Max));
     }
 
+    /**
+     * used to replace the value by a number on each value
+     * @param constraints the current constraint
+     * @param rule the current rule based on the category
+     * @return
+     */
     private String formatConstraints(String constraints, CustomRules rule)
     {
 
@@ -380,12 +390,23 @@ public class Fragment_display_settings extends Fragment {
     {
         return rules.replace(desingation,value);
     }
+
+    /**
+     *
+     * @param rules the constraint in string
+     * @param designation the current designation (ex: val1min,val1max)
+     * @return
+     */
     private boolean isRulesContainsDesignation(String rules, String designation)
     {
         return rules.contains(designation);
 
     }
 
+    /**
+     *
+     * @param editTexts edits text we want to show
+     */
     private void showEditText(EditText ... editTexts)
     {
         for (EditText anEditText : editTexts)
@@ -396,6 +417,11 @@ public class Fragment_display_settings extends Fragment {
             anEditText.setVisibility(View.VISIBLE);
         }
     }
+
+    /**
+     *
+     * @param editTexts editText we want to display
+     */
     private void hideEditText(EditText ... editTexts)
     {
         for (EditText anEditText : editTexts)
@@ -451,6 +477,11 @@ public class Fragment_display_settings extends Fragment {
         return true;
     }
 
+    /**
+     * Used when a user update a rule. It will be send to the watch
+     * @param rule : The current rule we want to send though a datamap (container)
+     * @return The datamap that contain the rule
+     */
     private DataMap prepareDataMap(CustomRules rule)
     {
         //create the value container
@@ -479,10 +510,15 @@ public class Fragment_display_settings extends Fragment {
         try {
             activity = (IactivityInterface) context;
         } catch (ClassCastException castException) {
-            /** The activity does not implement the listener. */
+           //
         }
     }
 
+    /**
+     * Replace the null value by an idetifier
+     * @param value the value we want to replace if null
+     * @return
+     */
     private Double formatDataMapValue(Double value)
     {
         return value==null ? Const.NULL_IDENTIFIER: value;

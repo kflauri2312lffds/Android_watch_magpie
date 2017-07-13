@@ -1,7 +1,5 @@
 package hevs.aislab.magpie.watch_library.communication_thread;
 
-import android.util.Log;
-
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.wearable.DataApi;
 import com.google.android.gms.wearable.DataMap;
@@ -40,17 +38,16 @@ public class SendToDataLayerThread extends Thread {
 
     @Override
     public void run() {
-        Log.d("RuleSync_Data","data send to the watch from the phone");
         // Construct a DataRequest and send over the data layer
         PutDataMapRequest putDMR = PutDataMapRequest.create(path);
         putDMR.getDataMap().putAll(dataMap);
         PutDataRequest request = putDMR.asPutDataRequest();
         DataApi.DataItemResult result = Wearable.DataApi.putDataItem(googleClient, request).await();
         if (result.getStatus().isSuccess()) {
-            Log.v("myTag", "DataMap: " + dataMap + " sent successfully to data layer ");
+
         } else {
             // Log an error
-            Log.v("myTag", "ERROR: failed to send DataMap to data layer");
+
         }
 
     }

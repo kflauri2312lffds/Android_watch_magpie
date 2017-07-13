@@ -22,6 +22,9 @@ import hevs.aislab.magpie.watch.gui.fragments.Fragment_display_measures;
 import hevs.aislab.magpie.watch.gui.fragments.Fragment_display_settings;
 import hevs.aislab.magpie.watch.watch_communication.MessageReceiver;
 
+/**
+ * Home activity will be used to display fragment
+ */
 public class Home_activity extends AppCompatActivity
         implements
         // implement methods

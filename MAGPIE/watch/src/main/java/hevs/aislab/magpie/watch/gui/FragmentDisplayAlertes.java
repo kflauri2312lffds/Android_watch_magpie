@@ -1,25 +1,20 @@
 package hevs.aislab.magpie.watch.gui;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import hevs.aislab.magpie.watch.HomeActivity;
 import hevs.aislab.magpie.watch.R;
 import hevs.aislab.magpie.watch.gui.adapter.AlertAdapter;
-
 import hevs.aislab.magpie.watch.models.Alertes;
 import hevs.aislab.magpie.watch.notification.CustomToast;
 import hevs.aislab.magpie.watch.repository.AlertRepository;
@@ -27,7 +22,7 @@ import hevs.aislab.magpie.watch_library.gui.ButtonsManager;
 import hevs.aislab.magpie.watch_library.lib.Const;
 
 /**
- * Created by teuft on 23.06.2017.
+ * Fragment that display all alert if no category is specified, or display alert based on the category
  */
 
 public class FragmentDisplayAlertes extends Fragment {
@@ -68,7 +63,7 @@ public class FragmentDisplayAlertes extends Fragment {
         try {
             contextActivity = (HomeActivity) context;
         } catch (ClassCastException castException) {
-            /** The activity does not implement the listener. */
+         //
         }
     }
 

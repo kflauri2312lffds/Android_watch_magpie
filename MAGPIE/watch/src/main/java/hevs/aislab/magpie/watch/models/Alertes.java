@@ -11,7 +11,7 @@ import org.greenrobot.greendao.annotation.NotNull;
 import java.io.Serializable;
 
 /**
- * Created by teuft on 13.06.2017.
+ * alert object. It will be manage by GreenDAO orm
  */
 
 @Entity(

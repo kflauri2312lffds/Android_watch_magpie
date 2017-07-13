@@ -1,7 +1,5 @@
 package hevs.aislab.magpie.watch.phone_communication;
 
-import android.util.Log;
-
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.wearable.DataMap;
 
@@ -19,7 +17,7 @@ import hevs.aislab.magpie.watch_library.communication_thread.SendToDataLayerThre
 import hevs.aislab.magpie.watch_library.lib.Const;
 
 /**
- * this thread will process and prepare data for the phone (data base)
+ * this thread will process and prepare data for the phone. It will push all database (measures, alert, rules ) to the phone
  */
 
 public class PushMeasureThread extends Thread {
@@ -76,7 +74,7 @@ public class PushMeasureThread extends Thread {
                     break;
                 }
             }
-            Log.d("size_of_data_send", containerList.size() + "");
+
             //add the list to the data_container
             data_container.putDataMapArrayList(Const.KEY_MEASURE_DATA, containerList);
             //send the data container to the data layer
@@ -94,7 +92,6 @@ public class PushMeasureThread extends Thread {
         int index = 0;
         sleepTime=1000;
 
-        Log.d("appel_methode_pushRules","fadfasdf");
         //get all the measure
         List<CustomRules> rulesList = RulesRepository.getInstance().getAll();
         //prepare the data container
@@ -122,7 +119,6 @@ public class PushMeasureThread extends Thread {
                     break;
                 }
             }
-            Log.d("size_of_data_send", containerList.size() + "");
             //add the list to the data_container
             data_container.putDataMapArrayList(Const.KEY_MEASURE_DATA, containerList);
             //send the data container to the data layer
@@ -143,7 +139,6 @@ public class PushMeasureThread extends Thread {
         //prepare the data container
         int datasize=alertList.size();
 
-        Log.d("alertesSizeArray",datasize+"");
 
         while (index < datasize) {
             try {
@@ -167,7 +162,6 @@ public class PushMeasureThread extends Thread {
                     break;
                 }
             }
-            Log.d("size_of_data_send", containerList.size() + "");
             //add the list to the data_container
             data_container.putDataMapArrayList(Const.KEY_MEASURE_DATA, containerList);
             //send the data container to the data layer

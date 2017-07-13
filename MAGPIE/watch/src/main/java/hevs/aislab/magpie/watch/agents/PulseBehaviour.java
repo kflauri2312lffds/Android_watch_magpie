@@ -19,7 +19,7 @@ import hevs.aislab.magpie.watch.threads.DisplayGUI;
 import hevs.aislab.magpie.watch_library.lib.Const;
 
 /**
- * Created by teuft on 05.06.2017.
+ * Pulse agent that will take care of the glucose data and trigger an alert
  */
 
 public class PulseBehaviour extends Behavior {

@@ -1,7 +1,7 @@
 package hevs.aislab.magpie.watch_library.lib;
 
 /**
- * Created by teuft on 04.07.2017.
+ * Used to validate number
  */
 
 public class Validator {

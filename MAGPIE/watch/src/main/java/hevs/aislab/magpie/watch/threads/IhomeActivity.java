@@ -3,7 +3,7 @@ package hevs.aislab.magpie.watch.threads;
 import android.hardware.Sensor;
 
 /**
- * Created by teuft on 17.06.2017.
+ * Used to make the link between the fragment and the activity
  */
 
 public interface IhomeActivity {

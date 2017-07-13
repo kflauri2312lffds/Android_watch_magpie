@@ -1,32 +1,22 @@
 package hevs.aislab.magpie.watch.gui;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
 
 import hevs.aislab.magpie.watch.IdialogToActivity;
 import hevs.aislab.magpie.watch.R;
-import hevs.aislab.magpie.watch.libs.Lib;
-
-import hevs.aislab.magpie.watch.notification.CustomToast;
 import hevs.aislab.magpie.watch.models.CustomRules;
+import hevs.aislab.magpie.watch.notification.CustomToast;
 import hevs.aislab.magpie.watch.repository.RulesRepository;
 import hevs.aislab.magpie.watch_library.gui.ButtonsManager;
 import hevs.aislab.magpie.watch_library.lib.Const;
@@ -34,7 +24,7 @@ import hevs.aislab.magpie.watch_library.lib.NumberFormater;
 import hevs.aislab.magpie.watch_library.lib.Validator;
 
 /**
- * Created by teuft on 04.06.2017.
+ * Used to display and update settings (constaints of rules) based on each category)
  */
 
 public class FragmentSettings extends Fragment {
@@ -61,10 +51,14 @@ public class FragmentSettings extends Fragment {
     //listener class
     CustomRules currentRules;
     //--------------------------LISTENER FOR BUTTONS, CHANGE THE CATEGORY DISPLAYED -----------------------------
+
+    /**
+     * Listener to button to change the category displayed
+     */
     private class ListenerButton implements View.OnClickListener
     {
         String category;
-        public ListenerButton (String category)
+        private ListenerButton (String category)
         {
             this.category=category;
         }
@@ -346,6 +340,12 @@ public class FragmentSettings extends Fragment {
         });
     }
 
+    /**
+     * this method will format a constraint and replace the designation (ex: val1_max) by a number corresponding)
+     * @param constraints contraint we want to format
+     * @param rule rule we want to apply
+     * @return formated constraint
+     */
     private String formatConstraints(String constraints, CustomRules rule)
     {
         constraints=replaceValueByNumber(constraints,Const.VALUE_Value_1Min,rule.getVal_1_min()+"");

@@ -11,7 +11,7 @@ import java.util.Map;
 
 
 /**
- * Created by teuft on 09.07.2017.
+ * Used to manage the button color displayed. It will be used by category button (red if the category is displayed, green if not)
  */
 
 public class ButtonsManager {

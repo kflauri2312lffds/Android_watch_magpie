@@ -18,9 +18,6 @@ import hevs.aislab.magpie.watch_library.lib.Const;
  *Runnable threadGui= new DisplayGUI(Const.CATEGORY_GLUCOSE,value,context);
  *context.runOnUiThread(threadGui);
  */
-
-
-
 public class DisplayGUI implements Runnable {
 
 
@@ -28,6 +25,7 @@ public class DisplayGUI implements Runnable {
     private String category;
     private double[] value;
     private HomeActivity context;
+
 
 
 

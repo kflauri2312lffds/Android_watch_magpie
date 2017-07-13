@@ -23,7 +23,7 @@ import hevs.aislab.magpie.watch_library.lib.DateFormater;
 import hevs.aislab.magpie.watch_library.lib.NumberFormater;
 
 /**
- * Created by teuft on 23.06.2017.
+ * adapter that will display the alert inside the fragment displayAlert
  */
 
 public class AlertAdapter extends ArrayAdapter<Alertes> {

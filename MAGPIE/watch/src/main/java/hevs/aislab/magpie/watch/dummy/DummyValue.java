@@ -16,7 +16,7 @@ import hevs.aislab.magpie.watch.repository.RulesRepository;
 import hevs.aislab.magpie.watch_library.lib.Const;
 
 /**
- * Created by teuft on 10.07.2017.
+ * this class is used to insert dummy data inside the DB
  */
 
 public class DummyValue {

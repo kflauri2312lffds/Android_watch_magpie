@@ -2,8 +2,6 @@ package hevs.aislab.magpie.watch.listener;
 
 import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
-
 import com.google.android.gms.wearable.DataEvent;
 import com.google.android.gms.wearable.DataEventBuffer;
 import com.google.android.gms.wearable.DataMap;
@@ -36,10 +34,6 @@ public class ListenerSyncRule extends WearableListenerService {
 
                 //save the rule in the database
                 RulesRepository.getInstance().insertOrUpdate(rule);
-
-                Log.d("RuleSync_Data","data receive in the watch");
-
-
 
                 //send the value to the activty to change the display of bar
 
@@ -77,13 +71,6 @@ public class ListenerSyncRule extends WearableListenerService {
         rule.setVal__2_min(formatValue(dataMap.getDouble(Const.KEY_RULE_VAL2_MIN)));
         rule.setVal_2_max(formatValue(dataMap.getDouble(Const.KEY_RULE_VAL2_MAX)));
 
-        Log.d("received_RUle_category",rule.getCategory());
-        Log.d("received_RUle_const1",rule.getConstraint_1());
-        Log.d("received_RUle_const2",rule.getConstraint_2());
-        Log.d("received_RUle_Val1_min",rule.getVal_1_min()+"");
-        Log.d("received_RUle_Val1_max",rule.getVal_1_max()+"");
-        Log.d("received_RUle_Val2_min",rule.getVal__2_min()+"");
-        Log.d("received_RUle_Val2_max",rule.getVal_2_max()+"");
 
 
         return rule;

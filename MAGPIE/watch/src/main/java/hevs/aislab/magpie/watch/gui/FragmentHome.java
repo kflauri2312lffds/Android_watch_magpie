@@ -8,7 +8,6 @@ import android.support.constraint.ConstraintLayout;
 import android.support.constraint.ConstraintSet;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +19,6 @@ import android.widget.TextView;
 import java.util.HashMap;
 import java.util.Map;
 
-import ch.hevs.aislab.magpie.support.Rule;
 import hevs.aislab.magpie.watch.R;
 import hevs.aislab.magpie.watch.models.CustomRules;
 import hevs.aislab.magpie.watch.models.Measure;
@@ -31,8 +29,8 @@ import hevs.aislab.magpie.watch_library.lib.Const;
 import hevs.aislab.magpie.watch_library.lib.NumberFormater;
 
 /**
- * Created by teuft on 30.05.2017.
- * This will be the main page were we will list all rules
+ *
+ * In this page, we will display the current status of all rules and the user will have possiblity to add a value
  */
 
 //initial fragment that display user states
@@ -280,7 +278,6 @@ public class FragmentHome extends Fragment {
             case Const.CATEGORY_WEIGHT :
                     //this value will be formated with the variation only. This is why, it will take the second value in the array (valuie[1])
                     double cursorPosition = formatValueForWeightBar(value[1]);
-                Log.d("WeightBug_cursorPositi",cursorPosition+"");
                 setLevel(barWeight,(float)cursorPosition);
                 break;
 
@@ -293,7 +290,6 @@ public class FragmentHome extends Fragment {
 
 
         double variation= value;
-        Log.d("vaal_debut",variation+"");
         double variationWithMaxWeight=variation*maxWeightVariation/2;
         double processedValue=1-(0.5+variationWithMaxWeight);
 
@@ -318,7 +314,6 @@ public class FragmentHome extends Fragment {
         value /= maxValue;
         //because the order of the layout is inversed (from the top to the bottom and we want from the bottom to the top), we have to take the max and remove the value from the max
         value = 1 - value;
-        Log.d("displayValue",value+"---");
         //don't allow to exceed the range
         if (value<0)
             return 0;
@@ -401,10 +396,6 @@ public class FragmentHome extends Fragment {
                 weightArea3=this.maxWeightVariation-(goodValue+maxVariationValue);
                 //area 3 correspond to an important gain of weight
                 weightArea1=this.maxWeightVariation-(goodValue+minVariationValue);
-
-                Log.d("weight_area1_",weightArea1+"");
-                Log.d("weight_area2_",weightArea2+"");
-                Log.d("weight_area3_",weightArea3+"");
                 break;
 
             case Const.CATEGORY_GLUCOSE :
@@ -431,10 +422,6 @@ public class FragmentHome extends Fragment {
                 weightArea1=minValuePulse;
                 weightArea2=maxValuePulse-minValuePulse;
                 weightArea3=this.maxPulse-maxValuePulse;
-
-                Log.d("weightArea__1",weightArea1+"");
-                Log.d("weightArea__2",weightArea2+"");
-                Log.d("weightArea__3",weightArea3+"");
                 break;
 
             case Const.CATEGORY_SYSTOL :
@@ -445,7 +432,6 @@ public class FragmentHome extends Fragment {
                 weightArea1=0F;
                 weightArea2=rule.getVal_1_max().floatValue();
                 weightArea3=this.maxSystol-rule.getVal_1_max().floatValue();
-                Log.d("PassageDansSystolCase","passage");
                 break;
 
             case Const.CATEGORY_DIASTOL :
@@ -457,7 +443,6 @@ public class FragmentHome extends Fragment {
                 weightArea1=0F;
                 weightArea2=rule.getVal_2_max().floatValue();
                 weightArea3=this.maxDiastol-rule.getVal_2_max().floatValue();
-                Log.d("PassageDansSystolCase","passage");
                 break;
             case Const.CATEGORY_STEP :
 

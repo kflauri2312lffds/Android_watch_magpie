@@ -10,7 +10,6 @@ import java.util.TimeZone;
 /**
  * This class will be used to manage the date format based on time stamp
  */
-
 public class DateFormater {
 
     private static DateFormater INSTANCE;
@@ -35,6 +34,12 @@ public class DateFormater {
         return getDate(timeStamp,dateFormat);
     }
 
+    public String getDateByFormat(long timeStamp,String dateformat)
+    {
+        timeStamp/=1000;
+        return getDate(timeStamp,dateformat);
+    }
+
     /**
      * Get the current date in the following format: dd_MMM_YY
      * @param timeStamp
@@ -44,6 +49,13 @@ public class DateFormater {
     {
         timeStamp/=1000;
         String dateFormat="dd-MMM-yy";
+        return getDate(timeStamp,dateFormat);
+    }
+
+    public String getDate_DDMM(long timeStamp)
+    {
+        timeStamp/=1000;
+        String dateFormat="d-M";
         return getDate(timeStamp,dateFormat);
     }
 

@@ -11,7 +11,7 @@ import org.greenrobot.greendao.DaoException;
 import org.greenrobot.greendao.annotation.NotNull;
 
 /**
- * Created by teuft on 07.07.2017.
+ * alert object. It will be manage by GreenDAO orm
  */
 
 

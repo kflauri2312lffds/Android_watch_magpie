@@ -11,7 +11,7 @@ import hevs.aislab.magpie.watch.models.CustomRules;
 import hevs.aislab.magpie.watch.models.CustomRulesDao;
 
 /**
- * Created by teuft on 05.06.2017.
+ * this class will take car of the Rule CRUD access. Querry are made by the ORM. It's a singletone class
  */
 
 public class RulesRepository {
