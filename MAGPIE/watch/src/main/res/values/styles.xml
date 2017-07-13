@@ -18,8 +18,8 @@
 
     <!-- USED TO SPECIFY THE COLOR OF ALL TEXT INSIDE THE APPS !-->
 <style name="main_textColor">
-    <item name="android:textColorHint">#000</item>
-    <item name="android:textColor">#000</item>
+    <item name="android:textColorHint">#f5f5f5</item>
+    <item name="android:textColor">#f5f5f5</item>
 </style>
 
 

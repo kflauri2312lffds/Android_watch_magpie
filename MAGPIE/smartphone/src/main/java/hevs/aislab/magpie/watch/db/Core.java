@@ -43,7 +43,6 @@ public class Core {
         return instance;
     }
 
-
     public DaoMaster.DevOpenHelper getHelper() {
         return helper;
     }

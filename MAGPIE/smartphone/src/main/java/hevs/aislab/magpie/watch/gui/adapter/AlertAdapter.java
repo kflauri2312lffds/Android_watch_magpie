@@ -23,15 +23,28 @@ import hevs.aislab.magpie.watch_library.lib.DateFormater;
 import hevs.aislab.magpie.watch_library.lib.NumberFormater;
 
 /**
- * Created by teuft on 10.07.2017.
+ * This adapter will contains alert and display it though an ListView
  */
 
 
+
     public class AlertAdapter extends ArrayAdapter<Alertes> {
+
+    /**
+     *
+     * @param context context
+     * @param resource
+     */
         public AlertAdapter(@NonNull Context context, @LayoutRes int resource) {
             super(context, resource);
         }
 
+    /**
+     *
+     * @param context
+     * @param resource
+     * @param objects
+     */
         public AlertAdapter(@NonNull Context context, @LayoutRes int resource, @NonNull List<Alertes> objects) {
             super(context, resource, objects);
         }
@@ -126,7 +139,12 @@ import hevs.aislab.magpie.watch_library.lib.NumberFormater;
             return view;
         }
 
-        private Drawable getDrawable(String category) {
+    /**
+     *
+     * @param category The current category display. Use the class Const to be sure to have a correct category
+     * @return
+     */
+    private Drawable getDrawable(String category) {
 
             String ressourceName="small_"+category;
             Context context = getContext();

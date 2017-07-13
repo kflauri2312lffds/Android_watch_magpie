@@ -36,6 +36,9 @@ import hevs.aislab.magpie.watch_library.lib.Const;
  * Created by teuft on 07.07.2017.
  */
 
+/**
+ * Used to display graph of measures based on category
+ */
 public class Fragment_display_measures extends Fragment {
 
 
@@ -43,15 +46,15 @@ public class Fragment_display_measures extends Fragment {
     View view;
     LineChart chart;
 
-    /**
-     * Will handle change the color of the button based on the category we selec
-     */
+
+      //Will handle change the color of the button based on the category we selec
+
     ButtonsManager buttonsManager;
 
 
 
     /**
-     * This class is used to display other category
+     * This class is used to display other category. It's the listener of the button
      */
     private class ListenerButtonCategory implements View.OnClickListener
     {
@@ -120,6 +123,9 @@ public class Fragment_display_measures extends Fragment {
 
     }
 
+    /**
+     * Used to instanciate element of the view
+     */
     private void initView() {
         //for this fragment, we will work with a line chart
         chart =(LineChart) view.findViewById(R.id.chart_measure);
@@ -130,6 +136,9 @@ public class Fragment_display_measures extends Fragment {
         buttonsManager.addButtonByCategory(Const.CATEGORY_STEP,(ImageButton)view.findViewById(R.id.button_step));
     }
 
+    /**
+     * Add the listener to the button to change category
+     */
     private void addListenerToButton()
     {
         buttonsManager.getButtonByCategory(Const.CATEGORY_GLUCOSE).setOnClickListener(new ListenerButtonCategory(Const.CATEGORY_GLUCOSE));
@@ -139,7 +148,10 @@ public class Fragment_display_measures extends Fragment {
         buttonsManager.getButtonByCategory(Const.CATEGORY_STEP).setOnClickListener(new ListenerButtonCategory(Const.CATEGORY_STEP));
     }
 
-
+    /**
+     * Display the graph with the value based on category
+     * @param category : the category we want to display
+     */
     private void displayValue(String category)
     {
         cleanValueFromChart();
@@ -178,8 +190,8 @@ public class Fragment_display_measures extends Fragment {
 
     /**
      * Used to display the value from the measure list into the chart
-     * @param measures
-     * @param labelName
+     * @param measures The list of the measure we want to display
+     * @param labelName The label we want to display for each value under the graph
      */
     private void setChart1Value(List<Measure> measures, String labelName,String dateFormat, CustomRules rule) {
 
@@ -239,7 +251,7 @@ public class Fragment_display_measures extends Fragment {
     }
 
     /**
-     * this methode is basicaly the same as the setchart1value1, but it will process 2 value
+     * this methode is basicaly the same as the setchart1value1, but it will process 2 value. Used for pressure
      * @param measures the list of the measure we have to display
      * @param labelValue1 the label of the first data set
      * @param labelValue2 the label of the second data set
@@ -302,17 +314,14 @@ public class Fragment_display_measures extends Fragment {
 
     }
 
-
+    /**
+     * Used to define limite line we want to display on the chart
+     * @param rule
+     */
     private void setLimites(CustomRules rule)
     {
         chart.getAxisLeft().removeAllLimitLines();
 
-
-        Log.d("affichageRule_category",rule.getCategory());
-        Log.d("affichageRule_value1Min",rule.getVal_1_min()+"");
-        Log.d("affichageRule_value1Max",rule.getVal_1_max()+"");
-        Log.d("affichageRule_value2Min",rule.getVal__2_min()+"");
-        Log.d("affichageRule_value2Max",rule.getVal_2_max()+"");
 
         if (rule.getCategory().equals(Const.CATEGORY_WEIGHT))
             return;
@@ -325,7 +334,7 @@ public class Fragment_display_measures extends Fragment {
             return;
         }
 
-
+        //display only when the value are not null
         if (rule.getVal_1_min()!=null)
             setLimite(rule.getVal_1_min().floatValue(),getString(R.string.min_range));
         if (rule.getVal_1_max()!=null)
@@ -334,9 +343,13 @@ public class Fragment_display_measures extends Fragment {
             setLimite(rule.getVal__2_min().floatValue(),getString(R.string.min_range));
         if (rule.getVal_2_max()!=null)
             setLimite(rule.getVal_2_max().floatValue(),getString(R.string.max_range));
-
     }
 
+    /**
+     * Used to drwaw a limite line on the chart
+     * @param limite
+     * @param label
+     */
     private void setLimite(float limite, String label )
     {
 
@@ -358,12 +371,6 @@ public class Fragment_display_measures extends Fragment {
         {
 
         }
-
-    }
-
-
-    private void rebuildLayout()
-    {
 
     }
 

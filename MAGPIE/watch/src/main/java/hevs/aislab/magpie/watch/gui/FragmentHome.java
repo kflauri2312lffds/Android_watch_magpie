@@ -1,10 +1,13 @@
 package hevs.aislab.magpie.watch.gui;
 
 
+import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.ConstraintSet;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +20,7 @@ import android.widget.TextView;
 import java.util.HashMap;
 import java.util.Map;
 
+import ch.hevs.aislab.magpie.support.Rule;
 import hevs.aislab.magpie.watch.R;
 import hevs.aislab.magpie.watch.models.CustomRules;
 import hevs.aislab.magpie.watch.models.Measure;
@@ -48,9 +52,15 @@ public class FragmentHome extends Fragment {
     private ConstraintLayout barSystol;
     private ConstraintLayout barDiastol;
 
+    //image button to set the severity
 
-    private ImageView imgSeverity_glucose;
-    private ImageButton imgSeverity_pulse;
+    private ImageButton imgGlucose;
+    private ImageButton imgStep;
+    private ImageButton imgWeight;
+    private ImageButton imgPulse;
+    private ImageButton imgPressure;
+
+
 
 
     //min and max value foreach category
@@ -109,8 +119,11 @@ public class FragmentHome extends Fragment {
         barStep=(ConstraintLayout)view.findViewById(R.id.bar_step);
         barWeight=(ConstraintLayout)view.findViewById(R.id.bar_weight);
 
-        imgSeverity_glucose=(ImageView)view.findViewById(R.id.img_severity_glucose);
-        imgSeverity_pulse=(ImageButton) view.findViewById(R.id.img_severity_pulse);
+        imgGlucose=(ImageButton) view.findViewById(R.id.img_severity_glucose);
+        imgPulse=(ImageButton) view.findViewById(R.id.img_severity_pulse);
+        imgPressure=(ImageButton)view.findViewById(R.id.img_severity_pressure);
+        imgStep=(ImageButton)view.findViewById(R.id.img_severity_step);
+        imgWeight=(ImageButton)view.findViewById(R.id.img_severity_weight);
     }
 
     /**
@@ -126,7 +139,7 @@ public class FragmentHome extends Fragment {
         if (measureList.containsKey(Const.CATEGORY_PRESSURE))
         {
             setSystolValue(measureList.get(Const.CATEGORY_PRESSURE).getValue1());
-            setDiastolValue(measureList.get(Const.CATEGORY_PRESSURE).getValue1());
+            setDiastolValue(measureList.get(Const.CATEGORY_PRESSURE).getValue2());
         }
         if (measureList.containsKey(Const.CATEGORY_PULSE))
         {
@@ -168,6 +181,8 @@ public class FragmentHome extends Fragment {
             txtViewGlucose.setText(NumberFormater.getInstance().formatWith1Digit(value));
         if (barGlucose!=null)
             setCursor(Const.CATEGORY_GLUCOSE, value.floatValue());
+
+        setIconColor(Const.CATEGORY_GLUCOSE,value);
     }
 
     public void setSystolValue(Double value)
@@ -176,6 +191,8 @@ public class FragmentHome extends Fragment {
             txtViewSystol.setText(NumberFormater.getInstance().formatWithNoDigit(value));
         if (barSystol!=null)
             setCursor(Const.CATEGORY_SYSTOL,value.floatValue());
+
+        setIconColor(Const.CATEGORY_SYSTOL,value);
     }
 
     public void setDiastolValue(Double value)
@@ -184,6 +201,9 @@ public class FragmentHome extends Fragment {
             txtViewDiastol.setText(NumberFormater.getInstance().formatWithNoDigit(value));
         if (barDiastol!=null)
             setCursor(Const.CATEGORY_DIASTOL,value.floatValue());
+
+        setIconColor(Const.CATEGORY_DIASTOL,value);
+
     }
 
     public void setStepValue(Double value)
@@ -192,6 +212,8 @@ public class FragmentHome extends Fragment {
             txtViewSteps.setText(NumberFormater.getInstance().formatWithNoDigit(value));
         if (barStep!=null)
             setCursor(Const.CATEGORY_STEP, value.floatValue());
+
+        setIconColor(Const.CATEGORY_STEP,value);
     }
 
     public void setPulseValue(Double value)
@@ -200,6 +222,8 @@ public class FragmentHome extends Fragment {
         txtViewPulse.setText(NumberFormater.getInstance().formatWithNoDigit(value));
         if (barPulse!=null)
             setCursor(Const.CATEGORY_PULSE, value.floatValue());
+
+        setIconColor(Const.CATEGORY_PULSE,value);
     }
     public void setWeightValue(Double value, Double variation)
     {
@@ -210,6 +234,8 @@ public class FragmentHome extends Fragment {
 
         if (barWeight!=null)
             setCursor(Const.CATEGORY_WEIGHT, value.floatValue(),variation.floatValue());
+
+            setIconColor(Const.CATEGORY_WEIGHT,variation);
     }
 
 
@@ -462,6 +488,90 @@ public class FragmentHome extends Fragment {
         LinearLayout.LayoutParams param =new LinearLayout.LayoutParams(area.getLayoutParams());
         param.weight=weight;
         area.setLayoutParams(param);
+    }
+
+    /**
+     * This method will change the color of the icon based on the value and the rule
+     */
+    private void setIconColor(String category, double value)
+    {
+        String cateSearch=category;
+        if (category.equals(Const.CATEGORY_SYSTOL) || category.equals(Const.CATEGORY_DIASTOL))
+            cateSearch=Const.CATEGORY_PRESSURE;
+
+        CustomRules rule=RulesRepository.getInstance().getByCategory(cateSearch);
+        boolean isSever=false;
+        switch (category)
+        {
+            case Const.CATEGORY_WEIGHT :
+                //val 2 min and val2 max
+                //get the max increase of weight allowed
+                Double increaseMaxVariation=(rule.getVal_2_max()-100)/100;
+                Double minWeightLoosVariation=-((100-rule.getVal__2_min())/100);
+
+                if (value>increaseMaxVariation ||value<minWeightLoosVariation)
+                    isSever=true;
+                    changeIconColor(imgWeight,Const.CATEGORY_WEIGHT,isSever);
+
+                break;
+            case Const.CATEGORY_PULSE:
+
+                if (value<rule.getVal_1_min() ||value>rule.getVal_1_max())
+                    isSever=true;
+                changeIconColor(imgPulse,Const.CATEGORY_PULSE,isSever);
+
+                break;
+            case Const.CATEGORY_GLUCOSE :
+                //val_1_min val_2_max
+                if (value<rule.getVal_1_min() ||value>rule.getVal_2_max())
+                    isSever=true;
+                changeIconColor(imgGlucose,Const.CATEGORY_GLUCOSE,isSever);
+
+                break;
+            case Const.CATEGORY_STEP :
+
+                if (value<rule.getVal_1_min() ||value>rule.getVal_1_max())
+                    isSever=true;
+                changeIconColor(imgStep,Const.CATEGORY_STEP,isSever);
+                break;
+            case Const.CATEGORY_SYSTOL :
+                if (value>rule.getVal_1_max())
+                    isSever=true;
+                changeIconColor(imgPressure,Const.CATEGORY_PRESSURE,isSever);
+
+                break;
+            case Const.CATEGORY_DIASTOL :
+
+                if (value>rule.getVal_2_max())
+                    isSever=true;
+                changeIconColor(imgPressure,Const.CATEGORY_PRESSURE,isSever);
+                break;
+
+        }
+    }
+    private void changeIconColor(ImageButton imagebutton, String category, boolean isSever)
+    {
+        if (imagebutton==null)
+            return;
+
+        String ressourceName=category;
+
+        if (isSever)
+            ressourceName+="_red";
+        else
+            ressourceName+="_green";
+
+        imagebutton.setImageDrawable(getDrawable(ressourceName));
+
+    }
+
+    private Drawable getDrawable(String ressourceName) {
+
+        Context context = getContext();
+        //Get the image with the named based on category and based on name of the category
+        int id = context.getResources().getIdentifier(ressourceName, "drawable", context.getPackageName());
+        Drawable img= ContextCompat.getDrawable(getContext(), id);
+        return img;
     }
 
 }

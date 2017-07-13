@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     tools:context="hevs.aislab.magpie.watch.MainActivity"
     style="@style/main_color"
-    android:background="#ffc405"
+    android:background="#263238"
     tools:deviceIds="wear">
 
 
