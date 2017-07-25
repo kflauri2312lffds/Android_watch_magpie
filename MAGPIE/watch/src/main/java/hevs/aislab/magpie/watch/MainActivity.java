@@ -181,6 +181,10 @@ public class MainActivity extends FragmentActivity implements
 
     }
 
+    /**
+     * Button to clear the database
+     * @param view
+     */
     public void click_deleteData(View view)
     {
        //open confirm dialog to confirm action
@@ -188,14 +192,6 @@ public class MainActivity extends FragmentActivity implements
         FragmentTransaction fragmentTransaction=getSupportFragmentManager().beginTransaction();
         fragmentConfirm.show(fragmentTransaction,"tag");
 
-        //check if the id are correct
-
-        List<Measure>measureList=MeasuresRepository.getInstance().getAll();
-
-        for (Measure aMeasure : measureList)
-        {
-            Log.d("measure_id_wesh",aMeasure.getId()+"");
-        }
     }
 
     private void sendDataToPhone()
@@ -214,7 +210,6 @@ public class MainActivity extends FragmentActivity implements
         glucoseRules.setTimeWindow(glucoseTimeWindow);
         glucoseRules.setConstraint_1("oldGlucose<=Value_1Min");
         glucoseRules.setConstraint_2("currentGlucose>=Value_2Max");
-        glucoseRules.setConstraint_3("Tev2>Tev1");
         //SET THE VALUES
         glucoseRules.setVal_1_min(3.8);
         glucoseRules.setVal_2_max(8.0);

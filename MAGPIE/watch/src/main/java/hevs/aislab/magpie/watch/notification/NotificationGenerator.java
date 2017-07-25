@@ -42,13 +42,10 @@ public class NotificationGenerator implements Runnable {
     {
         int notificationId = 001;
 
-        // Intent viewIntent=new Intent(this)
         Intent notificationIntent=new Intent(context,NotificationActivity.class);
         notificationIntent.putExtra("", "");
         PendingIntent viewPendingIntent =
                 PendingIntent.getActivity(context, 0, notificationIntent, 0);
-
-        long[]notificationPattern={10,5,10,5};
 
         NotificationCompat.Builder notificationBuilder =
                 new NotificationCompat.Builder(context)

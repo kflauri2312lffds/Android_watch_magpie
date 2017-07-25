@@ -4,4 +4,6 @@
     <string name="measures">Measures</string>
     <string name="incorrect_value">incorrect value</string>
     <string name="value_inserted">value has been inserted and send</string>
+    <string name="confirm_delete">delete all data ?</string>
+    <string name="notif_data_deleted">Data has been deleted</string>
 </resources>

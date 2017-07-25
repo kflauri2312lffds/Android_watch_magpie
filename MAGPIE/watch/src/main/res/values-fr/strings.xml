@@ -5,4 +5,37 @@
     <string name="start">démarrer</string>
     <string name="voice">Voix</string>
     <string name="voice_not_found">Commande introuvable</string>
+    <string name="add_glucose" translatable="false">ajouter glucose</string>
+    <string name="alert_list_category">categorie</string>
+    <string name="alert_list_value">valeur</string>
+    <string name="category_pressure" translatable="false">pression sanguine</string>
+    <string name="category_pulse" translatable="false">pulsation</string>
+    <string name="category_step" translatable="false">pas</string>
+    <string name="category_weight" translatable="false">poids</string>
+    <string name="change_saved" translatable="false">enregistré</string>
+    <string name="confirm_delete" translatable="false">supprimer tout?</string>
+    <string name="confirm_syncdata">données transmises</string>
+    <string name="glucose_level" translatable="false">ajouter glucose</string>
+    <string name="hint_addglucose" translatable="false">ajouter glucose</string>
+    <string name="category_glucose"></string>
+    <string name="incorrect_value" translatable="false">Valeur incorrecte</string>
+    <string name="information_pulse_device" translatable="false">capturer par le périphérique</string>
+    <string name="information_step_device" translatable="false">capturer par le périphérique</string>
+    <string name="notification_high_glucose" translatable="false">taux de sucre élevé</string>
+    <string name="notification_high_pressure" translatable="false">pression sanguine élevée</string>
+    <string name="notification_high_pulse" translatable="false">pulsations élevées</string>
+    <string name="notification_high_weight" translatable="false">gain de poids élevé</string>
+    <string name="notification_low_pulse" translatable="false">pulsations basses</string>
+    <string name="notification_low_weight" translatable="false">perte de poid élevée</string>
+    <string name="pressure_level" translatable="false">pression sanguine</string>
+    <string name="submit" translatable="false">valider</string>
+    <string name="toast_noalert" translatable="false">aucune donnée</string>
+    <string name="value_deleted">données supprimées</string>
+    <string name="voice_glucose" translatable="false">glucose</string>
+    <string name="voice_incomplet_number" translatable="false">commande incomplète</string>
+    <string name="voice_incorrect" translatable="false">valeur incorrecte</string>
+    <string name="voice_pressure" translatable="false">pression</string>
+    <string name="voice_weight" translatable="false">poid</string>
+    <string name="weight" translatable="false">poids en kilo</string>
+    <string name="weight_level" translatable="false">poid actuel</string>
 </resources>

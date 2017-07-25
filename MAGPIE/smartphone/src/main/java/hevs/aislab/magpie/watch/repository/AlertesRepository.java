@@ -75,7 +75,10 @@ public class AlertesRepository
             alertesDao.insertOrReplace(alertest);
         }
 
-
+    public void deleteAll()
+    {
+        alertesDao.deleteAll();
+    }
 
 
 }

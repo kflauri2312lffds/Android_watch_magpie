@@ -239,7 +239,8 @@ public class Fragment_display_settings extends Fragment {
         addListenerToEditText();
 
 
-
+        //display the pulse category the first time it's launch
+        buttonsManager.getButtonByCategory(Const.CATEGORY_PULSE).performClick();
         return view;
     }
     /**

@@ -25,11 +25,11 @@
             android:scaleType="fitXY"
             android:src="@drawable/pulse_green"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintHorizontal_bias="0.141"
+            app:layout_constraintHorizontal_bias="0.15"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.89" />
+            app:layout_constraintVertical_bias="0.86" />
 
         <ImageButton
             android:id="@+id/button_display_alert_glucose"
@@ -47,11 +47,11 @@
             android:scaleType="fitXY"
             android:src="@drawable/glucose_green"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintHorizontal_bias="0.253"
+            app:layout_constraintHorizontal_bias="0.29"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.95" />
+            app:layout_constraintVertical_bias="0.92" />
 
         <ImageButton
             android:id="@+id/button_display_alert_weight"
@@ -72,7 +72,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.98" />
+            app:layout_constraintVertical_bias="0.97" />
 
         <ImageButton
             android:id="@+id/button_display_alert_pressure"
@@ -94,7 +94,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.9" />
+            app:layout_constraintVertical_bias="0.88" />
 
         <ImageButton
             android:id="@+id/button_display_alert_step"
@@ -116,7 +116,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.97" />
+            app:layout_constraintVertical_bias="0.94" />
 
         <ListView
             style="@style/padding_container"

@@ -217,6 +217,8 @@ public class FragmentSettings extends Fragment {
         hideEditText( edit_value1min, edit_value1Max,edit_value2Min,edit_value2Max);
         hideButtonSave();
 
+        //display the pulse category the first time it's launch
+        buttonsManager.getButtonByCategory(Const.CATEGORY_PULSE).performClick();
         return view;
     }
 

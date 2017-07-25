@@ -21,11 +21,11 @@
         android:scaleType="fitXY"
         android:src="@drawable/pulse_green"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.141"
+        app:layout_constraintHorizontal_bias="0.16"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.88" />
+        app:layout_constraintVertical_bias="0.86" />
 
     <ImageButton
         android:id="@+id/button_display_rules_glucose"
@@ -42,7 +42,7 @@
         android:scaleType="fitXY"
         android:src="@drawable/glucose_green"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.253"
+        app:layout_constraintHorizontal_bias="0.29"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -197,7 +197,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.591">
+        app:layout_constraintVertical_bias="0.58000004">
 
         <TableRow
             android:layout_width="match_parent"

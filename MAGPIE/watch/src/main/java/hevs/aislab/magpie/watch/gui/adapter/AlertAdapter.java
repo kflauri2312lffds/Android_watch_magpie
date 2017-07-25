@@ -65,7 +65,7 @@ public class AlertAdapter extends ArrayAdapter<Alertes> {
             txtViewTimeStamp.setText(date);
         }
         if (txtViewmessage!=null)
-            txtViewmessage.setText(anAlert.getMessage());
+            txtViewmessage.setText("");
 
         if (txtViewValue!=null)
         {

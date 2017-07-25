@@ -117,7 +117,8 @@ public class Fragment_display_measures extends Fragment {
         initView();
         addListenerToButton();
 
-
+        //display the pulse category the first time it's launch
+        buttonsManager.getButtonByCategory(Const.CATEGORY_PULSE).performClick();
         return view;
 
     }

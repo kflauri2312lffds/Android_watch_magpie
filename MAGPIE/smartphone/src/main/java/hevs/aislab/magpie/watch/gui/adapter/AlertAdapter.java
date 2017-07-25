@@ -79,7 +79,7 @@ import hevs.aislab.magpie.watch_library.lib.NumberFormater;
                 txtViewTimeStamp.setText(date);
             }
             if (txtViewmessage!=null)
-                txtViewmessage.setText(anAlert.getMessage());
+                txtViewmessage.setText("");
 
 
 

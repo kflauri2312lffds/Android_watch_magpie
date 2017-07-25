@@ -95,7 +95,7 @@
                 android:id="@+id/edittxt_value1min"
                 style="@style/edittxt_values"
                 android:layout_height="match_parent"
-                android:background="@drawable/border_green"
+                android:background="@drawable/border_grey"
                 android:ems="10"
                 android:visibility="gone"
                 android:inputType="numberDecimal"
@@ -105,7 +105,7 @@
                 android:id="@+id/edittxt_value2min"
                 style="@style/edittxt_values"
                 android:layout_height="match_parent"
-                android:background="@drawable/border_green"
+                android:background="@drawable/border_grey"
                 android:ems="10"
                 android:visibility="gone"
                 android:inputType="numberDecimal" />
@@ -114,7 +114,7 @@
                 android:id="@+id/edittxt_value1max"
                 style="@style/edittxt_values"
                 android:layout_height="match_parent"
-                android:background="@drawable/border_green"
+                android:background="@drawable/border_grey"
                 android:ems="10"
                 android:visibility="gone"
                 android:inputType="numberDecimal" />
@@ -123,7 +123,7 @@
                 android:id="@+id/edittxt_value2max"
                 style="@style/edittxt_values"
                 android:layout_height="match_parent"
-                android:background="@drawable/border_green"
+                android:background="@drawable/border_grey"
                 android:ems="10"
                 android:inputType="numberDecimal"
                 android:visibility="gone" />

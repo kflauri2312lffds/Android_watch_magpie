@@ -1,8 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="greetings">Allo</string>
-    <string name="pulse">Pulsieren</string>
-    <string name="start">go</string>
-    <string name="voice">Stimme</string>
-    <string name="voice_not_found">Befehl nicht gefunden</string>
+    <string name="pulse">none</string>
+    <string name="start">none</string>
+    <string name="voice">none</string>
+    <string name="voice_not_found">none</string>
+    <string name="add_glucose">none</string>
+    <string name="alert_list_category">none</string>
+    <string name="alert_list_value">value</string>
+    <string name="category_pressure" translatable="false">none</string>
+    <string name="category_pulse" translatable="false">none</string>
+    <string name="category_step" translatable="false">none</string>
+    <string name="category_weight" translatable="false">none</string>
+    <string name="change_saved" translatable="false">none</string>
+    <string name="confirm_delete" translatable="false">none</string>
+    <string name="confirm_syncdata">none</string>
+    <string name="glucose_level" translatable="false">none</string>
+    <string name="hint_addglucose" translatable="false">none</string>
+    <string name="incorrect_value" translatable="false">none</string>
+    <string name="information_pulse_device" translatable="false">none</string>
+    <string name="information_step_device" translatable="false">none</string>
+    <string name="notification_high_glucose" translatable="false">none</string>
+    <string name="notification_high_pressure" translatable="false">none</string>
+    <string name="notification_high_pulse" translatable="false">none</string>
+    <string name="notification_high_weight" translatable="false">none</string>
+    <string name="notification_low_pulse" translatable="false">none</string>
+    <string name="notification_low_weight" translatable="false">none</string>
+    <string name="pressure_level" translatable="false">none</string>
+    <string name="submit" translatable="false">none</string>
+    <string name="toast_noalert" translatable="false">none</string>
+    <string name="value_deleted">none</string>
+    <string name="voice_glucose" translatable="false">none</string>
+    <string name="voice_incomplet_number" translatable="false">none</string>
+    <string name="voice_incorrect" translatable="false">none</string>
+    <string name="voice_pressure" translatable="false">none</string>
+    <string name="voice_weight" translatable="false">none</string>
+    <string name="weight" translatable="false">none</string>
+    <string name="weight_level" translatable="false">none</string>
 </resources>

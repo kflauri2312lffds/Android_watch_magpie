@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">Prototype</string>
+    <string name="app_name" translatable="false">MAGPIE</string>
     <string name="hello_world" translatable="false">Hello World!</string>
     <string name="greetings">hello</string>
     <string name="pulse">Pulse</string>
@@ -13,39 +13,39 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
-    <string name="add_glucose" translatable="false">Add glucose</string>
+    <string name="add_glucose">Add glucose</string>
     <string name="submit" translatable="false">Submit</string>
-    <string name="hint_addglucose" translatable="false">Enter glucose</string>
+    <string name="hint_addglucose">Enter glucose</string>
     <string name="voice_incorrect" translatable="false">Value inserted is not correct. expected a number</string>
-    <string name="glucose_level" translatable="false">enter glucose measure</string>
-    <string name="incorrect_value" translatable="false">incorrect value</string>
+    <string name="glucose_level">enter glucose measure</string>
+    <string name="incorrect_value">incorrect value</string>
     <string name="voice_incomplet_number" translatable="false">Incomplet command, expected a number</string>
     <string name="systol" translatable="false">systol</string>
     <string name="diastol" translatable="false">diastol</string>
     <string name="pressure_level" translatable="false">enter pressure leve</string>
-    <string name="voice_pressure" translatable="false">pression</string>
-    <string name="information_pulse_device" translatable="false">Taken by the device</string>
-    <string name="information_step_device" translatable="false">Taken by the device</string>
+    <string name="voice_pressure" translatable="false">pressure</string>
+    <string name="information_pulse_device">Taken by the device</string>
+    <string name="information_step_device">Taken by the device</string>
     <string name="weight_level" translatable="false">Enter your current weight</string>
     <string name="weight" translatable="false">weight in kg</string>
-    <string name="voice_weight" translatable="false">poids</string>
-    <string name="notification_high_pressure" translatable="false">high pressure detected</string>
-    <string name="notification_high_glucose" translatable="false">high glucose detected</string>
-    <string name="notification_high_pulse" translatable="false">high pulse detected</string>
-    <string name="category_pressure" translatable="false">blood pressure</string>
+    <string name="voice_weight" translatable="false">weight</string>
+    <string name="notification_high_pressure">high pressure detected</string>
+    <string name="notification_high_glucose">high glucose detected</string>
+    <string name="notification_high_pulse">high pulse detected</string>
+    <string name="category_pressure">blood pressure</string>
     <string name="category_glucose" translatable="false">glucose</string>
-    <string name="category_weight" translatable="false">weight</string>
-    <string name="category_pulse" translatable="false">heart pulse</string>
-    <string name="category_step" translatable="false">step</string>
-    <string name="notification_high_weight" translatable="false">high weight gain has been detected in short time</string>
-    <string name="notification_low_weight" translatable="false">high weith loss has been detected</string>
+    <string name="category_weight">weight</string>
+    <string name="category_pulse">heart pulse</string>
+    <string name="category_step">step</string>
+    <string name="notification_high_weight">high weight gain has been detected in short time</string>
+    <string name="notification_low_weight" translatable="false">high weight loos has been detected</string>
     <string name="alert_list_date" translatable="false">date</string>
-    <string name="alert_list_category" translatable="false">category</string>
-    <string name="alert_list_value" translatable="false">value</string>
-    <string name="notification_low_pulse" translatable="false">low pulse detected</string>
-    <string name="change_saved" translatable="false">change has been saved</string>
+    <string name="alert_list_category">category</string>
+    <string name="alert_list_value">value</string>
+    <string name="notification_low_pulse">low pulse detected</string>
+    <string name="change_saved">change has been saved</string>
     <string name="toast_noalert" translatable="false">no data</string>
-    <string name="confirm_delete" translatable="false">Delete all data ?</string>
+    <string name="confirm_delete">Delete all data ?</string>
     <string name="value_deleted">value has been deleted DB</string>
     <string name="confirm_syncdata">data has been send</string>
 </resources>

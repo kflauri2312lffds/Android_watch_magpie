@@ -75,11 +75,11 @@ public class DummyValue {
 
         List<Alertes>alertListe=new ArrayList<>();
 
-        alertListe.add(new Alertes(null,null,measureList.get(3).getId(),rule.getId()));
-        alertListe.add(new Alertes(null,null,measureList.get(4).getId(),rule.getId()));
-        alertListe.add(new Alertes(null,null,measureList.get(7).getId(),rule.getId()));
-        alertListe.add(new Alertes(null,null,measureList.get(8).getId(),rule.getId()));
-        alertListe.add(new Alertes(null,null,measureList.get(9).getId(),rule.getId()));
+        alertListe.add(new Alertes(null,measureList.get(3).getId(),rule.getId()));
+        alertListe.add(new Alertes(null,measureList.get(4).getId(),rule.getId()));
+        alertListe.add(new Alertes(null,measureList.get(7).getId(),rule.getId()));
+        alertListe.add(new Alertes(null,measureList.get(8).getId(),rule.getId()));
+        alertListe.add(new Alertes(null,measureList.get(9).getId(),rule.getId()));
 
         for (Alertes anAlert : alertListe)
         {
@@ -113,11 +113,11 @@ public class DummyValue {
 
         List<Alertes>alertListe=new ArrayList<>();
 
-        alertListe.add(new Alertes(null,null,measureList.get(3).getId(),rule.getId()));
-        alertListe.add(new Alertes(null,null,measureList.get(4).getId(),rule.getId()));
-        alertListe.add(new Alertes(null,null,measureList.get(7).getId(),rule.getId()));
-        alertListe.add(new Alertes(null,null,measureList.get(8).getId(),rule.getId()));
-        alertListe.add(new Alertes(null,null,measureList.get(9).getId(),rule.getId()));
+        alertListe.add(new Alertes(null,measureList.get(3).getId(),rule.getId()));
+        alertListe.add(new Alertes(null,measureList.get(4).getId(),rule.getId()));
+        alertListe.add(new Alertes(null,measureList.get(7).getId(),rule.getId()));
+        alertListe.add(new Alertes(null,measureList.get(8).getId(),rule.getId()));
+        alertListe.add(new Alertes(null,measureList.get(9).getId(),rule.getId()));
 
         for (Alertes anAlert : alertListe)
         {
@@ -147,11 +147,11 @@ public class DummyValue {
 
         List<Alertes>alertListe=new ArrayList<>();
 
-        alertListe.add(new Alertes(null,null,measureList.get(3).getId(),rule.getId()));
-        alertListe.add(new Alertes(null,null,measureList.get(4).getId(),rule.getId()));
-        alertListe.add(new Alertes(null,null,measureList.get(7).getId(),rule.getId()));
-        alertListe.add(new Alertes(null,null,measureList.get(8).getId(),rule.getId()));
-        alertListe.add(new Alertes(null,null,measureList.get(9).getId(),rule.getId()));
+        alertListe.add(new Alertes(null,measureList.get(3).getId(),rule.getId()));
+        alertListe.add(new Alertes(null,measureList.get(4).getId(),rule.getId()));
+        alertListe.add(new Alertes(null,measureList.get(7).getId(),rule.getId()));
+        alertListe.add(new Alertes(null,measureList.get(8).getId(),rule.getId()));
+        alertListe.add(new Alertes(null,measureList.get(9).getId(),rule.getId()));
 
         for (Alertes anAlert : alertListe)
         {
@@ -180,11 +180,11 @@ public class DummyValue {
 
         List<Alertes>alertListe=new ArrayList<>();
 
-        alertListe.add(new Alertes(null,null,measureList.get(3).getId(),rule.getId()));
-        alertListe.add(new Alertes(null,null,measureList.get(4).getId(),rule.getId()));
-        alertListe.add(new Alertes(null,null,measureList.get(7).getId(),rule.getId()));
-        alertListe.add(new Alertes(null,null,measureList.get(8).getId(),rule.getId()));
-        alertListe.add(new Alertes(null,null,measureList.get(9).getId(),rule.getId()));
+        alertListe.add(new Alertes(null,measureList.get(3).getId(),rule.getId()));
+        alertListe.add(new Alertes(null,measureList.get(4).getId(),rule.getId()));
+        alertListe.add(new Alertes(null,measureList.get(7).getId(),rule.getId()));
+        alertListe.add(new Alertes(null,measureList.get(8).getId(),rule.getId()));
+        alertListe.add(new Alertes(null,measureList.get(9).getId(),rule.getId()));
 
         for (Alertes anAlert : alertListe)
         {
@@ -214,11 +214,11 @@ public class DummyValue {
 
         List<Alertes>alertListe=new ArrayList<>();
 
-        alertListe.add(new Alertes(null,null,measureList.get(3).getId(),rule.getId()));
-        alertListe.add(new Alertes(null,null,measureList.get(4).getId(),rule.getId()));
-        alertListe.add(new Alertes(null,null,measureList.get(7).getId(),rule.getId()));
-        alertListe.add(new Alertes(null,null,measureList.get(8).getId(),rule.getId()));
-        alertListe.add(new Alertes(null,null,measureList.get(9).getId(),rule.getId()));
+        alertListe.add(new Alertes(null,measureList.get(3).getId(),rule.getId()));
+        alertListe.add(new Alertes(null,measureList.get(4).getId(),rule.getId()));
+        alertListe.add(new Alertes(null,measureList.get(7).getId(),rule.getId()));
+        alertListe.add(new Alertes(null,measureList.get(8).getId(),rule.getId()));
+        alertListe.add(new Alertes(null,measureList.get(9).getId(),rule.getId()));
 
         for (Alertes anAlert : alertListe)
         {

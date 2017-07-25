@@ -5,12 +5,17 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import hevs.aislab.magpie.watch.db.Core;
+import hevs.aislab.magpie.watch.gui.dialogFragment.DialogFragmentConfirmDelete;
 import hevs.aislab.magpie.watch.models.DaoMaster;
+import hevs.aislab.magpie.watch.models.Measure;
+import hevs.aislab.magpie.watch.repository.AlertesRepository;
+import hevs.aislab.magpie.watch.repository.MeasuresRepository;
 import hevs.aislab.magpie.watch.watch_communication.MessageReceiver;
 
 /**
@@ -41,6 +46,21 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    /**
+     * Listener of the buton. Used to clear the database
+     */
+
+    public void click_clearDB(View view)
+    {
+        //open confirm dialog to confirm action
+        android.support.v4.app.DialogFragment fragmentConfirm=new DialogFragmentConfirmDelete();
+        FragmentTransaction fragmentTransaction=getSupportFragmentManager().beginTransaction();
+        fragmentConfirm.show(fragmentTransaction,"tag");
+    }
+
+
+
+
     private void askAllPermission()
     {
         //ask for all the permission
@@ -61,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
         Core.getInstance().setDaoMaster(new DaoMaster(Core.getInstance().getDb()));
         Core.getInstance().setDaoSession( (Core.getInstance().getDaoMaster().newSession()));
     }
+
 
 }
 

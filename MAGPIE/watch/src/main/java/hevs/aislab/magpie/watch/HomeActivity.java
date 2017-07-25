@@ -46,7 +46,7 @@ import hevs.aislab.magpie.watch_library.lib.DateFormater;
 
 /**
  *
- * this class will handle all other fragment related the the apps
+ * this class will handle all other fragment related the the apps and contains the MAGPIE logic
  */
 
 //implement the listener for the sensors
@@ -85,16 +85,17 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
 
 
         //init the sensors
-        this.sensorManager=(SensorManager) getSystemService(SENSOR_SERVICE);
+        sensorManager=(SensorManager) getSystemService(SENSOR_SERVICE);
         sensor_pulse=sensorManager.getDefaultSensor(Sensor.TYPE_HEART_RATE);
-        sensor_step=sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
+        sensor_step=sensorManager.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR);
         //register the sensors
         sensorManager.registerListener(this,sensor_step,SensorManager.SENSOR_DELAY_NORMAL);
         //activate a thread for the pulse sensors
 
 
-            Log.d("TreadInformation_","THREAD IS INITIALIZED AND LAUNCHED");
-            threadPulse=new SensorsThreadLifecircle(this,sensor_pulse,30000,30000);
+            //process information: 30 sec
+            //stop time= 30 min
+            threadPulse=new SensorsThreadLifecircle(this,sensor_pulse,30000,1000*60*30);
             threadPulse.start();
 
         displayFragmentHome();
@@ -252,7 +253,7 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
                 voiceAction_addValue(Const.CATEGORY_GLUCOSE, arraySpocken[1]);
                 return;
             }
-            // no number has been specified, so command is not complet
+            // no number has been specified, so command is not completed
             CustomToast.getInstance().warningToast(getString(R.string.voice_incomplet_number), this);
             return;
         }
@@ -415,7 +416,6 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
     //sensor method
     @Override
     public void onAccuracyChanged(Sensor sensor, int i) {
-//        Toast.makeText(this, i+"", Toast.LENGTH_SHORT).show();
         //set the accuracy of the pulse snsors
         if (sensor.getType()==Sensor.TYPE_HEART_RATE)
         {

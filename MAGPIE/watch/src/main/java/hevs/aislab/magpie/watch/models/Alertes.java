@@ -24,7 +24,6 @@ public class Alertes  {
 
     @Id(autoincrement = true)
     private Long id;
-    private String message;
     @NotNull
     private long measure_id;
     @NotNull
@@ -47,16 +46,23 @@ public class Alertes  {
     @Generated(hash = 1580548308)
     private transient Long rule__resolvedKey;
 
+
+
     public Alertes() {
     }
 
-    @Generated(hash = 640696675)
-    public Alertes(Long id, String message, long measure_id, long rule_id) {
+
+
+
+    @Generated(hash = 550830157)
+    public Alertes(Long id, long measure_id, long rule_id) {
         this.id = id;
-        this.message = message;
         this.measure_id = measure_id;
         this.rule_id = rule_id;
     }
+
+
+
 
     public Long getId() {
         return id;
@@ -66,13 +72,6 @@ public class Alertes  {
         this.id = id;
     }
 
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
 
     public long getMeasure_id() {
         return measure_id;
@@ -89,6 +88,9 @@ public class Alertes  {
     public void setRule_id(long rule_id) {
         this.rule_id = rule_id;
     }
+
+
+
 
     /** To-one relationship, resolved on first access. */
     @Generated(hash = 1530824084)
@@ -109,6 +111,9 @@ public class Alertes  {
         return measure;
     }
 
+
+
+
     /** called by internal mechanisms, do not call yourself. */
     @Generated(hash = 406434750)
     public void setMeasure(@NotNull Measure measure) {
@@ -122,6 +127,9 @@ public class Alertes  {
             measure__resolvedKey = measure_id;
         }
     }
+
+
+
 
     /** To-one relationship, resolved on first access. */
     @Generated(hash = 752533316)
@@ -142,6 +150,9 @@ public class Alertes  {
         return rule;
     }
 
+
+
+
     /** called by internal mechanisms, do not call yourself. */
     @Generated(hash = 1626686981)
     public void setRule(@NotNull CustomRules rule) {
@@ -156,6 +167,9 @@ public class Alertes  {
         }
     }
 
+
+
+
     /**
      * Convenient call for {@link org.greenrobot.greendao.AbstractDao#delete(Object)}.
      * Entity must attached to an entity context.
@@ -167,6 +181,9 @@ public class Alertes  {
         }
         myDao.delete(this);
     }
+
+
+
 
     /**
      * Convenient call for {@link org.greenrobot.greendao.AbstractDao#refresh(Object)}.
@@ -180,6 +197,9 @@ public class Alertes  {
         myDao.refresh(this);
     }
 
+
+
+
     /**
      * Convenient call for {@link org.greenrobot.greendao.AbstractDao#update(Object)}.
      * Entity must attached to an entity context.
@@ -192,13 +212,16 @@ public class Alertes  {
         myDao.update(this);
     }
 
+
+
+
     /** called by internal mechanisms, do not call yourself. */
     @Generated(hash = 1523232790)
     public void __setDaoSession(DaoSession daoSession) {
         this.daoSession = daoSession;
         myDao = daoSession != null ? daoSession.getAlertesDao() : null;
     }
-
+    
     
 
 }

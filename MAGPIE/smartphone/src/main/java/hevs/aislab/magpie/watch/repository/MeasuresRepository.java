@@ -143,7 +143,11 @@ public class MeasuresRepository {
             c.close();
 
         }
-
         return measure;
+    }
+
+    public void deleteAll()
+    {
+        measuresDao.deleteAll();
     }
 }
