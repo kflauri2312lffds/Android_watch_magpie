@@ -29,7 +29,6 @@ import hevs.aislab.magpie.watch.models.DaoMaster;
 import hevs.aislab.magpie.watch.models.Measure;
 import hevs.aislab.magpie.watch.notification.CustomToast;
 import hevs.aislab.magpie.watch.phone_communication.PushMeasureThread;
-import hevs.aislab.magpie.watch.repository.AlertRepository;
 import hevs.aislab.magpie.watch.repository.MeasuresRepository;
 import hevs.aislab.magpie.watch.repository.RulesRepository;
 import hevs.aislab.magpie.watch.shared_pref.PrefAccessor;
@@ -241,7 +240,7 @@ public class MainActivity extends FragmentActivity implements
         weightRules.setConstraint_2("OR Current_weight<="+Const.VALUE_Value_2Min+"%*old_weight");
 
         // max % of weight loss allowed
-        weightRules.setVal__2_min(98.0);
+        weightRules.setVal_2_min(98.0);
         // max % of weight gain allowed
         weightRules.setVal_2_max(101.0);
         weightRules.setCategory(Const.CATEGORY_WEIGHT);

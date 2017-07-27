@@ -339,8 +339,8 @@ public class Fragment_display_measures extends Fragment {
             setLimite(rule.getVal_1_min().floatValue(),getString(R.string.min_range));
         if (rule.getVal_1_max()!=null)
             setLimite(rule.getVal_1_max().floatValue(),getString(R.string.max_range));
-        if (rule.getVal__2_min()!=null)
-            setLimite(rule.getVal__2_min().floatValue(),getString(R.string.min_range));
+        if (rule.getVal_2_min()!=null)
+            setLimite(rule.getVal_2_min().floatValue(),getString(R.string.min_range));
         if (rule.getVal_2_max()!=null)
             setLimite(rule.getVal_2_max().floatValue(),getString(R.string.max_range));
     }

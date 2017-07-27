@@ -1,9 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="start">start</string>
-    <string name="measures">Measures</string>
-    <string name="incorrect_value">incorrect value</string>
-    <string name="value_inserted">value has been inserted and send</string>
-    <string name="confirm_delete">delete all data ?</string>
-    <string name="notif_data_deleted">Data has been deleted</string>
+    <string name="start">Débuter</string>
+    <string name="measures">Mesures</string>
+    <string name="incorrect_value">Valeur incorrecte</string>
+    <string name="value_inserted">Modification enregistrées et envoyées</string>
+    <string name="confirm_delete">Vider la base de donnée ?</string>
+    <string name="notif_data_deleted">Données supprimées</string>
+    <string name="max_diasto" translatable="false">Valeur systolique maximum</string>
+    <string name="max_range" translatable="false">Limite maximum</string>
+    <string name="max_systo" translatable="false">Valeur systolique minimum</string>
+    <string name="min_range" translatable="false">Limite minimum</string>
+    <string name="settings" translatable="false">Paramètres</string>
+    <string name="sync_alertes" translatable="false">Alertes transmises</string>
+    <string name="sync_measures" translatable="false">Mesures transmises</string>
+    <string name="sync_rules" translatable="false">Règles transmises</string>
+    <string name="systol" translatable="false"></string>
+    <string name="unit_measure_pulse" translatable="false">Battements par minute</string>
+    <string name="unit_measure_step" translatable="false">Nombre de pas</string>
+    <string name="unit_measure_weight" translatable="false">Poids en kilos</string>
+    <string name="unit_measure_glucose" translatable="false">Glucose mmol/l</string>
+    <string name="unit_measure_diastol" translatable="false">Diastol</string>
+    <string name="diastol" translatable="false">Diastol</string>
 </resources>

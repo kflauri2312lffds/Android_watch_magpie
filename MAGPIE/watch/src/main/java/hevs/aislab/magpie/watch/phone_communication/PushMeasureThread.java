@@ -197,7 +197,7 @@ public class PushMeasureThread extends Thread {
         //if null, we send the number -100000. We will have to check on the other side
         dataMap.putDouble(Const.KEY_RULE_VAL1_MIN, formatValue(aRule.getVal_1_min()));
         dataMap.putDouble(Const.KEY_RULE_VAL1_MAX,formatValue(aRule.getVal_1_max()));
-        dataMap.putDouble(Const.KEY_RULE_VAL2_MIN,formatValue(aRule.getVal__2_min()));
+        dataMap.putDouble(Const.KEY_RULE_VAL2_MIN,formatValue(aRule.getVal_2_min()));
         dataMap.putDouble(Const.KEY_RULE_VAL2_MAX, formatValue(aRule.getVal_2_max()));
 
         return dataMap;

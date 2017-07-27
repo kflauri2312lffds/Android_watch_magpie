@@ -7,7 +7,6 @@ import org.greenrobot.greendao.annotation.NotNull;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.ToMany;
 
-import java.io.Serializable;
 import java.util.List;
 import org.greenrobot.greendao.DaoException;
 
@@ -31,7 +30,7 @@ public class CustomRules  {
 
     private Double val_1_max;
 
-    private Double val__2_min;
+    private Double val_2_min;
 
     private Double val_2_max;
 
@@ -54,16 +53,17 @@ public class CustomRules  {
     private transient CustomRulesDao myDao;
 
 
-    @Generated(hash = 1519990713)
+
+    @Generated(hash = 1250893848)
     public CustomRules(Long id, @NotNull String category, Double val_1_min,
-            Double val_1_max, Double val__2_min, Double val_2_max,
+            Double val_1_max, Double val_2_min, Double val_2_max,
             String constraint_1, String constraint_2, String constraint_3,
             Long timeWindow) {
         this.id = id;
         this.category = category;
         this.val_1_min = val_1_min;
         this.val_1_max = val_1_max;
-        this.val__2_min = val__2_min;
+        this.val_2_min = val_2_min;
         this.val_2_max = val_2_max;
         this.constraint_1 = constraint_1;
         this.constraint_2 = constraint_2;
@@ -74,6 +74,7 @@ public class CustomRules  {
     @Generated(hash = 922913921)
     public CustomRules() {
     }
+
 
 
     public Long getId() {
@@ -108,12 +109,12 @@ public class CustomRules  {
         this.val_1_max = val_1_max;
     }
 
-    public Double getVal__2_min() {
-        return val__2_min;
+    public Double getVal_2_min() {
+        return val_2_min;
     }
 
-    public void setVal__2_min(Double val__2_min) {
-        this.val__2_min = val__2_min;
+    public void setVal_2_min(Double val_2_min) {
+        this.val_2_min = val_2_min;
     }
 
     public Double getVal_2_max() {
@@ -227,4 +228,6 @@ public class CustomRules  {
         this.daoSession = daoSession;
         myDao = daoSession != null ? daoSession.getCustomRulesDao() : null;
     }
+
+   
 }

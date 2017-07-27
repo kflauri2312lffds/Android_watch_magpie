@@ -2,7 +2,6 @@ package hevs.aislab.magpie.watch.agents;
 
 import android.content.Context;
 import java.util.List;
-import java.util.Objects;
 
 import ch.hevs.aislab.magpie.agent.MagpieAgent;
 import ch.hevs.aislab.magpie.behavior.Behavior;
@@ -87,7 +86,7 @@ public class WeightBehaviour extends Behavior {
             Measure previousMeasure=weightsMeasures.get(weightsMeasures.size()-2);
             double previousWeight=previousMeasure.getValue1();
             //the minimal value allowed otherwise, it won't pass the test
-            double minValueAllowed =previousWeight*(weightRules.getVal__2_min()/100);
+            double minValueAllowed =previousWeight*(weightRules.getVal_2_min()/100);
             //idem for the max value
             double maxValueAllowed=previousWeight*(weightRules.getVal_2_max()/100);
 

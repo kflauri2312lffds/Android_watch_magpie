@@ -73,7 +73,7 @@ public class Listener_data_rule extends WearableListenerService {
 
         rule.setVal_1_min(formatNumber(dataMap.getDouble(Const.KEY_RULE_VAL1_MIN)));
         rule.setVal_1_max(formatNumber(dataMap.getDouble(Const.KEY_RULE_VAL1_MAX)));
-        rule.setVal__2_min(formatNumber(dataMap.getDouble(Const.KEY_RULE_VAL2_MIN)));
+        rule.setVal_2_min(formatNumber(dataMap.getDouble(Const.KEY_RULE_VAL2_MIN)));
         rule.setVal_2_max(formatNumber(dataMap.getDouble(Const.KEY_RULE_VAL2_MAX)));
 
         rule.setConstraint_1(dataMap.getString(Const.KEY_RULE_CONSTRAINT1));

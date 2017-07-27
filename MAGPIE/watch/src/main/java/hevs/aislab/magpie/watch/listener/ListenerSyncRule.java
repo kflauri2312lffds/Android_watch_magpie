@@ -19,6 +19,10 @@ import hevs.aislab.magpie.watch_library.lib.Const;
 public class ListenerSyncRule extends WearableListenerService {
 
 
+    /**
+     * This method is activated when a data is receive from the phone
+     * @param dataEvents
+     */
     @Override
     public void onDataChanged(DataEventBuffer dataEvents) {
 
@@ -37,12 +41,10 @@ public class ListenerSyncRule extends WearableListenerService {
 
                 //send the value to the activty to change the display of bar
 
-
                 Intent messageIntent = new Intent();
                 messageIntent.setAction(Intent.ACTION_SEND);
                 messageIntent.putExtra(Const.KEY_BROADCASTdATA, dataMap.toBundle());
                 LocalBroadcastManager.getInstance(this).sendBroadcast(messageIntent);
-
             }
         }
     }
@@ -64,11 +66,9 @@ public class ListenerSyncRule extends WearableListenerService {
         rule.setConstraint_2(dataMap.getString(Const.KEY_RULE_CONSTRAINT2));
         rule.setConstraint_3(dataMap.getString(Const.KEY_RULE_CONSTRAINT3));
 
-
-
         rule.setVal_1_min(formatValue( dataMap.getDouble(Const.KEY_RULE_VAL1_MIN)));
         rule.setVal_1_max(formatValue(dataMap.getDouble(Const.KEY_RULE_VAL1_MAX)));
-        rule.setVal__2_min(formatValue(dataMap.getDouble(Const.KEY_RULE_VAL2_MIN)));
+        rule.setVal_2_min(formatValue(dataMap.getDouble(Const.KEY_RULE_VAL2_MIN)));
         rule.setVal_2_max(formatValue(dataMap.getDouble(Const.KEY_RULE_VAL2_MAX)));
 
 

@@ -28,11 +28,11 @@ import hevs.aislab.magpie.watch.agents.PressureBehaviour;
 import hevs.aislab.magpie.watch.agents.PulseBehaviour;
 import hevs.aislab.magpie.watch.agents.StepBehaviour;
 import hevs.aislab.magpie.watch.agents.WeightBehaviour;
-import hevs.aislab.magpie.watch.gui.FragmentDisplayAlertes;
+import hevs.aislab.magpie.watch.gui.fragment.FragmentDisplayAlertes;
 import hevs.aislab.magpie.watch.gui.dialogfragment.DialogFragmentSetPressure;
 import hevs.aislab.magpie.watch.gui.dialogfragment.DialogFragmentSetGlucose;
-import hevs.aislab.magpie.watch.gui.FragmentHome;
-import hevs.aislab.magpie.watch.gui.FragmentSettings;
+import hevs.aislab.magpie.watch.gui.fragment.FragmentHome;
+import hevs.aislab.magpie.watch.gui.fragment.FragmentSettings;
 import hevs.aislab.magpie.watch.gui.dialogfragment.DialogFragmentSetWeight;
 
 import hevs.aislab.magpie.watch.models.CustomRules;
@@ -535,7 +535,7 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
 
         rule.setVal_1_min(formatValue( dataMap.getDouble(Const.KEY_RULE_VAL1_MIN)));
         rule.setVal_1_max(formatValue(dataMap.getDouble(Const.KEY_RULE_VAL1_MAX)));
-        rule.setVal__2_min(formatValue(dataMap.getDouble(Const.KEY_RULE_VAL2_MIN)));
+        rule.setVal_2_min(formatValue(dataMap.getDouble(Const.KEY_RULE_VAL2_MIN)));
         rule.setVal_2_max(formatValue(dataMap.getDouble(Const.KEY_RULE_VAL2_MAX)));
 
         Log.d("received_RUle_category",rule.getCategory());
@@ -543,7 +543,7 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
         Log.d("received_RUle_const2",rule.getConstraint_2());
         Log.d("received_RUle_Val1_min",rule.getVal_1_min()+"");
         Log.d("received_RUle_Val1_max",rule.getVal_1_max()+"");
-        Log.d("received_RUle_Val2_min",rule.getVal__2_min()+"");
+        Log.d("received_RUle_Val2_min",rule.getVal_2_min()+"");
         Log.d("received_RUle_Val2_max",rule.getVal_2_max()+"");
 
 

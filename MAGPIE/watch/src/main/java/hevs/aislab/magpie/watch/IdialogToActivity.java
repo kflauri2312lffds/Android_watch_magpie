@@ -5,10 +5,6 @@ package hevs.aislab.magpie.watch;
  */
 
 
-import ch.hevs.aislab.magpie.support.Rule;
-import hevs.aislab.magpie.watch.gui.FragmentDisplayAlertes;
-import hevs.aislab.magpie.watch.gui.FragmentHome;
-import hevs.aislab.magpie.watch.gui.FragmentSettings;
 import hevs.aislab.magpie.watch.models.CustomRules;
 
 /**

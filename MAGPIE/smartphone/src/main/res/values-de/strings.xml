@@ -1,7 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="start">start</string>
+    <string name="app_name" translatable="false">MAGPIE</string>
     <string name="measures">Measures</string>
+    <string name="settings" translatable="false">Settings</string>
+    <string name="alertes" translatable="false">Alertes</string>
+    <string name="start">start</string>
+    <string name="systol" translatable="false">Systol</string>
+    <string name="diastol" translatable="false">Diastol</string>
+    <string name="min_range" translatable="false">min range</string>
+    <string name="max_range" translatable="false">max range</string>
+    <string name="max_systo" translatable="false">max systol</string>
+    <string name="max_diasto">max diastol</string>
+    <string name="unit_measure_weight" translatable="false">Weight in kilo</string>
+    <string name="unit_measure_glucose" translatable="false">Glucose mmol/l</string>
+    <string name="unit_measure_pulse" translatable="false">Beats per minute</string>
+    <string name="unit_measure_step" translatable="false">Number of step</string>
+    <string name="unit_measure_systol" translatable="false">Systol</string>
+    <string name="unit_measure_diastol" translatable="false">Diastol</string>
+    <string name="sync_measures" translatable="false">measures has been synchronized</string>
+    <string name="sync_alertes" translatable="false">alertes has been synchronized</string>
+    <string name="sync_rules" translatable="false">Rules has been synchronized</string>
     <string name="incorrect_value">incorrect value</string>
     <string name="value_inserted">value has been inserted and send</string>
     <string name="confirm_delete">delete all data ?</string>

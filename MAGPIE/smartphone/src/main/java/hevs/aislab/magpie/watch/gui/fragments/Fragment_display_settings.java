@@ -94,7 +94,7 @@ public class Fragment_display_settings extends Fragment {
 
             String value1_min=currentRules.getVal_1_min()!= null ?currentRules.getVal_1_min()+"" :"";
             String value1_max=currentRules.getVal_1_max()!= null ?currentRules.getVal_1_max()+"" :"";
-            String value2_min=currentRules.getVal__2_min()!= null ?currentRules.getVal__2_min()+"" :"";
+            String value2_min=currentRules.getVal_2_min()!= null ?currentRules.getVal_2_min()+"" :"";
             String value_2max=currentRules.getVal_2_max()!= null ?currentRules.getVal_2_max()+"" :"";
 
             //format the value based on the category
@@ -294,7 +294,7 @@ public class Fragment_display_settings extends Fragment {
                         CustomToast.getInstance().errorTOast("incorrect value",getActivity());
                         return;
                     }
-                    currentRules.setVal__2_min(Double.parseDouble(value2_min));
+                    currentRules.setVal_2_min(Double.parseDouble(value2_min));
                 }
 
                 if (edit_value2Max.getVisibility()==View.VISIBLE)
@@ -382,7 +382,7 @@ public class Fragment_display_settings extends Fragment {
 
         constraints=replaceValueByNumber(constraints,Const.VALUE_Value_1Min,rule.getVal_1_min()+"");
         constraints=replaceValueByNumber(constraints,Const.VALUE_Value_1Max,rule.getVal_1_max()+"");
-        constraints=replaceValueByNumber(constraints,Const.VALUE_Value_2Min,rule.getVal__2_min()+"");
+        constraints=replaceValueByNumber(constraints,Const.VALUE_Value_2Min,rule.getVal_2_min()+"");
         constraints=replaceValueByNumber(constraints,Const.VALUE_Value_2Max,rule.getVal_2_max()+"");
         return constraints;
     }
@@ -497,7 +497,7 @@ public class Fragment_display_settings extends Fragment {
 
         dataContainer.putDouble(Const.KEY_RULE_VAL1_MIN,formatDataMapValue( rule.getVal_1_min()));
         dataContainer.putDouble(Const.KEY_RULE_VAL1_MAX,formatDataMapValue(rule.getVal_1_max()));
-        dataContainer.putDouble(Const.KEY_RULE_VAL2_MIN,formatDataMapValue(rule.getVal__2_min()));
+        dataContainer.putDouble(Const.KEY_RULE_VAL2_MIN,formatDataMapValue(rule.getVal_2_min()));
         dataContainer.putDouble(Const.KEY_RULE_VAL2_MAX,formatDataMapValue(rule.getVal_2_max()));
         dataContainer.putLong(Const.KEY_CURRENTTIMESTAMP,System.currentTimeMillis());
 

@@ -1,4 +1,4 @@
-package hevs.aislab.magpie.watch.gui;
+package hevs.aislab.magpie.watch.gui.fragment;
 
 
 import android.content.Context;
@@ -386,7 +386,7 @@ public class FragmentHome extends Fragment {
                  area3=(LinearLayout) barWeight.findViewById(R.id.bar_level_area3);
 
                 //now we get the number based on the rules. The value are in % (ex 98 or 101)
-                float minVariationValue=100-rule.getVal__2_min().floatValue();
+                float minVariationValue=100-rule.getVal_2_min().floatValue();
                 float maxVariationValue=rule.getVal_2_max().floatValue()-100;
                 float goodValue=minVariationValue+maxVariationValue;
 
@@ -492,7 +492,7 @@ public class FragmentHome extends Fragment {
                 //val 2 min and val2 max
                 //get the max increase of weight allowed
                 Double increaseMaxVariation=(rule.getVal_2_max()-100)/100;
-                Double minWeightLoosVariation=-((100-rule.getVal__2_min())/100);
+                Double minWeightLoosVariation=-((100-rule.getVal_2_min())/100);
 
                 if (value>increaseMaxVariation ||value<minWeightLoosVariation)
                     isSever=true;
