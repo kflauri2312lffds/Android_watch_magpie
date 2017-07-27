@@ -14,22 +14,16 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.view.View;
 
 import org.greenrobot.greendao.query.QueryBuilder;
-
-import java.util.List;
-
 import hevs.aislab.magpie.watch.db.Core;
 import hevs.aislab.magpie.watch.dummy.DummyValue;
 import hevs.aislab.magpie.watch.gui.dialogfragment.DialogFragmentConfirmDelete;
 import hevs.aislab.magpie.watch.models.CustomRules;
 import hevs.aislab.magpie.watch.models.DaoMaster;
-import hevs.aislab.magpie.watch.models.Measure;
 import hevs.aislab.magpie.watch.notification.CustomToast;
 import hevs.aislab.magpie.watch.phone_communication.PushMeasureThread;
-import hevs.aislab.magpie.watch.repository.MeasuresRepository;
 import hevs.aislab.magpie.watch.repository.RulesRepository;
 import hevs.aislab.magpie.watch.shared_pref.PrefAccessor;
 import hevs.aislab.magpie.watch_library.lib.Const;
@@ -111,6 +105,10 @@ public class MainActivity extends FragmentActivity implements
                 2);
     }
 
+    /**
+     *
+     * @return the users permission
+     */
     private boolean hasUserPermission()
     {
         //get the result of permission
@@ -124,6 +122,9 @@ public class MainActivity extends FragmentActivity implements
     }
 
 
+    /**
+     * Used to init the DB and the ORM
+     */
     private void initDB() {
         //init the session
         Core.getInstance().setHelper(new DaoMaster.DevOpenHelper(this,"Prototype-db",null));
@@ -133,6 +134,10 @@ public class MainActivity extends FragmentActivity implements
 
     }
 
+    /**
+     * Start home activity
+     * @param view
+     */
     public void startHomeActivity(View view)
     {
 
@@ -163,21 +168,15 @@ public class MainActivity extends FragmentActivity implements
         CustomToast.getInstance().confirmToast(getString(R.string.confirm_syncdata),this);
     }
 
+    /**
+     * Used to add dummy data when the user click
+     * @param view
+     */
     public void click_insertDummyData(View view )
     {
         DummyValue dummy=new DummyValue();
         dummy.insertDummyMeasure();
         CustomToast.getInstance().confirmToast("dummy data added",this);
-
-
-      List<Measure>measureList=  MeasuresRepository.getInstance().getAll();
-
-        for (Measure aMeasure : measureList)
-        {
-            Log.d("Display_ID",aMeasure.getId()+"");
-        }
-
-
     }
 
     /**
@@ -193,12 +192,17 @@ public class MainActivity extends FragmentActivity implements
 
     }
 
+    /**
+     * Used to sync the data with the phone
+     */
     private void sendDataToPhone()
     {
         new PushMeasureThread(googleClient).start();
     }
 
-
+    /**
+     * Insert all rules in the DB
+     */
     private void insertFirstRules()
     {
         //GLUCOSE RULES
@@ -280,7 +284,10 @@ public class MainActivity extends FragmentActivity implements
     }
     //methode used to create the first rules in our DB
 
-
+    /**
+     * Used to get if the device has a speacker
+     * @return
+     */
     public boolean hasSpeacker()
     {
         PackageManager packageManager = this.getPackageManager();
@@ -341,9 +348,4 @@ public class MainActivity extends FragmentActivity implements
         }
         super.onStop();
     }
-
-
-
-
-
 }

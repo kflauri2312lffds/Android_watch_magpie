@@ -76,35 +76,30 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintVertical_bias="0.877">
 
+        <LinearLayout
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:layout_width="0px"
+            android:layout_height="0px"/>
+
         <TableRow
+
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.85">
+            android:layout_height="match_parent">
 
             <EditText
                 android:id="@+id/edittxt_value1min"
                 style="@style/edittxt_values"
-                android:layout_height="match_parent"
+                android:layout_height="@dimen/edit_text_height"
                 android:background="@drawable/border_grey"
                 android:ems="10"
                 android:visibility="gone"
-                android:inputType="numberDecimal"
-                android:textAlignment="viewStart" />
+                android:inputType="numberDecimal" />
 
             <EditText
                 android:id="@+id/edittxt_value2min"
                 style="@style/edittxt_values"
-                android:layout_height="match_parent"
+                android:layout_height="@dimen/edit_text_height"
                 android:background="@drawable/border_grey"
                 android:ems="10"
                 android:visibility="gone"
@@ -113,7 +108,7 @@
             <EditText
                 android:id="@+id/edittxt_value1max"
                 style="@style/edittxt_values"
-                android:layout_height="match_parent"
+                android:layout_height="@dimen/edit_text_height"
                 android:background="@drawable/border_grey"
                 android:ems="10"
                 android:visibility="gone"
@@ -122,7 +117,7 @@
             <EditText
                 android:id="@+id/edittxt_value2max"
                 style="@style/edittxt_values"
-                android:layout_height="match_parent"
+                android:layout_height="@dimen/edit_text_height"
                 android:background="@drawable/border_grey"
                 android:ems="10"
                 android:inputType="numberDecimal"

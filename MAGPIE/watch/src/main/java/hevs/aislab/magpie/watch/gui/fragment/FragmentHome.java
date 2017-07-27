@@ -8,6 +8,7 @@ import android.support.constraint.ConstraintLayout;
 import android.support.constraint.ConstraintSet;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -288,6 +289,9 @@ public class FragmentHome extends Fragment {
         //set the max value and the min value of the weight
 
 
+       //if the value is infinity, it's mean it have no previous data. so we return 0.5
+        if (Float.isInfinite(value))
+            return 0.5;
 
         double variation= value;
         double variationWithMaxWeight=variation*maxWeightVariation/2;
@@ -495,7 +499,10 @@ public class FragmentHome extends Fragment {
                 Double minWeightLoosVariation=-((100-rule.getVal_2_min())/100);
 
                 if (value>increaseMaxVariation ||value<minWeightLoosVariation)
-                    isSever=true;
+                {   if (!Double.isInfinite(value))
+                        isSever=true;
+                }
+
                     changeIconColor(imgWeight,Const.CATEGORY_WEIGHT,isSever);
 
                 break;

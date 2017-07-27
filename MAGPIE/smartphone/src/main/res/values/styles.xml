@@ -44,6 +44,9 @@
 
     <style name="edittxt_values">
         <item name="android:layout_width">100dp</item>
+        <!-- USED TO SOLVE BUG OF TEXT DISAPEAR IF WE CHANGE FRAGMENT !-->
+        <item name="android:ellipsize">start</item>
+        <item name="android:gravity">center_horizontal</item>
     </style>
 
     <style name="txtView_toast"

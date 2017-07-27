@@ -9,6 +9,7 @@
     <dimen name="adapter_cell_textSize">18sp</dimen>
     <dimen name="scroll_view_display_rules_height">200dp</dimen>
     <dimen name="display_constraint_height">20sp</dimen>
+    <dimen name="edit_text_height">40dp</dimen>
 
 
 </resources>
