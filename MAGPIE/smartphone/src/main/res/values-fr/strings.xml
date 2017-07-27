@@ -11,9 +11,9 @@
     <string name="max_systo" translatable="false">Valeur systolique minimum</string>
     <string name="min_range" translatable="false">Limite minimum</string>
     <string name="settings" translatable="false">Paramètres</string>
-    <string name="sync_alertes" translatable="false">Alertes transmises</string>
-    <string name="sync_measures" translatable="false">Mesures transmises</string>
-    <string name="sync_rules" translatable="false">Règles transmises</string>
+    <string name="sync_alertes" translatable="false">Alertes synchronisée</string>
+    <string name="sync_measures" translatable="false">Mesures synchronisée</string>
+    <string name="sync_rules" translatable="false">Règles synchronisée</string>
     <string name="systol" translatable="false"></string>
     <string name="unit_measure_pulse" translatable="false">Battements par minute</string>
     <string name="unit_measure_step" translatable="false">Nombre de pas</string>

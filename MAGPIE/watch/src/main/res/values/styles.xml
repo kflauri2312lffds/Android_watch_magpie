@@ -53,9 +53,9 @@
 
 
 
-<!-- EDIT TEXT STYLE !-->
+<!-- EDIT TEXT STYLE for adding value  !-->
     <style name="edittxt" parent="txtView">
-        <item name="android:textStyle"></item>
+        <item name="android:maxLength">3</item>
         <item name="android:textSize">18sp</item>
     </style>
 
@@ -66,6 +66,7 @@
         <item name="android:layout_width">60dp</item>
         <item name="android:layout_height">40dp</item>
         <item name="android:textAlignment">viewEnd</item>
+        <item name="android:maxLength">5</item>
     </style>
     <style name="txtViewValue" parent="edittxt_values">
 
