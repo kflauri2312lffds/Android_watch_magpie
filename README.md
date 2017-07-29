@@ -19,9 +19,9 @@ MAGPIE agent platform for Android. It include a module for the watch and the Sma
 - [sample-sensor](https://github.com/aislab-hevs/magpie/tree/master/MAGPIE/sample-sensor): a demo application showing how to use MAGPIE with a BioHarness sensor.
 - [server](https://github.com/aislab-hevs/magpie/tree/master/MAGPIE/server): a Spring based server to be used with the sample-debs application. 
 
-- [Watch](https://github.com/aislab-hevs/magpie/tree/master/MAGPIE/Watch): the application for the watch
+- [Watch](https://github.com/kflauri2312lffds/Android_watch_magpie/tree/master/MAGPIE/watch): the application for the watch
 
-- [Smartphone](https://github.com/aislab-hevs/magpie/tree/master/MAGPIE/Smartphone): the application in the phone, related to the watch
+- [Smartphone](https://github.com/kflauri2312lffds/Android_watch_magpie/tree/master/MAGPIE/smartphone): the application in the phone, related to the watch
 
 
  
