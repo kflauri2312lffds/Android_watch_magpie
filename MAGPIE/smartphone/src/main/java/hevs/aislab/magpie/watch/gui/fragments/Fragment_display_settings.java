@@ -43,6 +43,8 @@ public class Fragment_display_settings extends Fragment {
     TextView txtConstraint2;
     TextView txtConstraint3;
 
+    TextView txtNoValue;
+
     //edit text of values
     EditText edit_value1min;
     EditText edit_value1Max;
@@ -82,7 +84,11 @@ public class Fragment_display_settings extends Fragment {
 
             //if no rule exist, we just return we don't do anythings
             if (currentRules==null)
+            {
+                txtNoValue.setVisibility(View.VISIBLE);
                 return;
+            }
+            txtNoValue.setVisibility(View.GONE);
 
             String constraint_1=currentRules.getConstraint_1();
             String constraint_2=currentRules.getConstraint_2();
@@ -341,6 +347,8 @@ public class Fragment_display_settings extends Fragment {
         txtConstraint1 =(TextView)view.findViewById(R.id.txtView_constraint1);
         txtConstraint2 =(TextView)view.findViewById(R.id.txtView_constraint2);
         txtConstraint3 =(TextView)view.findViewById(R.id.txtView_constraint3);
+
+        txtNoValue=(TextView)view.findViewById(R.id.txtView_noData);
 
         edit_value1min =(EditText)view.findViewById(R.id.edittxt_value1min);
         edit_value1Max =(EditText)view.findViewById(R.id.edittxt_value1max);
