@@ -48,4 +48,5 @@
     <string name="confirm_delete">Delete all data ?</string>
     <string name="value_deleted">value has been deleted DB</string>
     <string name="confirm_syncdata">data has been send</string>
+    <string name="empty_data">empty data</string>
 </resources>

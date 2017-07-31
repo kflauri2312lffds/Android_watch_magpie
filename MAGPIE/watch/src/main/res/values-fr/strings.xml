@@ -38,4 +38,5 @@
     <string name="voice_weight" translatable="false">poid</string>
     <string name="weight" translatable="false">poids en kilo</string>
     <string name="weight_level" translatable="false">poid actuel</string>
+    <string name="empty_data">pas de donnée</string>
 </resources>

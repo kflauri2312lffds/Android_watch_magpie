@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -30,6 +31,7 @@ public class FragmentDisplayAlertes extends Fragment {
     AlertAdapter alertAdapter;
     ListView listViewAlert;
     List<Alertes>alertesList;
+    TextView txtViewEmptyData;
 
     ButtonsManager buttonsManager;
 
@@ -100,12 +102,20 @@ public class FragmentDisplayAlertes extends Fragment {
         buttonsManager.addButtonByCategory(Const.CATEGORY_PULSE,(ImageButton)view.findViewById(R.id.button_display_alert_pulse));
         buttonsManager.addButtonByCategory(Const.CATEGORY_STEP,(ImageButton)view.findViewById(R.id.button_display_alert_step));
         buttonsManager.addButtonByCategory(Const.CATEGORY_WEIGHT,(ImageButton)view.findViewById(R.id.button_display_alert_weight));
+        //init the txtView
+        txtViewEmptyData=(TextView)view.findViewById(R.id.txt_view_empty_alert);
     }
 
-
+    /**
+     * Update the list view and set a message if null
+     */
     private void updateViewList() {
+
         if (alertesList.size()==0)
-            CustomToast.getInstance().warningToast(getString(R.string.toast_noalert),getActivity());
+            txtViewEmptyData.setVisibility(View.VISIBLE);
+        else
+            txtViewEmptyData.setVisibility(View.GONE);
+
         alertAdapter.notifyDataSetChanged();
     }
 

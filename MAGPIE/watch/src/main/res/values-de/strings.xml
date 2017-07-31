@@ -37,4 +37,5 @@
     <string name="voice_weight" translatable="false">none</string>
     <string name="weight" translatable="false">none</string>
     <string name="weight_level" translatable="false">none</string>
+    <string name="empty_data">empty data</string>
 </resources>

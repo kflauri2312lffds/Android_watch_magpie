@@ -107,6 +107,9 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
 
     }
 
+    /**
+     * USED TO INIT ALL FRAGMENT
+     */
     private void initFragment()
     {
         fragmentSettings=new FragmentSettings();
@@ -160,6 +163,10 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
                 processEvent(System.currentTimeMillis(),category,value);
     }
 
+    /**
+     * USED TO UPDATE THE BAR AREA OF EACH CATEGORY. it will delegate the task to the fragment
+     * @param rules
+     */
     @Override
     public void updateBarArea(CustomRules rules) {
 
@@ -204,17 +211,21 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
     public void click_setPulse(View view)
     {
         CustomToast.getInstance().warningToast(getString(R.string.information_pulse_device),this);
-        //TODO TESTE IMPLEMENTATION ! REMOVE THIS METHODE
+        //TODO TESTE IMPLEMENTATION ! REMOVE THIS CODE BELOW IN PROD ! ONLY FOR TEST.
         processEvent(System.currentTimeMillis(),Const.CATEGORY_PULSE,"100");
     }
     public void click_setSteps(View view)
     {
         CustomToast.getInstance().warningToast(getString(R.string.information_step_device),this);
+        //only used for test. It will add 1000 steps. IN PRODUCTION, REMOVE THIS!
         addStep(1000);
     }
 
     //------------VOICE RECOGNITION HANDLER------------------
 
+    /**
+     * Create the voice activty. It will call voice activity and capture voice
+     */
     private void displaySpeechRecognizer() {
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
@@ -233,7 +244,10 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
     }
 
 
-    //DEFINE THE ACTION IN RESPONSE OF VOICE EVENT
+    /**
+     *     DEFINE THE ACTION IN RESPONSE OF VOICE EVENT. Used to handle voice event (when they return back from the voice activity)
+     */
+
     private void handleVoiceEvent(Intent data) {
         List<String> results = data.getStringArrayListExtra(
                 RecognizerIntent.EXTRA_RESULTS);
@@ -284,6 +298,11 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
         CustomToast.getInstance().errorTOast(getString(R.string.voice_not_found), this);
     }
 
+    /**
+     * ADD A VALUE FROM THE VOICE ACTION
+     * @param category The category we want to add value
+     * @param rawvalue THe array of value. String and we can set it to the value we want
+     */
     private void voiceAction_addValue( String category, String ... rawvalue) {
         //we set the value of the glucose
         try
@@ -364,6 +383,12 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
 
     //PROCESS EVENT WITH MAGPIE
 
+    /**
+     * Send the event to magpie agent
+     * @param timeStamp Timestamp of the event
+     * @param category Category of the event
+     * @param value The values of the events
+     */
     public void processEvent(long timeStamp, String category, String ... value )
     {
         Log.d("sendToPRocess","send to process");
@@ -374,6 +399,10 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
     }
 
     //this methode will be called by the thread. we will send the pulse to magpie (average of pulse during a certain periode of time)
+
+    /**
+     * Used to process pulse. This method is called directly from the thread
+     */
     @Override
     public void processPulse()
     {
@@ -393,6 +422,11 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
     }
 
     //-------------SENSORS METHODE---------------------------
+
+    /**
+     * Used to handle all sensors event (in our case, is step and heart pulse)
+     * @param sensorEvent
+     */
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
 
@@ -413,7 +447,11 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
         }
     }
 
-    //sensor method
+    /**
+     * Used to handle change of accuracy from the sensors. We will only check pulse accuracy
+     * @param sensor
+     * @param i
+     */
     @Override
     public void onAccuracyChanged(Sensor sensor, int i) {
         //set the accuracy of the pulse snsors
@@ -423,18 +461,20 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
         }
     }
 
+    /**
+     * Used when the user to a step
+     * @param newStep
+     */
     private void addStep(long newStep) {
         //retrive the current step
         long currentStep= PrefAccessor.getInstance().getLong(this, Const.KEY_CURRENT_STEP);
         //check if it's a new day. If it is, we store the actual data in the data base
         String today= DateFormater.getInstance().getDate(System.currentTimeMillis());
 
-        Log.d("todayDate",today);
-        Log.d("previousDate",PrefAccessor.getInstance().getString(this,Const.KEY_DATE_STEP));
+
 
         if (!today.equals(PrefAccessor.getInstance().getString(this,Const.KEY_DATE_STEP)))
         {
-            Log.d("passage_dans_step_newDa","newdate");
             //write the new date in shared pref
             PrefAccessor.getInstance().save(this,Const.KEY_DATE_STEP,today);
             //send event to magpie
@@ -450,11 +490,21 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
     }
 
     //***************************************HANDLE THE LIFE CIRCLE OF SENSORS***************************
+
+    /**
+     *
+     * @param sensor THe sensor we want to activate
+     * @param sensorsType THe sensors type we want
+     */
     @Override
     public void registerSensor(Sensor sensor, int sensorsType) {
         sensorManager.registerListener(this,sensor,sensorsType);
     }
 
+    /**
+     * Used to disactivate sensors
+     * @param sensor
+     */
     @Override
     public void unregisterSensors(Sensor sensor) {
         sensorManager.unregisterListener(this,sensor);
@@ -495,7 +545,10 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
 
 //handle data receive from the service
 
-    //receive data from the listener service
+    /**
+     * This class is used to handle data from the different services (LIstener). It will make the link between the service and the
+     * activity
+     */
     private class MessageReceiver extends BroadcastReceiver {
 
         @Override
@@ -510,16 +563,23 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
             //create a Toast to inform that we have new rule
             toastConfirmDataReceive(rule);
 
-
-
         }
     }
 
+    /**
+     * Create a toast to confirme data have been received
+     * @param rule
+     */
     public void toastConfirmDataReceive(CustomRules rule)
     {
         CustomToast.getInstance().confirmToast("Rule "+rule.getCategory()+" updated",this);
     }
 
+    /**
+     * Parse a dataMap into a rule object
+     * @param dataMap
+     * @return
+     */
     private CustomRules getRuleFromMap(Bundle dataMap)
     {
         CustomRules rule =new CustomRules();
@@ -531,21 +591,10 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
         rule.setConstraint_2(dataMap.getString(Const.KEY_RULE_CONSTRAINT2));
         rule.setConstraint_3(dataMap.getString(Const.KEY_RULE_CONSTRAINT3));
 
-
-
         rule.setVal_1_min(formatValue( dataMap.getDouble(Const.KEY_RULE_VAL1_MIN)));
         rule.setVal_1_max(formatValue(dataMap.getDouble(Const.KEY_RULE_VAL1_MAX)));
         rule.setVal_2_min(formatValue(dataMap.getDouble(Const.KEY_RULE_VAL2_MIN)));
         rule.setVal_2_max(formatValue(dataMap.getDouble(Const.KEY_RULE_VAL2_MAX)));
-
-        Log.d("received_RUle_category",rule.getCategory());
-        Log.d("received_RUle_const1",rule.getConstraint_1());
-        Log.d("received_RUle_const2",rule.getConstraint_2());
-        Log.d("received_RUle_Val1_min",rule.getVal_1_min()+"");
-        Log.d("received_RUle_Val1_max",rule.getVal_1_max()+"");
-        Log.d("received_RUle_Val2_min",rule.getVal_2_min()+"");
-        Log.d("received_RUle_Val2_max",rule.getVal_2_max()+"");
-
 
         return rule;
 
