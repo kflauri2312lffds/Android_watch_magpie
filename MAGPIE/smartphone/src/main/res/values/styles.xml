@@ -54,16 +54,10 @@
         ></style>
 
 
-    <!--<style name="cells_img_table_category">-->
-
-        <!--<item name="android:height">-->
-
-        <!--</item>-->
-
-        <!--<item name="android:layout_width">-->
-
-        <!--</item>-->
-
-    <!--</style>-->
+<style name="txtView_noData">
+    <item name="android:layout_height">200dp</item>
+    <item name="android:layout_width">0dp</item>
+    <item name="android:textSize">60sp</item>
+</style>
 
 </resources>

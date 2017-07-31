@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -27,6 +28,7 @@ public class Fragment_display_alertes extends Fragment {
     AlertAdapter alertAdapter;
     ListView listViewAlert;
     List<Alertes> alertesList;
+    TextView txtViewEmptyData;
 
     /**
      * This class is used to display other category. It's the listener of the button
@@ -94,6 +96,7 @@ public class Fragment_display_alertes extends Fragment {
         buttonsManager.addButtonByCategory(Const.CATEGORY_PRESSURE,(ImageButton)view.findViewById(R.id.button_pressure));
         buttonsManager.addButtonByCategory(Const.CATEGORY_WEIGHT,(ImageButton)view.findViewById(R.id.button_weight));
         buttonsManager.addButtonByCategory(Const.CATEGORY_STEP,(ImageButton)view.findViewById(R.id.button_step));
+        txtViewEmptyData=(TextView)view.findViewById(R.id.txtView_noData);
     }
 
     /**
@@ -112,6 +115,10 @@ public class Fragment_display_alertes extends Fragment {
      * Update the display of the list vie
      */
     private void updateViewList() {
+        if (alertesList.size()==0)
+        txtViewEmptyData.setVisibility(View.VISIBLE);
+        else
+            txtViewEmptyData.setVisibility(View.GONE);
         alertAdapter.notifyDataSetChanged();
 
     }

@@ -21,4 +21,5 @@
     <string name="unit_measure_glucose" translatable="false">Glucose mmol/l</string>
     <string name="unit_measure_diastol" translatable="false">Diastol</string>
     <string name="diastol" translatable="false">Diastol</string>
+    <string name="empty_data">pas de donnée</string>
 </resources>

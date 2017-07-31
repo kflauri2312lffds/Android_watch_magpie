@@ -24,4 +24,5 @@
     <string name="value_inserted">value has been inserted and send</string>
     <string name="confirm_delete">delete all data ?</string>
     <string name="notif_data_deleted">Data has been deleted</string>
+    <string name="empty_data">no data</string>
 </resources>
