@@ -11,7 +11,9 @@ MAGPIE agent platform for Android. It include a module for the watch and the Sma
 - [How to import the project in Android Studio](#how-to-import-the-project-in-android-studio)
 - [Run the tests](#run-the-tests)
 - [Documentation](#documentation)
+- [Launch the project on Smartwatcj](#smartwatch_project)
 - [Copyright and license](#copyright-and-license)
+
 
 ## Contents of MAGPIE
 - [library](https://github.com/aislab-hevs/magpie/tree/master/MAGPIE/library): the MAGPIE agent platform.
@@ -63,6 +65,27 @@ Two quick start options are available:
   - Use the command to execute the tests: ./gradlew build connectedCheck
 
  For testing a running emulator or a connected device is needed.
+ 
+ 
+ 
+## Smartwatch_project
+To be able to launch the project on the smartwatch, 
+- open the project on Android studio  (MASTER/MAGPIE)
+-Create a emulator Android Wear 2.0 device OR use a real device (minimum version: 25)
+-Activate the developper option
+-Activate the debug by USB
+-Launch the app via Android Studio (module: watch)
+
+To connect the watch with the phone follow the tutorial
+https://developer.android.com/training/wearables/apps/creating.html
+
+## Smartphone_project
+-Install first the app on the watch (see previous section)
+-install the app on the phone (module: Smartphone)
+-Don't forget the commande on Android studio prompt to be able to pair the phone with the watch :  adb -d forward tcp:5601 tcp:5601
+
+## Watch_library
+It's a module used in both Watch and Smartphone module.
   
 ## Copyright and license
 Code and documentation copyright 2014-2015 [AISLab HES-SO Valais](http://www.hevs.ch/fr/mini-sites/projets-produits/aislab/). Code released under [the BSD license](https://github.com/aislab-hevs/magpie/blob/master/LICENSE).
