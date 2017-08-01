@@ -11,7 +11,7 @@ MAGPIE agent platform for Android. It include a module for the watch and the Sma
 - [How to import the project in Android Studio](#how-to-import-the-project-in-android-studio)
 - [Run the tests](#run-the-tests)
 - [Documentation](#documentation)
-- [Launch the project on Smartwatcj](#smartwatch_project)
+- [Launch the project on Smartwatch](#smartwatch_project)
 - [Copyright and license](#copyright-and-license)
 
 
