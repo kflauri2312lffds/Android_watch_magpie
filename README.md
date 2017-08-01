@@ -70,19 +70,19 @@ Two quick start options are available:
  
 ## Smartwatch_project
 To be able to launch the project on the smartwatch, 
-- open the project on Android studio  (MASTER/MAGPIE)
--Create a emulator Android Wear 2.0 device OR use a real device (minimum version: 25)
--Activate the developper option
--Activate the debug by USB
--Launch the app via Android Studio (module: watch)
+  - open the project on Android studio  (MASTER/MAGPIE)
+  - Create a emulator Android Wear 2.0 device OR use a real device (minimum version: 25)
+  - Activate the developper option
+  - Activate the debug by USB
+  - Launch the app via Android Studio (module: watch)
 
 To connect the watch with the phone follow the tutorial
 https://developer.android.com/training/wearables/apps/creating.html
 
 ## Smartphone_project
--Install first the app on the watch (see previous section)
--install the app on the phone (module: Smartphone)
--Don't forget the commande on Android studio prompt to be able to pair the phone with the watch :  adb -d forward tcp:5601 tcp:5601
+  - Install first the app on the watch (see previous section)
+  - install the app on the phone (module: Smartphone)
+  - Don't forget the commande on Android studio prompt to be able to pair the phone with the watch :  adb -d forward tcp:5601 tcp:5601
 
 ## Watch_library
 It's a module used in both Watch and Smartphone module.
