@@ -367,13 +367,9 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
         behaviorMind.addBehavior(new StepBehaviour(this,behaviorAgent,1));
         behaviorMind.addBehavior(new WeightBehaviour(this,behaviorAgent,1));
 
-        //TODO ADD THE WEIGHT
-
-
 
         behaviorAgent.setMind(behaviorMind);
         registerAgent(behaviorAgent);
-
     }
 
     @Override
@@ -439,8 +435,8 @@ public class HomeActivity extends MagpieActivityWatch implements SensorEventList
                 double value=sensorEvent.values[0];
                 listPulse.add(value);
                 break;
-            case Sensor.TYPE_STEP_COUNTER :
-                //for this sensor, we juste update the value. the value is processed only once a week
+            case Sensor.TYPE_STEP_DETECTOR :
+                //for this sensor, we juste update the value. the value is processed only once a day
                 addStep(1);
                 break;
 

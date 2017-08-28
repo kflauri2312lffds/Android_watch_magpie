@@ -202,22 +202,12 @@ public class Fragment_display_measures extends Fragment {
         //data for the entry
         List<Entry> dataEntries=new ArrayList<>();
 
-
-
-
-
-
         //get the data based on measure
         for (int k=0;k<measures.size();k++)
         {   //add the entry
             dataEntries.add(new Entry(k,measures.get(k).getValue1().floatValue()));
             //enter the fix value related to the rule
         }
-
-
-
-
-
         //add label instead of number in the axis
         chart.notifyDataSetChanged();
 
